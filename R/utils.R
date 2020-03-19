@@ -47,7 +47,7 @@ get_exported_dataset <- function(dataset_name) {
 
   expo_data_nms <- get_exported_dataset_names()
   if (!dataset_name %in% expo_data_nms) {
-    raise_internal_error(
+    stop(
       "requested exported dataset ",
       deparse(dataset_name), " is not one of ",
       deparse(expo_data_nms)
