@@ -13,29 +13,71 @@
 #' @rdname column_level_spaces
 
 
-#' @describeIn column_level_spaces retrieves a list of column level spaces, one
-#' element of each element of `col_nms`
-#' @importFrom data.table is.data.table
-#' @importFrom easyassertions assert_is_list assert_has_names
+#' @name column_level_spaces
+#' @details
+#' - `nordcan_column_level_space_list` retrieves a `list` which
+#' determines allowed levels for each column specified in `col_nms`
+#' @importFrom easyassertions assert_is_character_nonNA_vector
 #' @export
-get_column_level_spaces <- function(col_nms) {
-  column_level_spaces <- get_internal_dataset("column_set_level_spaces")
-  easyassertions::assert_is_list(column_level_spaces)
-  easyassertions::assert_has_names(column_level_spaces, col_nms)
+nordcan_column_level_space_list <- function(col_nms) {
+  easyassertions::assert_is_character_nonNA_vector(col_nms)
+  # the actual values would probably come from an internal or exported dataset
+  # inside this package.
+  # ... datasteps
 
-  column_level_spaces[col_nms]
+  stopifnot(
+    inherits(output, "list"),
+    identical(names(output), col_nms),
+    vapply(output, is.integer, logical(1L)),
+    !vapply(output, anyDuplicated, logical(1L))
+  )
+  return(output)
 }
 
 
-#' @describeIn column_level_spaces retrieves a `data.table` which determines
-#' allowed combinations of `col_nms`
-#' @importFrom data.table is.data.table CJ
-#' @importFrom easyassertions assert_is_list assert_has_names
-get_joint_column_level_space <- function(col_nms) {
-  column_level_spaces <- get_internal_dataset("column_set_level_spaces")
-  easyassertions::assert_is_list(column_level_spaces)
-  easyassertions::assert_has_names(column_level_spaces, col_nms)
+#' @name column_level_spaces
+#' @details
+#' - `nordcan_column_set_level_space_list` retrieves a `list` which
+#' determines allowed levels for each column specified in `col_nms`,
+#' and the allowed combinations for hierarchical columns
+#' @importFrom easyassertions assert_is_character_nonNA_vector
+#' @export
+nordcan_column_set_level_space_list <- function(col_nms) {
+  # you can think of a better name than this.
+  easyassertions::assert_is_character_nonNA_vector(col_nms)
 
-  do.call(data.table::CJ, column_level_spaces)
+  # ... datasteps
+
+  # e.g. areas are like norway -> oslo, finland -> helsinki, and it is not
+  # possible to have e.g. norway -> helsinki. such columns are hierarchical.
+  # for hierarchical cases this function must return a data.table as an element
+  # in  the list, e.g.
+  # list(area = data.table::data.table(area1 = c(1,1,2,2), area2 = c(1,2,3,4))).
+  stopifnot(
+    inherits(output, "list"),
+    identical(names(output), col_nms),
+    vapply(output, inherits, logical(1L), what = c("integer", "data.table")),
+    !vapply(output, anyDuplicated, logical(1L))
+  )
+  return(output)
+}
+
+#' @name column_level_spaces
+#' @details
+#' - `nordcan_column_level_space_dt` retrieves a `data.table` which
+#' determines allowed combinations of `col_nms`
+#' @importFrom data.table is.data.table
+#' @importFrom easyassertions assert_is_character_nonNA_vector
+nordcan_column_level_space_dt <- function(col_nms) {
+  easyassertions::assert_is_character_nonNA_vector(col_nms)
+
+  # ... datasteps
+
+  stopifnot(
+    data.table::is.data.table(output),
+    identical(names(output), col_nms),
+    !duplicated(output, by = col_nms)
+  )
+  return(output)
 }
 
