@@ -8,15 +8,19 @@
 \alias{get_internal_dataset}
 \title{Package Data}
 \usage{
-get_exported_dataset_names()
+get_exported_dataset_names(package_name)
 
-get_internal_dataset_names()
+get_internal_dataset_names(package_name)
 
-get_exported_dataset(dataset_name)
+get_exported_dataset(dataset_name, package_name)
 
-get_internal_dataset(dataset_name)
+get_internal_dataset(dataset_name, package_name)
 }
 \arguments{
+\item{package_name}{\verb{[character]} (mandatory, no default)
+
+name of R package}
+
 \item{dataset_name}{\verb{[character]} (mandatory, no default)
 
 name of dataset to retrieve.}
