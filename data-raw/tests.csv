@@ -1,0 +1,4 @@
+raw_incidence_dataset;incidence_dataset;col_nm_set;test
+TRUE;TRUE;date_of_birth;inherits(date_of_birth, "Date")
+TRUE;TRUE;date_of_birth;date_of_birth > as.Date("1800-01-01")
+TRUE;TRUE;date_of_birth;date_of_birth < Sys.Date()
