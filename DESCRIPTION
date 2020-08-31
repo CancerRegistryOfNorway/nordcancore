@@ -1,7 +1,7 @@
 Package: nordcancore
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.2.1
+Version: 0.2.2
 Authors@R: c(
   person("Huidong", "Tian", email = "huidong.tian@kreftregisteret.no", role = c("aut", "cre")), 
   person("Joonas", "Miettinen", email = "joonas.miettinen@cancer.fi", role = "aut")
@@ -10,9 +10,9 @@ Maintainer: Huidong Tian <huidong.tian@kreftregisteret.no>
 Description: Contains metadata and general utilities for the NORDCAN R 
   framework.
 License: MIT + file LICENSE
-Imports: data.table, easyassertions
+Imports: data.table, easyassertions, dbc
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-Remotes: WetRobot/easyassertions
+Remotes: github::WetRobot/easyassertions, github::WetRobot/dbc

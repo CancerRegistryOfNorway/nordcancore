@@ -1,12 +1,8 @@
 
 library("data.table")
 
-column_set_level_spaces <- list(
-  sex = 1:2,
-  area = data.table::fread("areas.csv")
-  # etc.
-)
+nordcan_columns <- data.table::fread("data-raw/nordcan_columns.csv")
 
-usethis::use_data(column_set_level_spaces)
+usethis::use_data(nordcan_columns, internal = TRUE, overwrite = TRUE)
 
 
