@@ -81,3 +81,34 @@ get_internal_dataset <- function(dataset_name, package_name) {
 
   eval(parse(text = paste0(package_name, ":::", dataset_name)))
 }
+
+
+
+#' @title Entity Detection
+#' @description
+#' Detect records that have at least one of the supplied entities.
+#' @param x `[data.table]` (mandatory, no default)
+#'
+#' dataset in which to look for records in specific entities
+#' @param entities `[integer]` (mandatory, no default)
+#'
+#' set of entities to look for
+#' @return
+#' Returns a logical vector of length `nrow(x)`.
+#' @export
+in_entity_set <- function(x, entities) {
+  dbc::assert_is_data.table(x)
+  dbc::assert_is_integer_nonNA_vector(entitites)
+  # TODO: specific assertion fun for entities and nordcan dataset
+
+  entity_col_nms <- names(x)[grepl("^entity", names(x))]
+
+  in_set <- rep(FALSE, nrow(x))
+  for (entity_col_nm in entity_col_nms) {
+    in_set <- in_set | x[[entity_col_nm]] %in% entities
+  }
+
+  return(in_set)
+}
+
+

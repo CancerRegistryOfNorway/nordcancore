@@ -1,7 +1,7 @@
 Package: nordcancore
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
   person("Huidong", "Tian", email = "huidong.tian@kreftregisteret.no", role = c("aut", "cre")), 
   person("Joonas", "Miettinen", email = "joonas.miettinen@cancer.fi", role = "aut")
@@ -13,6 +13,6 @@ License: MIT + file LICENSE
 Imports: data.table, easyassertions
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Remotes: WetRobot/easyassertions
