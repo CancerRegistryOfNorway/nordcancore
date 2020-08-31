@@ -1,0 +1,145 @@
+Variable name;Variable label/description;Format/Size;Mandatory NORDCAN/JRC;Coding;Comment
+pat;Patient identification code;A50;Nordcan / JRC;"Datasize can be max 50 
+One ID can be used for several rows (several cases), but is only connected to 1 person";Unique running number for each person
+date_of_birth;Date of birth;A10;Nordcan;"Valid date yyyy-mm-dd 
+First possible date in JRC is 01.01.1870. There is no minimum allowed date in NORDCAN";According to ISO 8601
+flag_dob;Flagging for date of birth;F1;Nordcan;"0 = exact date of birth
+1 = Set date of birth";"Flagging of dates which are ""set""/""made"" because accurate/exact date is missing"
+age;Age at diagnosis (in years);F3;Nordcan / JRC;0 > and < 121;
+sex;Current sex of patient;F1;Nordcan / JRC;"1 = Male
+2 = Female
+3 = Other & unknown";"""Current sex"" is preferred in NORDCAN, 
+""Sex at time of diagnosis"" or ""sex at time of birth"" can be used if ""Current sex is not available. 
+""Sex at birth"" is preferred by JRC/ENCR"
+region;Regional place of residence at time of diagnosis;F2;Nordcan;See regions ;
+geo_code;Code for geographical area of residence at diagnosis;A10;JRC;;
+geo_label;Name of geographical area of residence at diagnosis;A50;JRC;;
+tum;Tumor identification code;A50;Nordcan / JRC;"Datasize can be max 50 
+Only one record for each running number is allowed in the raw data file. ";Unique running number for each tumor
+tum_sequence;Sequence of tumors for each person;F2;Nordcan;Min value = 1, max value not set;"The number of this case in a sequence for the patient, for instance 1 for the first case, 2 for the second case etc. 
+If synchronous cancers: the most advanced cancer (highest stage/most metastasis) should have the lowest Tumor sequence number. 
+If this is equal, the one with the lowest casenumber should have lowest Tumor sequence number."
+date_of_incidence;Date of incidence;A10;Nordcan;"Valid date yyyy-mm-dd 
+Min allowed value: 01.01.1901 
+Max allowed value: according to user input (index year)";"Necessary for calculations of survival/days of follow up.
+Will not be distributed out of the registries. 
+According to ICO 8601.
+All registries have some issues with missing day and/or month for date of incidence. We include a variable for flagging of exact date."
+flag_doi;Flagging for date of incidence;F1;Nordcan;"0 = exact date of incidence
+1 = set date of incidence";
+bod;Basis of diagnosis according to ENCR recommendation;F1;Nordcan / JRC;"0 = Death certificate only (DCO)
+1 = Clinical
+2 = Clinical investigation
+4 = Specific tumor markers
+5 = Cytology
+6 = Histology of a metastasis
+7 = Histology of a primary tumor
+9 = Unknown";"Category 1/Clinical means clinical examination without any additional investigations. 
+Category 2/Clinical investigation includes blood samples, xray etc."
+topo;Topography in ICDO3, given as Cxxx;A4;Nordcan / JRC;Non-valid values will be picked up by the IARCcrgCheckTool;"Registries need to provide ICDO3 
+The full four-digit character's ICD-O-3 code should be provided, including the initial letter, but without the decimal point (""."")"
+morpho;First 4 digits of morphology in ICDO3;F4;Nordcan / JRC;Non-valid values will be picked up by the IARCcrgCheckTool;Registries need to provide ICDO3
+beh;Tumor behavior, 5th digit of morphology;F1;Nordcan / JRC;"0 = Benign neoplasm
+1 = Neoplasm of uncertain and unknown behaviour (uncertain whether benign or malignant, “borderline” malignant, incipient cancer, bladder papilloma)
+2 = In-situ neoplasm (carcinoma in situ/non invasive/preleukaemia/intraepithelial tumor)
+3 = Malignant neoplasm";
+grade;Grade of tumor, 6th digit of morphology;F1;Nordcan / JRC;"For solid tumours:
+1 = Grade 1, Well differentiated
+2 = Grade 2, Moderately differentiated
+3 = Grade 3, Poorly differentiated
+4 = Grade IV, Undifferentiated, anaplastic
+
+For leukaemias and lymphomas (only for JRC):
+5 = T-cell, T-precursor
+6 = B-cell, Pre-B, B-precursor
+7 = Null cell, Non T-non B
+8 = NK-cell (natural killer cell)
+
+For all: 
+9 = Unknown or not applicable";
+laterality;Laterality of tumor;F1;Nordcan;"0 = Not applicable
+1 = Right
+2 = Left
+3 = Unilateral NOS
+4 = Bilateral
+9 = Unknown";
+autopsy;Incidental finding of cancer at autopsy;F1;Nordcan / JRC;"0 = No (not found at autopsy)
+1 = Yes (found at autopsy)
+9 = Unknown";
+vit_sta;Last known vital status of patient;F1;Nordcan / JRC;"1 = Alive
+2 = Dead
+3 = Lost to follow up/Censored/Emigrated (NORDCAN only)
+9 = Unknown";
+end_of_followup;Date for last known vital status;A10;Nordcan;"Valid date yyyy-mm-dd 
+Min allowed value: 01.01.1901 
+Max allowed value: according to user input (index year)";"Necessary for calculations of survival/days of follow up.
+Will not be distributed out of the registry.
+Date of death or emigration if Vit_stat = 2 or 3.
+Last date of follow up if Vit_stat = 1
+According to ISO 8601"
+flag_eof;Flagging for date for end of follow up;F1;Nordcan;"0 = exact date for end of follow up
+1 = set date for end of follow up";
+cod;Official underlying cause of death;A4;JRC;"According to relevant version of ICD
+Blank/R99 = Unknown/missing";
+icd;ICD-edition used for coding cause of death;F2;JRC;"Range of allowed values <12
+99 = unknown/missing";
+tnm_ed;TNM-edition used;F2;JRC;99 = missing;
+ct;cT;A10;JRC;JRC Quality Check software will identify non-valid values;
+cn;cN;A10;JRC;JRC Quality Check software will identify non-valid values;
+cm;cM;A10;JRC;JRC Quality Check software will identify non-valid values;
+pt;pT;A10;JRC;JRC Quality Check software will identify non-valid values;
+pn;pN;A10;JRC;JRC Quality Check software will identify non-valid values;
+pm;pM;A10;JRC;JRC Quality Check software will identify non-valid values;
+tos;Type of staging system;A3;JRC;"A = Ann Arbor / Lugano stage
+D = Dukes' stage
+E = Extent of disease
+F = FIGO stage
+S = TNM stage, unknown whether clinical or pathological
+cIS = Clinical TNM stage
+paS = Pathological TNM stage
+cpS = Combination of clinical & pathological TNM stage
+coS = Condensed TNM stage
+esS = Essential TNM stage
+T1 = Tier 1 stage for paediatric tumours
+T2 = Tier 2 stage for paediatric tumours
+8 = Other system
+9 = Unknown";
+stage;Stage of tumor;F1;JRC;"0 = Stage 0, stage 0a, stage 0is, carcinoma in situ, non-invasive
+1 = Stage I, FIGO I, localized, localized limited (L), limited, Dukes A
+2 = Stage II, FIGO II, localized advanced (A), locally advanced, advanced, direct extension, Dukes B
+3 = Stage III, FIGO III, regional (with or without direct extention), R+, N+, Dukes C
+4 = Stage IV, FIGO IV, metastatic, distant, M+, Dukes D
+9 = Unknown";
+surgery;Surgery;F1;JRC;"0 = No
+1 = Yes, without specification
+2 = Yes, local surgery only
+3 = Yes, 'operative' surgery
+9 = Unknown";
+rt;Radiotherapy;F1;JRC;"0 = No
+1 = Yes, without specification
+2 = Yes, neoadjuvant (pre-operative) radiotherapy
+3 = Yes, adjuvant (post-operative) radiotherapy
+9 = Unknown";
+cht;Chemotherapy;F1;JRC;"0 = No
+1 = Yes, without other specification
+2 = Yes, neoadjuvant (pre-operative)
+3 = Yes, adjuvant (post-operative)
+4 = Yes, both neoadjuvant and adjuvant
+9 = Unknown";
+tt;Targeted therapy;F1;JRC;"0 = No
+1 = Yes
+9 = Unknown";
+it;Immunetherapy;F1;JRC;"0 = No
+1 = Yes
+9 = Unknown";
+ht;Hormone therapy;F1;JRC;"0 = No
+1 = Yes
+9 = Unknown";
+ot;Other or unspecified therapy;F1;JRC;"0 = No
+1 = Yes, without other specification
+2 = Yes, neoadjuvant (pre-operative)
+3 = Yes, adjuvant (post-operative)
+9 = Unknown";
+sct;Stem cell transplantation;F1;JRC;"0 = No
+1 = Yes
+9 = Unknown";
