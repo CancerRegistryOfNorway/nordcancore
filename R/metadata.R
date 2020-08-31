@@ -17,10 +17,10 @@
 #' @details
 #' - `nordcan_column_level_space_list` retrieves a `list` which
 #' determines allowed levels for each column specified in `col_nms`
-#' @importFrom easyassertions assert_is_character_nonNA_vector
+#' @importFrom dbc assert_is_character_nonNA_vector
 #' @export
 nordcan_column_level_space_list <- function(col_nms) {
-  easyassertions::assert_is_character_nonNA_vector(col_nms)
+  dbc::assert_is_character_nonNA_vector(col_nms)
   # the actual values would probably come from an internal or exported dataset
   # inside this package.
   # ... datasteps
@@ -40,11 +40,11 @@ nordcan_column_level_space_list <- function(col_nms) {
 #' - `nordcan_column_set_level_space_list` retrieves a `list` which
 #' determines allowed levels for each column specified in `col_nms`,
 #' and the allowed combinations for hierarchical columns
-#' @importFrom easyassertions assert_is_character_nonNA_vector
+#' @importFrom dbc assert_is_character_nonNA_vector
 #' @export
 nordcan_column_set_level_space_list <- function(col_nms) {
   # you can think of a better name than this.
-  easyassertions::assert_is_character_nonNA_vector(col_nms)
+  dbc::assert_is_character_nonNA_vector(col_nms)
 
   # ... datasteps
 
@@ -67,9 +67,9 @@ nordcan_column_set_level_space_list <- function(col_nms) {
 #' - `nordcan_column_level_space_dt` retrieves a `data.table` which
 #' determines allowed combinations of `col_nms`
 #' @importFrom data.table is.data.table
-#' @importFrom easyassertions assert_is_character_nonNA_vector
+#' @importFrom dbc assert_is_character_nonNA_vector
 nordcan_column_level_space_dt <- function(col_nms) {
-  easyassertions::assert_is_character_nonNA_vector(col_nms)
+  dbc::assert_is_character_nonNA_vector(col_nms)
 
   # ... datasteps
 

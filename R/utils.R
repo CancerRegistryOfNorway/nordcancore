@@ -17,15 +17,17 @@
 #' @export
 #' @rdname package_data_utils
 #' @importFrom utils data
+#' @importFrom dbc assert_is_character_nonNA_atom
 get_exported_dataset_names <- function(package_name) {
-  easyassertions::assert_is_character_nonNA_atom(package_name)
+  dbc::assert_is_character_nonNA_atom(package_name)
   dataset_names <- utils::data(package = package_name)
   dataset_names[["results"]][, "Item"]
 }
 #' @export
 #' @rdname package_data_utils
+#' @importFrom dbc assert_is_character_nonNA_atom
 get_internal_dataset_names <- function(package_name) {
-  easyassertions::assert_is_character_nonNA_atom(package_name)
+  dbc::assert_is_character_nonNA_atom(package_name)
   # exported datasets are not in namespace!
   ns <- getNamespace(package_name)
   obj_nms <- names(ns)
@@ -42,9 +44,10 @@ get_internal_dataset_names <- function(package_name) {
 #' @param dataset_name `[character]` (mandatory, no default)
 #'
 #' name of dataset to retrieve.
+#' @importFrom dbc assert_is_character_nonNA_atom
 get_exported_dataset <- function(dataset_name, package_name) {
-  easyassertions::assert_is_character_nonNA_atom(dataset_name)
-  easyassertions::assert_is_character_nonNA_atom(package_name)
+  dbc::assert_is_character_nonNA_atom(dataset_name)
+  dbc::assert_is_character_nonNA_atom(package_name)
 
   expo_data_nms <- get_exported_dataset_names(package_name)
   if (!dataset_name %in% expo_data_nms) {
@@ -66,9 +69,10 @@ get_exported_dataset <- function(dataset_name, package_name) {
 #' @rdname package_data_utils
 #' @importFrom data.table is.data.table
 #' @importFrom utils maintainer
+#' @importFrom dbc assert_is_character_nonNA_atom
 get_internal_dataset <- function(dataset_name, package_name) {
-  easyassertions::assert_is_character_nonNA_atom(dataset_name)
-  easyassertions::assert_is_character_nonNA_atom(package_name)
+  dbc::assert_is_character_nonNA_atom(dataset_name)
+  dbc::assert_is_character_nonNA_atom(package_name)
 
   dataset_nms <- get_internal_dataset_names(package_name)
   if (!dataset_name %in% dataset_nms) {
