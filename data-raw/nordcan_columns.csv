@@ -16,9 +16,7 @@ geo_code,Code for geographical area of residence at diagnosis,A10,JRC,,,TRUE,TRU
 geo_label,Name of geographical area of residence at diagnosis,A50,JRC,,,TRUE,TRUE,,,,,,,
 tum,Tumor identification code,A50,Nordcan / JRC,"Datasize can be max 50 
 Only one record for each running number is allowed in the raw data file. ",Unique running number for each tumor,TRUE,TRUE,record_id,record_id,record_id,record_id,record_id,record_id,record_id
-tum_sequence,Sequence of tumors for each person,F2,Nordcan,Min value = 1, max value not set,"The number of this case in a sequence for the patient, for instance 1 for the first case, 2 for the second case etc. 
-If synchronous cancers: the most advanced cancer (highest stage/most metastasis) should have the lowest Tumor sequence number. 
-If this is equal, the one with the lowest casenumber should have lowest Tumor sequence number.",TRUE,TRUE,,,,,record_order,record_order
+tum_sequence,Sequence of tumors for each person,F2,Nordcan,Min value = 1, max value not set,TRUE,TRUE,,,,,,record_order,record_order
 date_of_incidence,Date of incidence,A10,Nordcan,"Valid date yyyy-mm-dd 
 Min allowed value: 01.01.1901 
 Max allowed value: according to user input (index year)","Necessary for calculations of survival/days of follow up.
@@ -36,13 +34,12 @@ bod,Basis of diagnosis according to ENCR recommendation,F1,Nordcan / JRC,"0 = De
 7 = Histology of a primary tumor
 9 = Unknown","Category 1/Clinical means clinical examination without any additional investigations. 
 Category 2/Clinical investigation includes blood samples, xray etc.",TRUE,TRUE,,,,basis,basis,basis,basis
-topo,Topography in ICDO3, given as Cxxx,A4,Nordcan / JRC,Non-valid values will be picked up by the IARCcrgCheckTool,"Registries need to provide ICDO3 
-The full four-digit character's ICD-O-3 code should be provided, including the initial letter, but without the decimal point (""."")",TRUE,TRUE,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography
+topo,Topography in ICDO3, given as Cxxx,A4,Nordcan / JRC,Non-valid values will be picked up by the IARCcrgCheckTool,TRUE,TRUE,,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography
 morpho,First 4 digits of morphology in ICDO3,F4,Nordcan / JRC,Non-valid values will be picked up by the IARCcrgCheckTool,Registries need to provide ICDO3,TRUE,TRUE,,icdo3_histology,icdo3_histology,icdo3_histology,icdo3_histology,icdo3_histology,icdo3_histology
 beh,Tumor behavior, 5th digit of morphology,F1,Nordcan / JRC,"0 = Benign neoplasm
 1 = Neoplasm of uncertain and unknown behaviour (uncertain whether benign or malignant, “borderline” malignant, incipient cancer, bladder papilloma)
 2 = In-situ neoplasm (carcinoma in situ/non invasive/preleukaemia/intraepithelial tumor)
-3 = Malignant neoplasm",,TRUE,TRUE,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour
+3 = Malignant neoplasm",,TRUE,,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour,icdo3_behaviour
 grade,Grade of tumor, 6th digit of morphology,F1,Nordcan / JRC,"For solid tumours:
 1 = Grade 1, Well differentiated
 2 = Grade 2, Moderately differentiated
@@ -56,7 +53,7 @@ For leukaemias and lymphomas (only for JRC):
 8 = NK-cell (natural killer cell)
 
 For all: 
-9 = Unknown or not applicable",,TRUE,TRUE,icdo3_grade,,icdo3_grade,,,
+9 = Unknown or not applicable",,TRUE,,icdo3_grade,,icdo3_grade,,,
 laterality,Laterality of tumor,F1,Nordcan,"0 = Not applicable
 1 = Right
 2 = Left
@@ -161,20 +158,15 @@ entity_level4,Cancer site/grouping of cancer sites according to NORDCAN-definiti
 entity_level5,Cancer site/grouping of cancer sites according to NORDCAN-definition,F3,Nordcan,,Created by R-program from ICD10 and Morpho (lymphomas and leukaemias)Only lowest level entities are set here. Grouping of entities are done when aggregating data.,FALSE,TRUE,,,,,,,
 agegroup,5-year age groups for age at diagnosis,F2,Nordcan,,Created by R-program from Age,FALSE,TRUE,,,,,,,
 agr_all_ages,Agegroup for survival all ages together,F2,Nordcan,,Created by R-program from Age,FALSE,TRUE,,,,,,,
-agr_bone,Agegroups to be used for survival analysis of bone, Hodgkin and testis,F2,Nordcan,,Created by R-program from Age,FALSE,TRUE,,,,,,
+agr_bone,Agegroups to be used for survival analysis of bone, Hodgkin and testis,F2,Nordcan,,FALSE,TRUE,,,,,,,
 agr_all_sites,Agegroups to be used for other survival analysis,F2,Nordcan,,Created by R-program from Age,FALSE,TRUE,,,,,,,
 period,First year of each 5-year period for date of incidence,F4,Nordcan,Last year of the last 5-year period = Last year of incidence,Created by R-program from YoI (or alternatively from Date_of_Incidence),FALSE,TRUE,,,,,,,
-excl_imp_error,Excluded from incidence, mortality, prevalence due to error in checktool,A50,Nordcan,Text from error message in checktool,Created by R-program from checktool-info,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
-excl_imp_icd10conversion,Excluded from incidence, mortality, prevalence due to missing conversion to ICD10,F1,Nordcan,"0 = included
-1 = excluded",Created by R-program from checktool-info,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
-excl_imp_benign,Excluded from incidence, mortality, prevalence due to benign tumor,F1,Nordcan,"0 = included
-1 = excluded",Created by R-program from checktool-info,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
-excl_imp_duplicate,Excluded from incidence, mortality, prevalence due to duplicate case,F1,Nordcan,"0 = included
-1 = excluded",Created by R-program from checktool-info,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
-excl_imp_entitymissing,Excluded from incidence, mortality, prevalence due to missing conversion to nordcan-entity,F1,Nordcan,"0 = included
-1 = excluded",Created by R-program from checktool-info,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
-excl_imp_total,Excluded from incidence, mortality, prevalence all causes total,F1,Nordcan,"0 = included
-1 = excluded",Created by R-program from checktool-info,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
+excl_imp_error,Excluded from incidence, mortality, prevalence due to error in checktool,A50,Nordcan,FALSE,TRUE,,,,,,,
+excl_imp_icd10conversion,Excluded from incidence, mortality, prevalence due to missing conversion to ICD10,F1,Nordcan,FALSE,TRUE,,,,,,,
+excl_imp_benign,Excluded from incidence, mortality, prevalence due to benign tumor,F1,Nordcan,FALSE,TRUE,,,,,,,
+excl_imp_duplicate,Excluded from incidence, mortality, prevalence due to duplicate case,F1,Nordcan,FALSE,TRUE,,,,,,,
+excl_imp_entitymissing,Excluded from incidence, mortality, prevalence due to missing conversion to nordcan-entity,F1,Nordcan,FALSE,TRUE,,,,,,,
+excl_imp_total,Excluded from incidence, mortality, prevalence all causes total,F1,Nordcan,FALSE,TRUE,,,,,,,
 excl_surv_age,Excluded from survival due to age 90+,F1,Nordcan,"0 = included
 1 = excluded",Created by R-program from age,FALSE,TRUE,,,,,,,
 excl_surv_dco,Excluded from survival due to dco-case,F1,Nordcan,"0 = included
@@ -187,6 +179,6 @@ excl_surv_zerofou,Excluded from survival due to zero followup,F1,Nordcan,"0 = in
 1 = excluded",Created by R-program from survtime,FALSE,TRUE,,,,,,,
 excl_surv_total,Excluded from survival all causes total,F1,Nordcan,"0 = included
 1 = excluded",Created by R-program from checktool-info,FALSE,TRUE,,,,,,,
-clinical_stage,Calculation of stage using cTNM,A4,No,,Created by R-program from ct, cn, cm,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
-pathological_stage,Calculation of stage using pTNM,A4,No,,Created by R-program from pt, pn, pmSee comment above,FALSE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE
+clinical_stage,Calculation of stage using cTNM,A4,No,,Created by R-program from ct,FALSE,TRUE,,,,,,,
+pathological_stage,Calculation of stage using pTNM,A4,No,,Created by R-program from pt,FALSE,TRUE,,,,,,,
 tnm_group,Grouping of ICD-10-codes fr solid tumors in TNM-manuals,F2,No,,,FALSE,TRUE,,,,,,,
