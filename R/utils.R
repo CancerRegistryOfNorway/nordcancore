@@ -165,4 +165,24 @@ nordcan_column_name_set <- function(column_name_set_name) {
 }
 
 
+#' @title NORDCAN Dataset Names
+#' @description Retrieve names of NORDCAN datasets.
+#' @export
+nordcan_dataset_names <- function() {
+  nms <- nordcan_column_name_set_names()
+  nms[grepl("_dataset$", nms)]
+}
+
+#' @title NORDCAN IARC CRG Tools Tool Names
+#' @description Retrieve names of tools of IARC CRG Tools supported by the
+#' NORDCAN R framework.
+#' @export
+nordcan_iarccrgtools_tool_names <- function() {
+  nms <- nordcan_column_name_set_names()
+  nms <- nms[grepl("^column_name_set_iarccrgtools", nms)]
+  nms <- sub("^column_name_set_iarccrgtools_((all)|(mandatory))_", "", nms)
+  nms <- unique(nms)
+  nms
+}
+
 
