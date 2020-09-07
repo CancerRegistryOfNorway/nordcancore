@@ -53,7 +53,7 @@ column_specification_list <- list(
   sex           = list(format = "Categorical",
                        levels = c("Male" = 1,  "Female" = 2, "Other & unknown" = 3)),
 
-  region        = list(format = "region",
+  region        = list(format = "Region",
                        table = data.frame(Description = c("Denmark", "North Jutland", "Central Jutland", "Southern Denmark", "Greater Copenhagen",
                                                           "Zealand", "Faroe Islands", "Finland", "Helsinki", "Kuopio", "Oulu", "Tampere", "Turku",
                                                           "Iceland", "Reykjavik-Reykjanes", "Rural", "Norway", "Central", "Northern", "Southeastern",
