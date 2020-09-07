@@ -158,7 +158,7 @@ nordcan_column_name_set <- function(column_name_set_name) {
     names(col_nm_set) <- col_name_set_data
     col_nm_set <- col_nm_set[col_name_set_data != ""]
   } else if (is.logical(col_name_set_data)) {
-    col_nm_set <- col_nm_set[col_name_set_data]
+    col_nm_set <- col_nm_set[col_name_set_data %in% TRUE]
   }
 
   return(col_nm_set)
