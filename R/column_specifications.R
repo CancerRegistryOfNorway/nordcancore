@@ -58,7 +58,7 @@ column_specification_list <- list(
                                                           "Zealand", "Faroe Islands", "Finland", "Helsinki", "Kuopio", "Oulu", "Tampere", "Turku",
                                                           "Iceland", "Reykjavik-Reykjanes", "Rural", "Norway", "Central", "Northern", "Southeastern",
                                                           "Western", "Sweden", "Northern", "Stockholm-Gotland", "Southern", "Southeastern",
-                                                          "Uppsala-Örebro", "Western", "Greenland", "Nordic countries"),
+                                                          "Uppsala-\u00d6rebro", "Western", "Greenland", "Nordic countries"),
                                           Value = c("10", "11", "12", "13", "14", "15", "20", "30", "31", "32", "33", "34", "35", "40", "41", "42",
                                                     "50", "51", "52", "53", "54", "60", "61", "62", "63", "64", "65", "66", "80", "90"))),
 
@@ -95,7 +95,7 @@ column_specification_list <- list(
 
   beh  = list(format = "Categorical",
               levels = c("Benign neoplasm" = 0,
-                         "Neoplasm of uncertain and unknown behaviour (uncertain whether benign or malignant, “borderline” malignant, incipient cancer, bladder papilloma" = 1,
+                         "Neoplasm of uncertain and unknown behaviour (uncertain whether benign or malignant, \"borderline\" malignant, incipient cancer, bladder papilloma" = 1,
                          "In-situ neoplasm (carcinoma in situ/non invasive/preleukaemia/intraepithelial tumor)" = 2,
                          "Malignant neoplasm" = 3)),
 

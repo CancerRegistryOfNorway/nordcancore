@@ -102,7 +102,7 @@ get_internal_dataset <- function(dataset_name, package_name) {
 #' @export
 in_entity_set <- function(x, entities) {
   dbc::assert_is_data.table(x)
-  dbc::assert_is_integer_nonNA_vector(entitites)
+  dbc::assert_is_integer_nonNA_vector(entities)
   # TODO: specific assertion fun for entities and nordcan dataset
 
   entity_col_nms <- names(x)[grepl("^entity", names(x))]
