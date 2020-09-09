@@ -5,7 +5,7 @@ date_of_birth,Date of birth,A10,Nordcan,"Valid date yyyy-mm-dd
 First possible date in JRC is 01.01.1870. There is no minimum allowed date in NORDCAN",According to ISO 8601,TRUE,TRUE,TRUE,TRUE,,,,bi_date,bi_date,,,,
 flag_dob,Flagging for date of birth,F1,Nordcan,"0 = exact date of birth
 1 = Set date of birth","Flagging of dates which are ""set""/""made"" because accurate/exact date is missing",TRUE,TRUE,TRUE,,,,,,,,,,
-age,Age at diagnosis (in years),F3,Nordcan / JRC,0 > and < 121,,TRUE,TRUE,TRUE,TRUE,,,,dg_age,dg_age,dg_age,dg_age,,
+age,Age at diagnosis (in years),F3,Nordcan / JRC,0 > and < 121,,TRUE,TRUE,TRUE,TRUE,,,,dg_age,dg_age,,,,
 sex,Current sex of patient,F1,Nordcan / JRC,"1 = Male
 2 = Female
 3 = Other & unknown","""Current sex"" is preferred in NORDCAN,
@@ -33,7 +33,7 @@ bod,Basis of diagnosis according to ENCR recommendation,F1,Nordcan / JRC,"0 = De
 6 = Histology of a metastasis
 7 = Histology of a primary tumor
 9 = Unknown","Category 1/Clinical means clinical examination without any additional investigations.
-Category 2/Clinical investigation includes blood samples, xray etc.",TRUE,TRUE,TRUE,,,,,basis,basis,basis,basis,,
+Category 2/Clinical investigation includes blood samples, xray etc.",TRUE,TRUE,TRUE,,,,,basis,basis,,,,
 topo,Topography in ICDO3, given as Cxxx,A4,Nordcan / JRC,Non-valid values will be picked up by the IARCcrgCheckTool,TRUE,TRUE,TRUE,,,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography,icdo3_topography,,TRUE
 morpho,First 4 digits of morphology in ICDO3,F4,Nordcan / JRC,Non-valid values will be picked up by the IARCcrgCheckTool,Registries need to provide ICDO3,TRUE,TRUE,TRUE,,,icdo3_histology,icdo3_histology,icdo3_histology,icdo3_histology,icdo3_histology,icdo3_histology,,TRUE
 beh,Tumor behavior, 5th digit of morphology,F1,Nordcan / JRC,"0 = Benign neoplasm
