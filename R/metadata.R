@@ -20,45 +20,61 @@
 #' @importFrom dbc assert_is_character_nonNA_vector
 #' @export
 nordcan_column_level_space_list <- function(col_nms) {
-  dbc::assert_is_character_nonNA_vector(col_nms)
-  # the actual values would probably come from an internal or exported dataset
-  # inside this package.
-  # ... datasteps
-
-  stopifnot(
-    inherits(output, "list"),
-    identical(names(output), col_nms),
-    vapply(output, is.integer, logical(1L)),
-    !vapply(output, anyDuplicated, logical(1L))
+  dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
+  dbc::assert_prod_input_vector_elems_are_in_set(
+    x = col_nms, set = nordcan_categorical_column_names()
   )
+
+  output <- lapply(col_nms, function(col_nm) {
+    has_col_nm <- vapply(
+      joint_categorical_column_spaces[["col_nm_set"]],
+      function(col_nm_set) {
+        col_nm %in% col_nm_set
+      },
+      logical(1L)
+    )
+    wh_has_col_nm <- which(has_col_nm)[1L]
+    dt <-joint_categorical_column_spaces[["joint_level_space"]][[wh_has_col_nm]]
+    unique(dt[[col_nm]])
+  })
+  names(output) <- col_nms
+  dbc::report_to_assertion(dbc::tests_to_report(
+    tests = c(
+      "vapply(output, is.integer, logical(1L))"
+    )
+  ), assertion_type = "prod_output")
   return(output)
 }
 
-
 #' @name column_level_spaces
 #' @details
-#' - `nordcan_column_set_level_space_list` retrieves a `list` which
-#' determines allowed levels for each column specified in `col_nms`,
-#' and the allowed combinations for hierarchical columns
+#' - `nordcan_column_level_space_dt_list` retrieves a `list` of  `data.table`s,
+#'   each of which a set of columns named in `col_nms`
+#' @importFrom data.table is.data.table
 #' @importFrom dbc assert_is_character_nonNA_vector
+#' assert_prod_output_is_data.table_with_required_names
+#' report_to_assertion tests_to_report
+#' @importFrom data.table .SD
 #' @export
-nordcan_column_set_level_space_list <- function(col_nms) {
-  # you can think of a better name than this.
-  dbc::assert_is_character_nonNA_vector(col_nms)
-
-  # ... datasteps
-
-  # e.g. areas are like norway -> oslo, finland -> helsinki, and it is not
-  # possible to have e.g. norway -> helsinki. such columns are hierarchical.
-  # for hierarchical cases this function must return a data.table as an element
-  # in  the list, e.g.
-  # list(area = data.table::data.table(area1 = c(1,1,2,2), area2 = c(1,2,3,4))).
-  stopifnot(
-    inherits(output, "list"),
-    identical(names(output), col_nms),
-    vapply(output, inherits, logical(1L), what = c("integer", "data.table")),
-    !vapply(output, anyDuplicated, logical(1L))
+nordcan_column_level_space_dt_list <- function(col_nms) {
+  dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
+  dbc::assert_prod_input_vector_elems_are_in_set(
+    x = col_nms, set = nordcan_categorical_column_names()
   )
+  col_nm_sets <- lapply(joint_categorical_column_spaces[["col_nm_set"]],
+                        intersect, y = col_nms)
+  wh_to_use <- which(vapply(col_nm_sets, length, integer(1L)) > 0L)
+
+  output <- lapply(wh_to_use, function(wh) {
+    dt <- joint_categorical_column_spaces[["joint_level_space"]][[wh]]
+    col_nm_set <- col_nm_sets[[wh]]
+    non_dup <- !duplicated(dt, by = col_nm_set)
+    dt <- dt[i = non_dup, j = .SD, .SDcols = col_nm_set]
+    dt[]
+  })
+  names(output) <- vapply(col_nm_sets[wh_to_use], function(col_nm_set) {
+    paste(deparse(col_nm_set), collapse = "")
+  }, character(1L))
   return(output)
 }
 
@@ -70,10 +86,16 @@ nordcan_column_set_level_space_list <- function(col_nms) {
 #' @importFrom dbc assert_is_character_nonNA_vector
 #' assert_prod_output_is_data.table_with_required_names
 #' report_to_assertion tests_to_report
+#' @export
 nordcan_column_level_space_dt <- function(col_nms) {
   dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
+  dbc::assert_prod_input_vector_elems_are_in_set(
+    x = col_nms, set = nordcan_categorical_column_names()
+  )
 
-
+  output <- level_space_list_to_level_space_data_table(
+    nordcan_column_level_space_dt_list(col_nms = col_nms)
+  )
 
   dbc::assert_prod_output_is_data.table_with_required_names(
     output,
@@ -81,7 +103,7 @@ nordcan_column_level_space_dt <- function(col_nms) {
   )
   dbc::report_to_assertion(
     dbc::tests_to_report(
-      tests = paste0("!duplicated(output, by = ",deparse(col_nms),")")
+      tests = paste0("!duplicated(output, by = ", deparse(col_nms),")")
     ),
     assertion_type = "prod_output"
   )
@@ -152,16 +174,69 @@ get_global_nordcan_settings <- function() {
 }
 
 
-
-#' @title NORDCAN Entities
+#' @title NORDCAN Metadata
 #' @description
-#' Retrieve definition table of NORDCAN entities by ICD-10 and sex.
-#' @format `data.table` with columns
-#'
-#' - `icd10`, of class `character`
-#' - `sex`, of class `integer`
-#' and the columns for entities by level, each an `integer` column.
-nordcan_entity_levels_by_icd10_and_sex <- function() {
-  get_internal_dataset("entity_levels_by_icd10_and_sex", "nordcancore")
+#' Retrieve definition tables on NORDCAN datasets and their contents.
+#' @name nordcan_metadata
+
+#' @export
+#' @rdname nordcan_metadata
+nordcan_metadata_icd10_to_entity <- function() {
+  data.table::copy(
+    get_internal_dataset("icd10_to_entity", "nordcancore")
+  )
 }
+
+#' @export
+#' @rdname nordcan_metadata
+nordcan_metadata_entity_usage_info <- function() {
+  data.table::copy(
+    get_internal_dataset("entity_usage_info", "nordcancore")
+  )
+}
+
+#' @export
+#' @rdname nordcan_metadata
+nordcan_metadata_icd10_vs_icd7_icd8_icd9 <- function() {
+  data.table::copy(
+    get_internal_dataset("icd10_vs_icd7_icd8_icd9", "nordcancore")
+  )
+}
+
+
+#' @export
+#' @rdname nordcan_metadata
+nordcan_metadata_entity_by_sex_icd10 <- function() {
+  usage <- nordcan_metadata_entity_usage_info()
+  icd10_to_entity <- nordcan_metadata_icd10_to_entity()
+  icd10_to_entity[, "sex" := NA_integer_]
+  entity_col_nms <- names(icd10_to_entity)[
+    grepl("^entity", names(icd10_to_entity))
+    ]
+  i.sex <- NULL # only to appease R CMD CHECK
+  # rev: start from smallest group
+  lapply(rev(entity_col_nms), function(entity_col_nm) {
+    data.table::setnames(usage, "entity", entity_col_nm)
+    on.exit(data.table::setnames(usage, entity_col_nm, "entity"))
+    icd10_to_entity[
+      i = usage,
+      on = entity_col_nm,
+      j = "sex" := data.table::fifelse(is.na(sex), i.sex, sex)
+    ]
+    NULL
+  })
+
+  data.table::setcolorder(icd10_to_entity, c("sex", "icd10", entity_col_nms))
+  return(icd10_to_entity[])
+}
+
+#' @export
+#' @rdname nordcan_metadata
+nordcan_metadata_entity_by_sex  <- function() {
+  dt <- nordcan_metadata_entity_by_sex_icd10()
+  dt[, "icd10" := NULL]
+  return(unique(dt, by = names(dt)))
+}
+
+
 

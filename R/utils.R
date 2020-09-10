@@ -1,5 +1,45 @@
 
 
+level_space_list_to_level_space_data_table <- function(
+  x
+) {
+  dbc::assert_prod_input_is_list(x)
+  dbc::assert_prod_input_is_uniquely_named(x)
+  stopifnot(
+    vapply(x,
+           function(elem) {is.vector(x) || data.table::is.data.table(x)},
+           logical(1L))
+  )
+
+  contains_dt <- vapply(x, data.table::is.data.table, logical(1L))
+  dt <- do.call(data.table::CJ, lapply(seq_along(x), function(i) {
+    if (contains_dt[i]) {
+      1:nrow(x[[i]])
+    } else {
+      seq_along(x[[i]])
+    }
+  }))
+  pos_col_nms <- paste0("_____", names(dt), "_pos")
+  names(pos_col_nms) <- names(x)
+  data.table::setnames(dt, names(dt), pos_col_nms)
+  lapply(seq_along(x), function(i) {
+    pos_col_nm <- pos_col_nms[i]
+    x_i_is_dt <- contains_dt[i]
+    x_i <- x[[i]]
+    value_col_nms <- if (x_i_is_dt) names(x_i) else names(x)[i]
+    pos_vec <- dt[[pos_col_nm]]
+    data.table::set(
+      x = dt,
+      j = value_col_nms,
+      value = if (x_i_is_dt) x_i[pos_vec, ] else x_i[pos_vec]
+    )
+    NULL
+  })
+  data.table::set(x = dt, j = pos_col_nms, value = NULL)
+  data.table::setkeyv(dt, names(dt))
+  return(dt[])
+}
+
 
 
 

@@ -3,13 +3,13 @@
 \name{column_level_spaces}
 \alias{column_level_spaces}
 \alias{nordcan_column_level_space_list}
-\alias{nordcan_column_set_level_space_list}
+\alias{nordcan_column_level_space_dt_list}
 \alias{nordcan_column_level_space_dt}
 \title{Column Level Spaces}
 \usage{
 nordcan_column_level_space_list(col_nms)
 
-nordcan_column_set_level_space_list(col_nms)
+nordcan_column_level_space_dt_list(col_nms)
 
 nordcan_column_level_space_dt(col_nms)
 }
@@ -29,9 +29,8 @@ determines allowed levels for each column specified in \code{col_nms}
 }
 
 \itemize{
-\item \code{nordcan_column_set_level_space_list} retrieves a \code{list} which
-determines allowed levels for each column specified in \code{col_nms},
-and the allowed combinations for hierarchical columns
+\item \code{nordcan_column_level_space_dt_list} retrieves a \code{list} of  \code{data.table}s,
+each of which a set of columns named in \code{col_nms}
 }
 
 \itemize{

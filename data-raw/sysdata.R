@@ -1,17 +1,36 @@
 
 library("data.table")
 
+tf_entity_usage <- tempfile(fileext = ".csv")
+download.file(
+  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/entity_usage_info.csv ",
+  destfile = tf_entity_usage
+)
+tf_icd10_to_entity <- tempfile(fileext = ".csv")
+download.file(
+  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/icd10_to_entity_columns.csv",
+  destfile = tf_icd10_to_entity
+)
+tf_icds <- tempfile(fileext = ".csv")
+download.file(
+  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/icd10_vs_icd7_icd8_icd9.csv",
+  destfile = tf_icds
+)
+tf_regions <- tempfile(fileext = ".csv")
+download.file(
+  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/regions.csv",
+  destfile = tf_regions
+)
+
+entity_usage_info <- data.table::fread(tf_entity_usage)
+icd10_to_entity <- data.table::fread(tf_icd10_to_entity)
+icd10_vs_icd7_icd8_icd9 <- data.table::fread(tf_icds)
+regions <- data.table::fread(tf_regions)
 nordcan_columns <- data.table::fread("data-raw/nordcan_columns.csv")
 
-download.file(
-  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/entity_levels_by_icd10_and_sex.csv",
-  destfile = "data-raw/entity_levels_by_icd10_and_sex.csv"
+usethis::use_data(
+  nordcan_columns, entity_usage_info, icd10_to_entity, icd10_vs_icd7_icd8_icd9,
+  regions, internal = TRUE, overwrite = TRUE
 )
-
-entity_levels_by_icd10_and_sex <- data.table::fread(
-  "data-raw/entity_levels_by_icd10_and_sex.csv"
-)
-
-usethis::use_data(nordcan_columns, entity_levels_by_icd10_and_sex, internal = TRUE, overwrite = TRUE)
 
 
