@@ -1,7 +1,7 @@
 Package: nordcancore
 Type: Package
 Title: What the Package Does (Title Case)
-Version: 0.2.14
+Version: 0.2.15
 Authors@R: c(
   person("Huidong", "Tian", email = "huidong.tian@kreftregisteret.no", role = c("aut", "cre")), 
   person("Joonas", "Miettinen", email = "joonas.miettinen@cancer.fi", role = "aut")
@@ -18,3 +18,5 @@ Roxygen: list(markdown = TRUE)
 Remotes: github::WetRobot/dbc
 Depends: 
     R (>= 2.10)
+Suggests: 
+    testthat

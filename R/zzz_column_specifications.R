@@ -37,8 +37,30 @@ nordcan_column_format <- function(column_name) {
 }
 
 
+month_level_space <- function() {
+  c(
+    January = 1L,
+    February = 2L,
+    March = 3L,
+    April = 4L,
+    May = 5L,
+    June = 6L,
+    July = 7L,
+    August = 8L,
+    September = 9L,
+    October = 10L,
+    November = 11L,
+    December = 12L
+  )
+}
+
+#' @importFrom data.table year
+year_level_space <- function() {
+  1800:data.table::year(Sys.Date())
+}
+
 column_specification_list <- list(
-  pat           = list(format = "ID"),
+  pat           = list(format = "String"),
 
   date_of_birth = list(format = "Date",
                        min = as.Date("1800-01-01"),
@@ -253,9 +275,128 @@ column_specification_list <- list(
              levels = c("No" = 0,
                         "Yes" = 1,
                         "Unknown" = 9))
-
+  ,
+  mob = list(
+    format = "Categorical",
+    levels = month_level_space()
+  ),
+  yob = list(
+    format = "Categorical",
+    levesl = year_level_space()
+  ),
+  moi = list(
+    format = "Categorical",
+    levels = month_level_space()
+  ),
+  yoi = list(
+    format = "Categorical",
+    levels = year_level_space()
+  ),
+  mof = list(
+    format = "Categorical",
+    levels = month_level_space()
+  ),
+  yof = list(
+    format = "Categorical",
+    levels = year_level_space()
+  ),
+  surv_time =  list(
+    format = "Integer",
+    min = 0L, max = as.integer(100L * 365L)
+  ),
+  icd10 = list(
+    format = "ICD-10"
+  ),
+  entity = list(
+    format = "Entity",
+    table = local({
+      dt <- nordcan_entity_levels_by_icd10_and_sex()
+      dt <- dt[
+        j = .SD,
+        .SDcols = nordcan_column_name_set("column_name_set_entity")
+        ]
+      unique(dt, by = names(dt))
+    })
+  ),
+  agegroup = list(
+    format = "Integer",
+    min = 1L, max = 18L
+  ),
+  agr_all_ages = list(
+    format = "Integer",
+    min = 1L, max = 5L
+  ),
+  agr_bone = list(
+    format = "Integer",
+    min = 1L, max = 5L
+  ),
+  agr_all_sites = list(
+    format = "Integer",
+    min = 1L, max = 5L
+  ),
+  period = list(
+    format = "Integer",
+    min = 1800L, max = data.table::year(Sys.Date())
+  ),
+  excl_imp_error = list(
+    format = "String"
+  ),
+  excl_imp_icd10conversion = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_imp_benign = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_imp_duplicate = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_imp_entitymissing = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_imp_total = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_surv_dco = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_surv_autopsy = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_surv_negativefou = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_surv_zerofou = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  excl_surv_total = list(
+    format = "Categorical",
+    levels = c(Included = 0L, excluded = 1L)
+  ),
+  clinical_stage = list(
+    format = "String"
+  ),
+  pathological_stage = list(
+    format = "String"
+  ),
+  tnm_group = list(
+    format = "Integer",
+    min = 0L, max = 100L
+  )
 
 )
+column_specification_list[nordcan_column_name_set("column_name_set_entity")] <-
+  lapply(nordcan_column_name_set("column_name_set_entity"), function(col_nm) {
+    unique(column_specification_list[["entity"]][["table"]][[col_nm]])
+  })
 
 
 

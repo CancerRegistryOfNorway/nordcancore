@@ -88,3 +88,80 @@ nordcan_column_level_space_dt <- function(col_nms) {
   return(output)
 }
 
+
+
+assert_user_input_country_name <- function(x) {
+  dbc::assert_user_input_is_character_nonNA_atom(x, x_nm = "country_name")
+  dbc::assert_user_input_atom_is_in_set(
+    x = x,
+    x_nm = "country_name",
+    set = nordcan_countries()
+  )
+}
+assert_prod_input_country_name <- function(x) {
+  dbc::assert_prod_input_is_character_nonNA_atom(x, x_nm = "country_name")
+  dbc::assert_prod_input_atom_is_in_set(
+    x,
+    x_nm = "country_name",
+    set = nordcan_countries()
+  )
+}
+
+nordcan_countries <- function() {
+  c("denmark", "finland", "norway", "sweden")
+}
+
+global_settings_env <- new.env(parent = emptyenv())
+global_settings_env[["country_name"]] <- NA_character_
+set_global_nordcan_settings <- function(
+  country_name,
+  first_stat_cancer_record_count_year,
+  last_stat_cancer_record_count_year,
+  first_stat_prevalent_subject_count_year,
+  last_stat_prevalent_subject_count_year,
+  first_stat_survival_follow_up_year,
+  last_stat_survival_follow_up_year
+  ) {
+  arg_nms <- names(formals(set_global_nordcan_settings))
+  invisible(lapply(arg_nms, function(arg_nm) {
+    is_missing <- eval(substitute(
+      missing(ARG),
+      list(ARG = as.name(arg_nm))
+    ), envir = parent.frame(2L))
+    if (is_missing) {
+      stop("You need to supply a value to argument named ",
+           deparse(arg_nm), "; see ?set_global_nordcan_settings",
+           call. = FALSE)
+    }
+    if (arg_nm == "country_name") {
+      assert_user_input_country_name(country_name)
+    } else {
+      is_year_arg <- grepl("year$", arg_nm)
+      if (is_year_arg) {
+        dbc::assert_user_input_is_integer_nonNA_gtzero_atom(
+          x = get(arg_nm), x_nm = arg_nm
+        )
+      }
+    }
+  }))
+
+  invisible(NULL)
+}
+get_global_nordcan_settings <- function() {
+  as.list(global_settings_env)
+}
+
+
+
+#' @title NORDCAN Entities
+#' @description
+#' Retrieve definition table of NORDCAN entities by ICD-10 and sex.
+#' @format `data.table` with columns
+#'
+#' - `icd10`, of class `character`
+#' - `sex`, of class `integer`
+#' and the columns for entities by level, each an `integer` column.
+nordcan_entity_levels_by_icd10_and_sex <- function() {
+  get_internal_dataset("entity_levels_by_icd10_and_sex", "nordcancore")
+}
+
