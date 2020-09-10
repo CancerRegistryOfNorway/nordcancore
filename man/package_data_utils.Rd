@@ -3,14 +3,11 @@
 \name{package_data_utils}
 \alias{package_data_utils}
 \alias{get_exported_dataset_names}
-\alias{get_internal_dataset_names}
 \alias{get_exported_dataset}
 \alias{get_internal_dataset}
 \title{Package Data}
 \usage{
 get_exported_dataset_names(package_name)
-
-get_internal_dataset_names(package_name)
 
 get_exported_dataset(dataset_name, package_name)
 

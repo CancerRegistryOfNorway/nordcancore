@@ -311,10 +311,10 @@ column_specification_list <- list(
     format = "Entity",
     table = local({
       dt <- nordcan_entity_levels_by_icd10_and_sex()
-      dt <- dt[
-        j = .SD,
-        .SDcols = nordcan_column_name_set("column_name_set_entity")
-        ]
+      entity_col_nms <- names(dt)[grepl("entity", names(dt))]
+      dt <- data.table::setDT(lapply(entity_col_nms, function(col_nm) {
+        dt[[col_nm]]
+      }))
       unique(dt, by = names(dt))
     })
   ),
@@ -393,8 +393,12 @@ column_specification_list <- list(
   )
 
 )
-column_specification_list[nordcan_column_name_set("column_name_set_entity")] <-
-  lapply(nordcan_column_name_set("column_name_set_entity"), function(col_nm) {
+entity_column_names <- function() {
+  dt <- column_specification_list[["entity"]][["table"]]
+  names(dt)[grepl("entity", names(dt))]
+}
+column_specification_list[entity_column_names()] <-
+  lapply(entity_column_names(), function(col_nm) {
     unique(column_specification_list[["entity"]][["table"]][[col_nm]])
   })
 

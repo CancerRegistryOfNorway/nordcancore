@@ -3,7 +3,6 @@
 export(get_exported_dataset)
 export(get_exported_dataset_names)
 export(get_internal_dataset)
-export(get_internal_dataset_names)
 export(in_entity_set)
 export(nordcan_column_format)
 export(nordcan_column_level_space_list)
