@@ -68,15 +68,22 @@ nordcan_column_set_level_space_list <- function(col_nms) {
 #' determines allowed combinations of `col_nms`
 #' @importFrom data.table is.data.table
 #' @importFrom dbc assert_is_character_nonNA_vector
+#' assert_prod_output_is_data.table_with_required_names
+#' report_to_assertion tests_to_report
 nordcan_column_level_space_dt <- function(col_nms) {
-  dbc::assert_is_character_nonNA_vector(col_nms)
+  dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
 
-  # ... datasteps
 
-  stopifnot(
-    data.table::is.data.table(output),
-    identical(names(output), col_nms),
-    !duplicated(output, by = col_nms)
+
+  dbc::assert_prod_output_is_data.table_with_required_names(
+    output,
+    required_names = col_nms
+  )
+  dbc::report_to_assertion(
+    dbc::tests_to_report(
+      tests = paste0("!duplicated(output, by = ",deparse(col_nms),")")
+    ),
+    assertion_type = "prod_output"
   )
   return(output)
 }
