@@ -245,3 +245,34 @@ nordcan_metadata_entity_by_sex  <- function() {
 
 
 
+
+#' @export
+#' @rdname nordcan_metadata
+#' @importFrom dbc assert_prod_input_is_character_nonNA_atom
+#' assert_prod_input_atom_is_in_set
+nordcan_metadata_entity_no_set <- function(entity_no_set_name) {
+  dbc::assert_prod_input_is_character_nonNA_atom(entity_no_set_name)
+  entity_no_set_names <- c(
+    "cancer_record_count",
+    "prevalent_subject_count",
+    "cancer_death_count",
+    "survival"
+  )
+  dbc::assert_prod_input_atom_is_in_set(
+    entity_no_set_name, set = entity_no_set_names
+  )
+  dt <- nordcan_metadata_entity_usage_info()
+  keep <- switch(
+    entity_no_set_name,
+    cancer_record_count = dt[["incidence/prevalence"]],
+    prevalent_subject_count = dt[["incidence/prevalence"]],
+    cancer_death_count = dt[["mortality"]],
+    survival = dt[["survival"]]
+  )
+  dt[["entity"]][keep]
+}
+
+
+
+
+
