@@ -320,6 +320,32 @@ column_specification_list <- list(
   tnm_group = list(
     format = "Integer",
     min = 0L, max = 100L
+  ),
+  year = list(
+    format = "Categorical",
+    levels = year_level_space()
+  ),
+  icd_code = list(
+    format = "String"
+  ),
+  icd_version = list(
+    format = "String"
+  ),
+  death_count = list(
+    format = "Integer",
+    min = 0L, max = 1e6L
+  ),
+  pop_endofyear = list(
+    format = "Integer",
+    min = 0L, max = 1e9L
+  ),
+  pop_midyear = list(
+    format = "Numeric",
+    min = 0.0, max = 1e9
+  ),
+  prob = list(
+    format = "Numeric",
+    min = 0.0, max = 1.0
   )
 )
 
