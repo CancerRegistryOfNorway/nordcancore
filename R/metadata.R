@@ -15,11 +15,11 @@
 
 #' @name column_level_spaces
 #' @details
-#' - `nordcan_column_level_space_list` retrieves a `list` which
+#' - `nordcan_metadata_column_level_space_list` retrieves a `list` which
 #' determines allowed levels for each column specified in `col_nms`
 #' @importFrom dbc assert_is_character_nonNA_vector
 #' @export
-nordcan_column_level_space_list <- function(col_nms) {
+nordcan_metadata_column_level_space_list <- function(col_nms) {
   dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
   dbc::assert_prod_input_vector_elems_are_in_set(
     x = col_nms, set = nordcan_categorical_column_names()
@@ -48,7 +48,7 @@ nordcan_column_level_space_list <- function(col_nms) {
 
 #' @name column_level_spaces
 #' @details
-#' - `nordcan_column_level_space_dt_list` retrieves a `list` of  `data.table`s,
+#' - `nordcan_metadata_column_level_space_dt_list` retrieves a `list` of  `data.table`s,
 #'   each of which a set of columns named in `col_nms`
 #' @importFrom data.table is.data.table
 #' @importFrom dbc assert_is_character_nonNA_vector
@@ -56,7 +56,7 @@ nordcan_column_level_space_list <- function(col_nms) {
 #' report_to_assertion tests_to_report
 #' @importFrom data.table .SD
 #' @export
-nordcan_column_level_space_dt_list <- function(col_nms) {
+nordcan_metadata_column_level_space_dt_list <- function(col_nms) {
   dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
   dbc::assert_prod_input_vector_elems_are_in_set(
     x = col_nms, set = nordcan_categorical_column_names()
@@ -80,21 +80,21 @@ nordcan_column_level_space_dt_list <- function(col_nms) {
 
 #' @name column_level_spaces
 #' @details
-#' - `nordcan_column_level_space_dt` retrieves a `data.table` which
+#' - `nordcan_metadata_column_level_space_dt` retrieves a `data.table` which
 #' determines allowed combinations of `col_nms`
 #' @importFrom data.table is.data.table
 #' @importFrom dbc assert_is_character_nonNA_vector
 #' assert_prod_output_is_data.table_with_required_names
 #' report_to_assertion tests_to_report
 #' @export
-nordcan_column_level_space_dt <- function(col_nms) {
+nordcan_metadata_column_level_space_dt <- function(col_nms) {
   dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
   dbc::assert_prod_input_vector_elems_are_in_set(
     x = col_nms, set = nordcan_categorical_column_names()
   )
 
   output <- level_space_list_to_level_space_data_table(
-    nordcan_column_level_space_dt_list(col_nms = col_nms)
+    nordcan_metadata_column_level_space_dt_list(col_nms = col_nms)
   )
 
   dbc::assert_prod_output_is_data.table_with_required_names(

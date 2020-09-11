@@ -28,15 +28,15 @@ year_level_space <- function() {
 #' @param column_name `[character]` (mandatory, no default)
 #' name of one column for which to retrieve specifications
 #' @export
-#' @name nordcan_column_specifications
+#' @name nordcan_metadata_column_specifications
 
-#' @rdname nordcan_column_specifications
+#' @rdname nordcan_metadata_column_specifications
 #' @export
 #' @importFrom dbc assert_is_character_nonNA_atom
 #' @return
-#' - `nordcan_column_format`: a `character` string that names the format; e.g.
+#' - `nordcan_metadata_column_format`: a `character` string that names the format; e.g.
 #'   `"ID"` or `"Date"`
-nordcan_column_format <- function(column_name) {
+nordcan_metadata_column_format <- function(column_name) {
   dbc::assert_is_character_nonNA_atom(column_name)
   if (!column_name %in% names(column_specification_list)) {
     stop("No specifications for column named ", deparse(column_name))
@@ -45,14 +45,14 @@ nordcan_column_format <- function(column_name) {
 }
 
 
-#' @rdname nordcan_column_specifications
+#' @rdname nordcan_metadata_column_specifications
 #' @export
 #' @importFrom dbc assert_is_character_nonNA_atom
 #' @return
-#' - `nordcan_column_specifications`: a `list` of specifications; elements of
+#' - `nordcan_metadata_column_specifications`: a `list` of specifications; elements of
 #'   the list vary by format,
 #'   but they all have element `format` (character string)
-nordcan_column_specifications <- function(column_name) {
+nordcan_metadata_column_specifications <- function(column_name) {
   dbc::assert_is_character_nonNA_atom(column_name)
   csl <- get_internal_dataset("column_specifications_list", "nordcancore")
   if (!column_name %in% names(csl)) {

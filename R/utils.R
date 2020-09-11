@@ -157,10 +157,10 @@ in_entity_set <- function(x, entities) {
 
 #' @rdname nordcan_columns
 #' @return
-#' - `nordcan_column_name_set_names`: a `character` vector of names of all
+#' - `nordcan_metadata_column_name_set_names`: a `character` vector of names of all
 #'   column name sets
 #' @export
-nordcan_column_name_set_names <- function() {
+nordcan_metadata_column_name_set_names <- function() {
   dt <- get_internal_dataset("nordcan_columns", package_name = "nordcancore")
   column_name_set_names <- names(dt)[grepl("^column_name_set_", names(dt))]
   column_name_set_names
@@ -170,17 +170,17 @@ nordcan_column_name_set_names <- function() {
 #' @param column_name_set_name `[character]` (mandatory, no default)
 #'
 #' name of column name, one of the elements from output of
-#' `nordcan_column_name_set_names()`; causes all column names for this set to
+#' `nordcan_metadata_column_name_set_names()`; causes all column names for this set to
 #' be retrieved
 #' @return
-#' - `nordcan_column_name_set`: a `character` vector of names in queried set
+#' - `nordcan_metadata_column_name_set`: a `character` vector of names in queried set
 #' @export
 #' @importFrom dbc assert_is_character_nonNA_atom assert_atom_is_in_set
-nordcan_column_name_set <- function(column_name_set_name) {
+nordcan_metadata_column_name_set <- function(column_name_set_name) {
   dbc::assert_is_character_nonNA_atom(column_name_set_name)
   dt <- get_internal_dataset("nordcan_columns", package_name = "nordcancore")
   dbc::assert_atom_is_in_set(
-    column_name_set_name, set = nordcan_column_name_set_names()
+    column_name_set_name, set = nordcan_metadata_column_name_set_names()
   )
 
   col_nm_set <- dt[["Variable name"]]
@@ -200,7 +200,7 @@ nordcan_column_name_set <- function(column_name_set_name) {
 #' @description Retrieve names of NORDCAN datasets.
 #' @export
 nordcan_dataset_names <- function() {
-  nms <- nordcan_column_name_set_names()
+  nms <- nordcan_metadata_column_name_set_names()
   nms[grepl("_dataset$", nms)]
 }
 
@@ -209,7 +209,7 @@ nordcan_dataset_names <- function() {
 #' NORDCAN R framework.
 #' @export
 nordcan_iarccrgtools_tool_names <- function() {
-  nms <- nordcan_column_name_set_names()
+  nms <- nordcan_metadata_column_name_set_names()
   nms <- nms[grepl("^column_name_set_iarccrgtools", nms)]
   nms <- sub("^column_name_set_iarccrgtools_((all)|(mandatory))_", "", nms)
   nms <- unique(nms)
