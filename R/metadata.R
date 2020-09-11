@@ -112,22 +112,6 @@ nordcan_metadata_column_level_space_dt <- function(col_nms) {
 
 
 
-assert_user_input_country_name <- function(x) {
-  dbc::assert_user_input_is_character_nonNA_atom(x, x_nm = "country_name")
-  dbc::assert_user_input_atom_is_in_set(
-    x = x,
-    x_nm = "country_name",
-    set = nordcan_countries()
-  )
-}
-assert_prod_input_country_name <- function(x) {
-  dbc::assert_prod_input_is_character_nonNA_atom(x, x_nm = "country_name")
-  dbc::assert_prod_input_atom_is_in_set(
-    x,
-    x_nm = "country_name",
-    set = nordcan_countries()
-  )
-}
 
 nordcan_countries <- function() {
   c("denmark", "finland", "norway", "sweden")
@@ -256,7 +240,8 @@ nordcan_metadata_entity_no_set <- function(entity_no_set_name) {
     "cancer_record_count",
     "prevalent_subject_count",
     "cancer_death_count",
-    "survival"
+    "survival",
+    "all"
   )
   dbc::assert_prod_input_atom_is_in_set(
     entity_no_set_name, set = entity_no_set_names
@@ -267,7 +252,8 @@ nordcan_metadata_entity_no_set <- function(entity_no_set_name) {
     cancer_record_count = dt[["incidence/prevalence"]],
     prevalent_subject_count = dt[["incidence/prevalence"]],
     cancer_death_count = dt[["mortality"]],
-    survival = dt[["survival"]]
+    survival = dt[["survival"]],
+    all = rep(TRUE, nrow(dt))
   )
   dt[["entity"]][keep]
 }
