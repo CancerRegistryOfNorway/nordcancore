@@ -348,13 +348,14 @@ joint_categorical_column_spaces <- local({
   sex_entity_dt <- nordcan_metadata_entity_by_sex()
   sex_entity_dt <- rbind(
     data.table::set(sex_entity_dt[sex_entity_dt$sex == 0L, ], j = "sex",
-                    value = 1L),
+                    value = 1L)[],
     data.table::set(sex_entity_dt[sex_entity_dt$sex == 0L, ], j = "sex",
-                    value = 2L),
+                    value = 2L)[],
     sex_entity_dt[sex_entity_dt$sex == 1L, ],
     sex_entity_dt[sex_entity_dt$sex == 2L, ]
   )
-  sex_entity_dt <- na.omit(sex_entity_dt)
+  sex_entity_dt <- sex_entity_dt[sex_entity_dt$entity_level_30 != 999L, ]
+
   data.table::setDT(sex_entity_dt)
   data.table::setkeyv(sex_entity_dt, names(sex_entity_dt))
   level_spaces[["sex_entity"]] <- sex_entity_dt
