@@ -199,9 +199,10 @@ nordcan_metadata_column_name_set <- function(column_name_set_name) {
 #' @title NORDCAN Dataset Names
 #' @description Retrieve names of NORDCAN datasets.
 #' @export
-nordcan_dataset_names <- function() {
+nordcan_metadata_dataset_names <- function() {
   nms <- nordcan_metadata_column_name_set_names()
-  nms[grepl("_dataset$", nms)]
+  nms <- nms[grepl("_dataset$", nms)]
+  sub("^column_name_set_", "", nms)
 }
 
 #' @title NORDCAN IARC CRG Tools Tool Names
