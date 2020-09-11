@@ -28,7 +28,13 @@ icd10_vs_icd7_icd8_icd9 <- data.table::fread(tf_icds)
 regions <- data.table::fread(tf_regions)
 nordcan_columns <- data.table::fread("data-raw/nordcan_columns.csv")
 
+ne <- new.env()
+source("data-raw/column_specifications.R", local = ne)
+column_specifications_list <- ne$column_specification_list
+joint_categorical_column_spaces <- ne$joint_categorical_column_spaces
+
 usethis::use_data(
+  column_specifications_list, joint_categorical_column_spaces,
   nordcan_columns, entity_usage_info, icd10_to_entity, icd10_vs_icd7_icd8_icd9,
   regions, internal = TRUE, overwrite = TRUE
 )

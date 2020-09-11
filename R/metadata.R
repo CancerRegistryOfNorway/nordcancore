@@ -181,31 +181,35 @@ get_global_nordcan_settings <- function() {
 
 #' @export
 #' @rdname nordcan_metadata
+#' @importFrom data.table setDT copy
 nordcan_metadata_icd10_to_entity <- function() {
-  data.table::copy(
+  data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_to_entity", "nordcancore")
-  )
+  ))
 }
 
 #' @export
 #' @rdname nordcan_metadata
+#' @importFrom data.table setDT copy
 nordcan_metadata_entity_usage_info <- function() {
-  data.table::copy(
+  data.table::setDT(data.table::copy(
     get_internal_dataset("entity_usage_info", "nordcancore")
-  )
+  ))
 }
 
 #' @export
 #' @rdname nordcan_metadata
+#' @importFrom data.table setDT copy
 nordcan_metadata_icd10_vs_icd7_icd8_icd9 <- function() {
-  data.table::copy(
+  data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_vs_icd7_icd8_icd9", "nordcancore")
-  )
+  ))
 }
 
 
 #' @export
 #' @rdname nordcan_metadata
+#' @importFrom data.table :=
 nordcan_metadata_entity_by_sex_icd10 <- function() {
   usage <- nordcan_metadata_entity_usage_info()
   icd10_to_entity <- nordcan_metadata_icd10_to_entity()
@@ -232,6 +236,7 @@ nordcan_metadata_entity_by_sex_icd10 <- function() {
 
 #' @export
 #' @rdname nordcan_metadata
+#' @importFrom data.table :=
 nordcan_metadata_entity_by_sex  <- function() {
   dt <- nordcan_metadata_entity_by_sex_icd10()
   dt[, "icd10" := NULL]

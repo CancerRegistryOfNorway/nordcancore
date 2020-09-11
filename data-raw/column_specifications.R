@@ -1,63 +1,5 @@
 
-#' @title Column Specifications
-#' @description Retrieve NORDCAN column specifications.
-#' @param column_name `[character]` (mandatory, no default)
-#' name of one column for which to retrieve specifications
-#' @export
-#' @name nordcan_column_specifications
-
-
-#' @rdname nordcan_column_specifications
-#' @export
-#' @importFrom dbc assert_is_character_nonNA_atom
-#' @return
-#' - `nordcan_column_specifications`: a `list` of specifications; elements of
-#'   the list vary by format,
-#'   but they all have element `format` (character string)
-nordcan_column_specifications <- function(column_name) {
-  dbc::assert_is_character_nonNA_atom(column_name)
-  if (!column_name %in% names(column_specification_list)) {
-    stop("No specifications for column named ", deparse(column_name))
-  }
-  column_specification_list[[column_name]]
-}
-
-#' @rdname nordcan_column_specifications
-#' @export
-#' @importFrom dbc assert_is_character_nonNA_atom
-#' @return
-#' - `nordcan_column_format`: a `character` string that names the format; e.g.
-#'   `"ID"` or `"Date"`
-nordcan_column_format <- function(column_name) {
-  dbc::assert_is_character_nonNA_atom(column_name)
-  if (!column_name %in% names(column_specification_list)) {
-    stop("No specifications for column named ", deparse(column_name))
-  }
-  column_specification_list[[column_name]][["format"]]
-}
-
-
-month_level_space <- function() {
-  c(
-    January = 1L,
-    February = 2L,
-    March = 3L,
-    April = 4L,
-    May = 5L,
-    June = 6L,
-    July = 7L,
-    August = 8L,
-    September = 9L,
-    October = 10L,
-    November = 11L,
-    December = 12L
-  )
-}
-
-#' @importFrom data.table year
-year_level_space <- function() {
-  1800:data.table::year(Sys.Date())
-}
+devtools::load_all()
 
 column_specification_list <- list(
   pat           = list(format = "String"),
@@ -382,6 +324,8 @@ column_specification_list <- list(
 )
 
 
+
+
 joint_categorical_column_spaces <- local({
   formats <- vapply(column_specification_list, function(obj) {
     if ("format" %in% names(obj)) {
@@ -403,8 +347,10 @@ joint_categorical_column_spaces <- local({
 
   sex_entity_dt <- nordcan_metadata_entity_by_sex()
   sex_entity_dt <- rbind(
-    sex_entity_dt[sex_entity_dt$sex == 0L, ][, "sex" := 1L],
-    sex_entity_dt[sex_entity_dt$sex == 0L, ][, "sex" := 2L],
+    data.table::set(sex_entity_dt[sex_entity_dt$sex == 0L, ], j = "sex",
+                    value = 1L),
+    data.table::set(sex_entity_dt[sex_entity_dt$sex == 0L, ], j = "sex",
+                    value = 2L),
     sex_entity_dt[sex_entity_dt$sex == 1L, ],
     sex_entity_dt[sex_entity_dt$sex == 2L, ]
   )
@@ -419,13 +365,6 @@ joint_categorical_column_spaces <- local({
   out[]
 })
 
-nordcan_categorical_column_names <- function() {
-  unique(unlist(joint_categorical_column_spaces$col_nm_set))
-}
-entity_column_names <- function() {
-  dt <- nordcan_metadata_icd10_to_entity()
-  names(dt)[grepl("^entity", names(dt))]
-}
 column_specification_list[entity_column_names()] <-
   lapply(entity_column_names(), function(col_nm) {
     list(
@@ -433,14 +372,3 @@ column_specification_list[entity_column_names()] <-
       levels = unique(column_specification_list[["entity"]][["table"]][[col_nm]])
     )
   })
-
-
-
-
-
-
-
-
-
-
-
