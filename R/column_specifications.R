@@ -38,10 +38,13 @@ year_level_space <- function() {
 #'   `"ID"` or `"Date"`
 nordcan_metadata_column_format <- function(column_name) {
   dbc::assert_is_character_nonNA_atom(column_name)
-  if (!column_name %in% names(column_specification_list)) {
+  csl <- get_internal_dataset(
+    "column_specification_list", "nordcancore"
+  )
+  if (!column_name %in% names()) {
     stop("No specifications for column named ", deparse(column_name))
   }
-  column_specification_list[[column_name]][["format"]]
+  csl[[column_name]][["format"]]
 }
 
 
@@ -54,7 +57,7 @@ nordcan_metadata_column_format <- function(column_name) {
 #'   but they all have element `format` (character string)
 nordcan_metadata_column_specifications <- function(column_name) {
   dbc::assert_is_character_nonNA_atom(column_name)
-  csl <- get_internal_dataset("column_specifications_list", "nordcancore")
+  csl <- get_internal_dataset("column_specification_list", "nordcancore")
   if (!column_name %in% names(csl)) {
     stop("No specifications defined for column_name = ", deparse(column_name))
   }

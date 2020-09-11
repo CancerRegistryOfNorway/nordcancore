@@ -30,7 +30,7 @@ nordcan_columns <- data.table::fread("data-raw/nordcan_columns.csv")
 
 ne <- new.env()
 source("data-raw/column_specifications.R", local = ne)
-column_specifications_list <- ne$column_specification_list
+column_specification_list <- ne$column_specification_list
 joint_categorical_column_spaces <- ne$joint_categorical_column_spaces
 
 usethis::use_data(
