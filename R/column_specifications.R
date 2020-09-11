@@ -41,7 +41,7 @@ nordcan_metadata_column_format <- function(column_name) {
   csl <- get_internal_dataset(
     "column_specification_list", "nordcancore"
   )
-  if (!column_name %in% names()) {
+  if (!column_name %in% names(csl)) {
     stop("No specifications for column named ", deparse(column_name))
   }
   csl[[column_name]][["format"]]

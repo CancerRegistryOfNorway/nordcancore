@@ -34,7 +34,7 @@ column_specification_list <- ne$column_specification_list
 joint_categorical_column_spaces <- ne$joint_categorical_column_spaces
 
 usethis::use_data(
-  column_specifications_list, joint_categorical_column_spaces,
+  column_specification_list, joint_categorical_column_spaces,
   nordcan_columns, entity_usage_info, icd10_to_entity, icd10_vs_icd7_icd8_icd9,
   regions, internal = TRUE, overwrite = TRUE
 )
