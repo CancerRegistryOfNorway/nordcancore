@@ -201,7 +201,7 @@ nordcan_metadata_column_name_set <- function(column_name_set_name) {
 #' @export
 nordcan_metadata_dataset_names <- function() {
   nms <- nordcan_metadata_column_name_set_names()
-  nms <- nms[grepl("_dataset$", nms)]
+  nms <- nms[grepl("(_dataset)|(life_table)$", nms)]
   sub("^column_name_set_", "", nms)
 }
 
