@@ -1,7 +1,7 @@
 Package: nordcancore
 Type: Package
 Title: NORDCAN Core Utilities and Metadata
-Version: 0.2.24
+Version: 0.2.25
 Authors@R: c(
   person("Huidong", "Tian", email = "huidong.tian@kreftregisteret.no", role = c("aut", "cre")), 
   person("Joonas", "Miettinen", email = "joonas.miettinen@cancer.fi", role = "aut")
