@@ -2,16 +2,16 @@
 % Please edit documentation in R/metadata.R
 \name{column_level_spaces}
 \alias{column_level_spaces}
-\alias{nordcan_column_level_space_list}
-\alias{nordcan_column_level_space_dt_list}
-\alias{nordcan_column_level_space_dt}
+\alias{nordcan_metadata_column_level_space_list}
+\alias{nordcan_metadata_column_level_space_dt_list}
+\alias{nordcan_metadata_column_level_space_dt}
 \title{Column Level Spaces}
 \usage{
-nordcan_column_level_space_list(col_nms)
+nordcan_metadata_column_level_space_list(col_nms)
 
-nordcan_column_level_space_dt_list(col_nms)
+nordcan_metadata_column_level_space_dt_list(col_nms)
 
-nordcan_column_level_space_dt(col_nms)
+nordcan_metadata_column_level_space_dt(col_nms)
 }
 \arguments{
 \item{col_nms}{\verb{[character]} (mandatory, no default)
@@ -24,17 +24,17 @@ Retrieve allowed levels for categorical NORDCAN columns.
 }
 \details{
 \itemize{
-\item \code{nordcan_column_level_space_list} retrieves a \code{list} which
+\item \code{nordcan_metadata_column_level_space_list} retrieves a \code{list} which
 determines allowed levels for each column specified in \code{col_nms}
 }
 
 \itemize{
-\item \code{nordcan_column_level_space_dt_list} retrieves a \code{list} of  \code{data.table}s,
+\item \code{nordcan_metadata_column_level_space_dt_list} retrieves a \code{list} of  \code{data.table}s,
 each of which a set of columns named in \code{col_nms}
 }
 
 \itemize{
-\item \code{nordcan_column_level_space_dt} retrieves a \code{data.table} which
+\item \code{nordcan_metadata_column_level_space_dt} retrieves a \code{data.table} which
 determines allowed combinations of \code{col_nms}
 }
 }

@@ -2,29 +2,29 @@
 % Please edit documentation in R/utils.R
 \name{nordcan_columns}
 \alias{nordcan_columns}
-\alias{nordcan_column_name_set_names}
-\alias{nordcan_column_name_set}
+\alias{nordcan_metadata_column_name_set_names}
+\alias{nordcan_metadata_column_name_set}
 \title{NORDCAN Columns}
 \usage{
-nordcan_column_name_set_names()
+nordcan_metadata_column_name_set_names()
 
-nordcan_column_name_set(column_name_set_name)
+nordcan_metadata_column_name_set(column_name_set_name)
 }
 \arguments{
 \item{column_name_set_name}{\verb{[character]} (mandatory, no default)
 
 name of column name, one of the elements from output of
-\code{nordcan_column_name_set_names()}; causes all column names for this set to
+\code{nordcan_metadata_column_name_set_names()}; causes all column names for this set to
 be retrieved}
 }
 \value{
 \itemize{
-\item \code{nordcan_column_name_set_names}: a \code{character} vector of names of all
+\item \code{nordcan_metadata_column_name_set_names}: a \code{character} vector of names of all
 column name sets
 }
 
 \itemize{
-\item \code{nordcan_column_name_set}: a \code{character} vector of names in queried set
+\item \code{nordcan_metadata_column_name_set}: a \code{character} vector of names in queried set
 }
 }
 \description{
