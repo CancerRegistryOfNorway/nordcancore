@@ -367,8 +367,9 @@ joint_categorical_column_spaces <- local({
 
 column_specification_list[entity_column_names()] <-
   lapply(entity_column_names(), function(col_nm) {
+    dt <- nordcancore::nordcan_metadata_entity_by_sex()
     list(
-      format = "Entity",
-      levels = unique(column_specification_list[["entity"]][["table"]][[col_nm]])
+      format = "Categorical",
+      levels = unique(dt[[col_nm]])
     )
   })

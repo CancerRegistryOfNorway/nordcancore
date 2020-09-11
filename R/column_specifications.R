@@ -54,7 +54,7 @@ nordcan_column_format <- function(column_name) {
 #'   but they all have element `format` (character string)
 nordcan_column_specifications <- function(column_name) {
   dbc::assert_is_character_nonNA_atom(column_name)
-  csl <- get_internal_dataset("column_specification_list")
+  csl <- get_internal_dataset("column_specifications_list", "nordcancore")
   if (!column_name %in% names(csl)) {
     stop("No specifications defined for column_name = ", deparse(column_name))
   }

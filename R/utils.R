@@ -106,10 +106,10 @@ get_internal_dataset <- function(dataset_name, package_name) {
     error = function(e) e
   )
 
-  if (inherits(obj, "try-error")) {
+  if (inherits(obj, "error")) {
     stop("Internal error: requested internal dataset ",
          deparse(dataset_name), " is not one of the internal datasets ",
-         " in package ", package_name,
+         "in package ", package_name,
          ". If you see this, please complain to the ",
          "package maintainer ", utils::maintainer(package_name))
   }
