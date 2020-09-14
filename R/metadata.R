@@ -113,20 +113,22 @@ nordcan_metadata_column_level_space_dt <- function(col_nms) {
 
 
 
-nordcan_countries <- function() {
-  c("denmark", "finland", "norway", "sweden")
-}
-
 global_settings_env <- new.env(parent = emptyenv())
-global_settings_env[["country_name"]] <- NA_character_
+#' @title NORDCAN Settings
+#' @description Set and get settings for NORDCAN software.
+#' @name global_nordcan_settings
+NULL
+
+#' @rdname global_nordcan_settings
+#' @export
 set_global_nordcan_settings <- function(
-  country_name,
-  first_stat_cancer_record_count_year,
-  last_stat_cancer_record_count_year,
-  first_stat_prevalent_subject_count_year,
-  last_stat_prevalent_subject_count_year,
-  first_stat_survival_follow_up_year,
-  last_stat_survival_follow_up_year
+  work_dir,
+  stat_cancer_record_count_year_first,
+  stat_cancer_record_count_year_last,
+  stat_prevalent_subject_count_year_first,
+  stat_prevalent_subject_count_year_last,
+  stat_survival_follow_up_year_first,
+  stat_survival_follow_up_year_last
   ) {
   arg_nms <- names(formals(set_global_nordcan_settings))
   invisible(lapply(arg_nms, function(arg_nm) {
@@ -139,20 +141,25 @@ set_global_nordcan_settings <- function(
            deparse(arg_nm), "; see ?set_global_nordcan_settings",
            call. = FALSE)
     }
-    if (arg_nm == "country_name") {
-      assert_user_input_country_name(country_name)
+    arg_value <- get(arg_nm)
+    if (arg_nm == "work_dir") {
+      dbc::assert_user_input_dir_exists(arg_value, x_nm = arg_nm)
     } else {
       is_year_arg <- grepl("year$", arg_nm)
       if (is_year_arg) {
         dbc::assert_user_input_is_integer_nonNA_gtzero_atom(
-          x = get(arg_nm), x_nm = arg_nm
+          x = arg_value, x_nm = arg_nm
         )
       }
     }
+    global_settings_env[[arg_nm]] <- arg_value
   }))
 
   invisible(NULL)
 }
+
+#' @rdname global_nordcan_settings
+#' @export
 get_global_nordcan_settings <- function() {
   as.list(global_settings_env)
 }
