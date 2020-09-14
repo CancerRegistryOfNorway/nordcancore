@@ -120,6 +120,10 @@ global_settings_env <- new.env(parent = emptyenv())
 NULL
 
 #' @rdname global_nordcan_settings
+#' @param work_dir `[character]` (mandatory, no default)
+#'
+#' root directory for any and all (temporarily) stored NORDCAN data; if it
+#' does not exist it is attempted to be created
 #' @export
 set_global_nordcan_settings <- function(
   work_dir,
@@ -142,15 +146,12 @@ set_global_nordcan_settings <- function(
            call. = FALSE)
     }
     arg_value <- get(arg_nm)
-    if (arg_nm == "work_dir") {
-      dbc::assert_user_input_dir_exists(arg_value, x_nm = arg_nm)
-    } else {
-      is_year_arg <- grepl("year$", arg_nm)
-      if (is_year_arg) {
-        dbc::assert_user_input_is_integer_nonNA_gtzero_atom(
-          x = arg_value, x_nm = arg_nm
-        )
-      }
+
+    is_year_arg <- grepl("year$", arg_nm)
+    if (is_year_arg) {
+      dbc::assert_user_input_is_integer_nonNA_gtzero_atom(
+        x = arg_value, x_nm = arg_nm
+      )
     }
     global_settings_env[[arg_nm]] <- arg_value
   }))

@@ -18,6 +18,12 @@ set_global_nordcan_settings(
 
 get_global_nordcan_settings()
 }
+\arguments{
+\item{work_dir}{\verb{[character]} (mandatory, no default)
+
+root directory for any and all (temporarily) stored NORDCAN data; if it
+does not exist it is attempted to be created}
+}
 \description{
 Set and get settings for NORDCAN software.
 }
