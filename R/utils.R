@@ -1,5 +1,14 @@
 
 
+
+is_writable <- function(path) {
+  dbc::assert_prod_input_is_character_nonNA_atom(path)
+  file.access(path, mode = 2L) == 0L
+}
+
+
+
+
 level_space_list_to_level_space_data_table <- function(
   x
 ) {

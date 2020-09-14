@@ -155,15 +155,34 @@ set_global_nordcan_settings <- function(
     global_settings_env[[arg_nm]] <- arg_value
   }))
 
-  global_settings_env[["iarccrgtools_work_dir"]] <- paste0(
-    global_settings_env[["work_dir"]],
-    "/iarccrgtools"
-  )
-  global_settings_env[["survival_work_dir"]] <- paste0(
-    global_settings_env[["work_dir"]],
-    "/survival"
+  global_settings_env[["work_dir"]] <- normalizePath(
+    global_settings_env[["work_dir"]]
   )
 
+  global_settings_env[["iarccrgtools_work_dir"]] <- normalizePath(paste0(
+    global_settings_env[["work_dir"]],
+    "/iarccrgtools"
+  ), mustWork = FALSE)
+  global_settings_env[["survival_work_dir"]] <- normalizePath(paste0(
+    global_settings_env[["work_dir"]],
+    "/survival"
+  ), mustWork = FALSE)
+
+  dir_setting_names <- c("work_dir", "iarccrgtools_work_dir",
+                         "survival_work_dir")
+
+  lapply(dir_setting_names, function(dir_setting_name) {
+    dir_path <- global_settings_env[[dir_setting_name]]
+    if (!dir.exists(dir_path)) {
+      dir.create(dir_path)
+    } else {
+      if (!is_writable(dir_path)) {
+        stop("Looks like directory ", deparse(dir_path), " is not writable; ",
+             "please ensure you can write files into that directory before ",
+             "proceeding.")
+      }
+    }
+  })
 
   invisible(NULL)
 }
