@@ -157,7 +157,7 @@ set_global_nordcan_settings <- function(
   }))
 
   global_settings_env[["work_dir"]] <- normalizePath(
-    global_settings_env[["work_dir"]]
+    global_settings_env[["work_dir"]], mustWork = FALSE
   )
 
   global_settings_env[["iarccrgtools_work_dir"]] <- normalizePath(paste0(
