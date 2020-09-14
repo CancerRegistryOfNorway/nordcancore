@@ -155,6 +155,16 @@ set_global_nordcan_settings <- function(
     global_settings_env[[arg_nm]] <- arg_value
   }))
 
+  global_settings_env[["iarccrgtools_work_dir"]] <- paste0(
+    global_settings_env[["work_dir"]],
+    "/iarccrgtools"
+  )
+  global_settings_env[["survival_work_dir"]] <- paste0(
+    global_settings_env[["work_dir"]],
+    "/survival"
+  )
+
+
   invisible(NULL)
 }
 
