@@ -103,7 +103,9 @@ nordcan_metadata_column_level_space_dt <- function(col_nms) {
   )
   dbc::report_to_assertion(
     dbc::tests_to_report(
-      tests = paste0("!duplicated(output, by = ", deparse(col_nms),")")
+      tests = paste0(
+        "!duplicated(output, by = ", paste0(deparse(col_nms), collapse = ""),")"
+      )
     ),
     assertion_type = "prod_output"
   )
@@ -133,7 +135,7 @@ set_global_nordcan_settings <- function(
   stat_prevalent_subject_count_year_last,
   stat_survival_follow_up_year_first,
   stat_survival_follow_up_year_last
-  ) {
+) {
   arg_nms <- names(formals(set_global_nordcan_settings))
   invisible(lapply(arg_nms, function(arg_nm) {
     is_missing <- eval(substitute(
@@ -237,7 +239,7 @@ nordcan_metadata_entity_by_sex_icd10 <- function() {
   icd10_to_entity[, "sex" := NA_integer_]
   entity_col_nms <- names(icd10_to_entity)[
     grepl("^entity", names(icd10_to_entity))
-    ]
+  ]
   i.sex <- NULL # only to appease R CMD CHECK
   # rev: start from smallest group
   lapply(rev(entity_col_nms), function(entity_col_nm) {
