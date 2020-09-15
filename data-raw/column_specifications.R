@@ -287,7 +287,7 @@ column_specification_list <- list(
     format = "Categorical",
     levels = c(Included = 0L, excluded = 1L)
   ),
-  excl_imp_surv_age = list(
+  excl_surv_age = list(
     format = "Categorical",
     levels = c(Included = 0L, excluded = 1L)
   ),
