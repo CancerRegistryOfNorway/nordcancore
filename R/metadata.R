@@ -208,7 +208,7 @@ get_global_nordcan_settings <- function() {
 nordcan_metadata_icd10_to_entity <- function() {
   data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_to_entity", "nordcancore")
-  ))
+  ))[]
 }
 
 #' @export
@@ -217,7 +217,7 @@ nordcan_metadata_icd10_to_entity <- function() {
 nordcan_metadata_entity_usage_info <- function() {
   data.table::setDT(data.table::copy(
     get_internal_dataset("entity_usage_info", "nordcancore")
-  ))
+  ))[]
 }
 
 #' @export
@@ -226,7 +226,7 @@ nordcan_metadata_entity_usage_info <- function() {
 nordcan_metadata_icd10_vs_icd7_icd8_icd9 <- function() {
   data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_vs_icd7_icd8_icd9", "nordcancore")
-  ))
+  ))[]
 }
 
 
@@ -263,7 +263,7 @@ nordcan_metadata_entity_by_sex_icd10 <- function() {
 nordcan_metadata_entity_by_sex  <- function() {
   dt <- nordcan_metadata_entity_by_sex_icd10()
   dt[, "icd10" := NULL]
-  return(unique(dt, by = names(dt)))
+  return(unique(dt, by = names(dt))[])
 }
 
 
