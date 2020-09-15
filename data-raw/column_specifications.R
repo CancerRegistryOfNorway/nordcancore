@@ -250,19 +250,19 @@ column_specification_list <- list(
   ),
   agegroup = list(
     format = "Categorical",
-    levels = 1:18
+    levels = c(1:18, 21L)
   ),
   agr_all_ages = list(
     format = "Categorical",
-    levels = 1:5
+    levels = 1:6
   ),
   agr_bone = list(
     format = "Categorical",
-    levels = 1:5
+    levels = 1:6
   ),
   agr_all_sites = list(
     format = "Categorical",
-    levels = 1:5
+    levels = 1:6
   ),
   period = list(
     format = "Integer",
