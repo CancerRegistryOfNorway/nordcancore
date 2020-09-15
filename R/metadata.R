@@ -13,6 +13,34 @@
 #' @rdname column_level_spaces
 
 
+nordcan_metadata_column_restrictions_by_global_settings <- function() {
+  gs <- get_global_nordcan_settings()
+  nordcan_year <- nordcan_metadata_nordcan_year()
+  region_levels <- nordcan_metadata_column_specifications("region")[["levels"]]
+  participant_name <- gs[["participant_name"]]
+  participant_region_no <- region_levels[participant_name]
+  region_space <- region_levels[
+    substr(region_levels, 1L, 1L) == substr(participant_region_no, 1L, 1L)
+  ]
+  region_space <- setdiff(region_space, participant_region_no)
+  list(
+    yoi = list(
+      levels = gs[["stat_cancer_record_count_first_year"]]:nordcan_year
+    ),
+    yof = list(
+      levels = gs[["stat_cancer_death_count_first_year"]]:nordcan_year
+    ),
+    region = list(
+      levels = region_space
+    ),
+    period = list(
+      levels = rev(seq(
+        nordcan_year + 1L, gs[["stat_cancer_record_count_first_year"]], -5L
+      )[-1L])
+    )
+  )
+}
+
 #' @name column_level_spaces
 #' @details
 #' - `nordcan_metadata_column_level_space_list` retrieves a `list` which
@@ -25,6 +53,8 @@ nordcan_metadata_column_level_space_list <- function(col_nms) {
     x = col_nms, set = nordcan_categorical_column_names()
   )
 
+  restrictions <- nordcan_metadata_column_restrictions_by_global_settings()
+
   output <- lapply(col_nms, function(col_nm) {
     has_col_nm <- vapply(
       joint_categorical_column_spaces[["col_nm_set"]],
@@ -35,7 +65,11 @@ nordcan_metadata_column_level_space_list <- function(col_nms) {
     )
     wh_has_col_nm <- which(has_col_nm)[1L]
     dt <-joint_categorical_column_spaces[["joint_level_space"]][[wh_has_col_nm]]
-    unique(dt[[col_nm]])
+    levels <- unique(dt[[col_nm]])
+    if (col_nm %in% names(restrictions)) {
+      levels <- intersect(restrictions[[col_nm]][["levels"]], levels)
+    }
+    return(levels)
   })
   names(output) <- col_nms
   dbc::report_to_assertion(dbc::tests_to_report(
@@ -64,12 +98,19 @@ nordcan_metadata_column_level_space_dt_list <- function(col_nms) {
   col_nm_sets <- lapply(joint_categorical_column_spaces[["col_nm_set"]],
                         intersect, y = col_nms)
   wh_to_use <- which(vapply(col_nm_sets, length, integer(1L)) > 0L)
-
+  restrictions <- nordcan_metadata_column_restrictions_by_global_settings()
   output <- lapply(wh_to_use, function(wh) {
     dt <- joint_categorical_column_spaces[["joint_level_space"]][[wh]]
     col_nm_set <- col_nm_sets[[wh]]
     non_dup <- !duplicated(dt, by = col_nm_set)
     dt <- dt[i = non_dup, j = .SD, .SDcols = col_nm_set]
+    restricted_col_nms <- intersect(names(dt), names(restrictions))
+    if (length(restricted_col_nms) > 0L) {
+      for (col_nm in restricted_col_nms) {
+        subset <- dt[[col_nm]] %in% restrictions[[col_nm]][["levels"]]
+        dt <- dt[subset, ]
+      }
+    }
     dt[]
   })
   names(output) <- vapply(col_nm_sets[wh_to_use], function(col_nm_set) {
@@ -121,6 +162,12 @@ global_settings_env <- new.env(parent = emptyenv())
 #' @name global_nordcan_settings
 NULL
 
+nordcan_participant_names <- function() {
+  regions <- nordcan_metadata_column_specifications("region")[["levels"]]
+  regions <- sort(names(regions)[regions %% 10L == 0L])
+  regions[!grepl("[nN]ordic", regions)]
+}
+
 #' @rdname global_nordcan_settings
 #' @param work_dir `[character]` (mandatory, no default)
 #'
@@ -129,12 +176,11 @@ NULL
 #' @export
 set_global_nordcan_settings <- function(
   work_dir,
-  stat_cancer_record_count_year_first,
-  stat_cancer_record_count_year_last,
-  stat_prevalent_subject_count_year_first,
-  stat_prevalent_subject_count_year_last,
-  stat_survival_follow_up_year_first,
-  stat_survival_follow_up_year_last
+  participant_name,
+  stat_cancer_record_count_first_year,
+  stat_prevalent_subject_count_first_year,
+  stat_cancer_death_count_first_year,
+  stat_survival_follow_up_first_year
 ) {
   arg_nms <- names(formals(set_global_nordcan_settings))
   invisible(lapply(arg_nms, function(arg_nm) {
@@ -149,10 +195,14 @@ set_global_nordcan_settings <- function(
     }
     arg_value <- get(arg_nm)
 
-    is_year_arg <- grepl("year$", arg_nm)
+    is_year_arg <- grepl("year", arg_nm)
     if (is_year_arg) {
       dbc::assert_user_input_is_integer_nonNA_gtzero_atom(
         x = arg_value, x_nm = arg_nm
+      )
+    } else if (arg_nm == "participant_name") {
+      dbc::assert_user_input_atom_is_in_set(
+        x = arg_value, x_nm = arg_nm, set = nordcan_participant_names()
       )
     }
     global_settings_env[[arg_nm]] <- arg_value
@@ -197,10 +247,20 @@ get_global_nordcan_settings <- function() {
 }
 
 
+
 #' @title NORDCAN Metadata
 #' @description
 #' Retrieve definition tables on NORDCAN datasets and their contents.
 #' @name nordcan_metadata
+
+#' @export
+#' @rdname nordcan_metadata
+#' @details
+#' - `nordcan_metadata_nordcan_year` just returns the current NORDCAN year
+#'   as an integer.
+nordcan_metadata_nordcan_year <- function() {
+  2018L
+}
 
 #' @export
 #' @rdname nordcan_metadata

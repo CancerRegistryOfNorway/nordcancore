@@ -8,12 +8,11 @@
 \usage{
 set_global_nordcan_settings(
   work_dir,
-  stat_cancer_record_count_year_first,
-  stat_cancer_record_count_year_last,
-  stat_prevalent_subject_count_year_first,
-  stat_prevalent_subject_count_year_last,
-  stat_survival_follow_up_year_first,
-  stat_survival_follow_up_year_last
+  participant_name,
+  stat_cancer_record_count_first_year,
+  stat_prevalent_subject_count_first_year,
+  stat_cancer_death_count_first_year,
+  stat_survival_follow_up_first_year
 )
 
 get_global_nordcan_settings()
