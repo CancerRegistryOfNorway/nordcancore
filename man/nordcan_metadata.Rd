@@ -9,6 +9,7 @@
 \alias{nordcan_metadata_entity_by_sex_icd10}
 \alias{nordcan_metadata_entity_by_sex}
 \alias{nordcan_metadata_entity_no_set}
+\alias{nordcan_metadata_icd_by_version_to_entity}
 \title{NORDCAN Metadata}
 \usage{
 nordcan_metadata_nordcan_year()
@@ -24,6 +25,8 @@ nordcan_metadata_entity_by_sex_icd10()
 nordcan_metadata_entity_by_sex()
 
 nordcan_metadata_entity_no_set(entity_no_set_name)
+
+nordcan_metadata_icd_by_version_to_entity()
 }
 \description{
 Retrieve definition tables on NORDCAN datasets and their contents.
