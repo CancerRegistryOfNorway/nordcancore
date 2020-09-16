@@ -254,7 +254,7 @@ column_specification_list <- list(
   ),
   agr_all_ages = list(
     format = "Categorical",
-    levels = 1:6
+    levels = 1L
   ),
   agr_bone = list(
     format = "Categorical",
@@ -265,8 +265,8 @@ column_specification_list <- list(
     levels = 1:6
   ),
   period = list(
-    format = "Integer",
-    min = 1800L, max = data.table::year(Sys.Date())
+    format = "Categorical",
+    levels = 1800L:data.table::year(Sys.Date())
   ),
   excl_imp_error = list(
     format = "String"
@@ -368,6 +368,10 @@ joint_categorical_column_spaces <- local({
   categ_col_nms <- names(column_specification_list)[formats %in% "Categorical"]
   level_spaces <- lapply(categ_col_nms, function(col_nm) {
     obj <- column_specification_list[[col_nm]]
+    if (!"levels" %in% names(obj)) {
+      stop("obj did not have levels; is col_nm = ", col_nm, " categorical ",
+           "and does it have levels defined?")
+    }
     dt <- data.table::data.table(V1 = unname(obj[["levels"]]))
     data.table::setnames(dt, "V1", col_nm)
     dt[]
