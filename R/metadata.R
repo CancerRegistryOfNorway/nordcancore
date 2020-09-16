@@ -243,6 +243,14 @@ set_global_nordcan_settings <- function(
 #' @rdname global_nordcan_settings
 #' @export
 get_global_nordcan_settings <- function() {
+  expected_settings_nms <- names(formals(set_global_nordcan_settings))
+  found_settings_nms <- ls(global_settings_env)
+  miss_settings_nms <- setdiff(expected_settings_nms, found_settings_nms)
+  if (length(miss_settings_nms) > 0L) {
+    stop("The following setting(s) were not set: ",
+         paste0(miss_settings_nms, collapse = ", "), "; see ",
+         "?set_global_nordcan_settings")
+  }
   as.list(global_settings_env)
 }
 
