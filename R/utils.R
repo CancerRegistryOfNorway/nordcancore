@@ -192,7 +192,7 @@ nordcan_metadata_column_name_set <- function(column_name_set_name) {
     column_name_set_name, set = nordcan_metadata_column_name_set_names()
   )
 
-  col_nm_set <- dt[["Variable name"]]
+  col_nm_set <- dt[["column_name"]]
   col_name_set_data <- dt[[column_name_set_name]]
   if (is.character(col_name_set_data)) {
     names(col_nm_set) <- col_name_set_data
