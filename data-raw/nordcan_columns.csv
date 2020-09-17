@@ -4,7 +4,7 @@ date_of_birth;TRUE;TRUE;TRUE;TRUE;;;;bi_date;bi_date;;;;;;;;;;
 flag_dob;TRUE;TRUE;TRUE;;;;;;;;;;;;;;;;
 age;TRUE;TRUE;TRUE;TRUE;;;;dg_age;dg_age;;;;;;;;;;TRUE
 sex;TRUE;TRUE;TRUE;TRUE;;sex;sex;sex;sex;sex;sex;;TRUE;;TRUE;TRUE;TRUE;TRUE;TRUE
-region;TRUE;TRUE;TRUE;;;;;;;;;;;;;TRUE;TRUE;TRUE;TRUE
+region;TRUE;TRUE;TRUE;;;;;;;;;;;;;TRUE;TRUE;TRUE;
 geo_code;TRUE;;;;;;;;;;;;;;;;;;
 geo_label;TRUE;;;;;;;;;;;;;;;;;;
 tum;TRUE;TRUE;TRUE;TRUE;record_id;record_id;record_id;record_id;record_id;record_id;record_id;;;;;;;;
@@ -74,7 +74,7 @@ clinical_stage;TRUE;;TRUE;;;;;;;;;;;;;;;;
 pathological_stage;TRUE;;TRUE;;;;;;;;;;;;;;;;
 tnm_group;TRUE;;TRUE;;;;;;;;;;;;;;;;
 icd9;TRUE;;;;;;;;;;;;;;TRUE;;;;
-agegroup;TRUE;;;;;;;;;;;;;;;TRUE;TRUE;TRUE;TRUE
+agegroup;TRUE;;;;;;;;;;;;;;;TRUE;TRUE;TRUE;
 icd_code;TRUE;;;;;;;;;;;;;;;;TRUE;;
 icd_version;TRUE;;;;;;;;;;;;;;;;TRUE;;
 death_count;TRUE;;;;;;;;;;;;;;;;TRUE;TRUE;
