@@ -1,21 +1,4 @@
 
-assert_user_input_country_name <- function(x) {
-  dbc::assert_user_input_is_character_nonNA_atom(x, x_nm = "country_name")
-  dbc::assert_user_input_atom_is_in_set(
-    x = x,
-    x_nm = "country_name",
-    set = nordcan_countries()
-  )
-}
-assert_prod_input_country_name <- function(x) {
-  dbc::assert_prod_input_is_character_nonNA_atom(x, x_nm = "country_name")
-  dbc::assert_prod_input_atom_is_in_set(
-    x,
-    x_nm = "country_name",
-    set = nordcan_countries()
-  )
-}
-
 
 #' @title Assertions
 #' @description

@@ -28,6 +28,11 @@ nordcan_metadata_entity_no_set(entity_no_set_name)
 
 nordcan_metadata_icd_by_version_to_entity()
 }
+\arguments{
+\item{entity_no_set_name}{\verb{[character]} (mandatory, no default)
+
+name of entity number set; e.g. "all"}
+}
 \description{
 Retrieve definition tables on NORDCAN datasets and their contents.
 }

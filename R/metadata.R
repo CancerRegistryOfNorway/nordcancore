@@ -173,6 +173,26 @@ nordcan_participant_names <- function() {
 #'
 #' root directory for any and all (temporarily) stored NORDCAN data; if it
 #' does not exist it is attempted to be created
+#' @param participant_name `[character]` (mandatory, no default)
+#'
+#' name of NORDCAN participant; e.g. "Denmark" or "Sweden"
+#' @param stat_cancer_record_count_first_year `[integer]` (mandatory, no default)
+#'
+#' first year for which to compute the cancer record count statistics;
+#' e.g. `1953L`
+#' @param stat_prevalent_subject_count_first_year
+#' `[integer]` (mandatory, no default)
+#'
+#' first year for which to compute the prevalent patient count statistics;
+#' e.g. `1953L`
+#' @param stat_cancer_death_count_first_year
+#' `[integer]` (mandatory, no default)
+#'
+#' first year for the cancer death count statistics; e.g. `1953L`
+#' @param stat_survival_follow_up_first_year
+#' `[integer]` (mandatory, no default)
+#'
+#' starting year for survival estimation in 5-year periods; e.g. `1953L`
 #' @export
 set_global_nordcan_settings <- function(
   work_dir,
@@ -308,7 +328,7 @@ nordcan_metadata_entity_by_sex_icd10 <- function() {
   entity_col_nms <- names(icd10_to_entity)[
     grepl("^entity", names(icd10_to_entity))
   ]
-  i.sex <- NULL # only to appease R CMD CHECK
+  sex <- i.sex <- NULL # only to appease R CMD CHECK
   # rev: start from smallest group
   lapply(rev(entity_col_nms), function(entity_col_nm) {
     data.table::setnames(usage, "entity", entity_col_nm)
@@ -341,6 +361,9 @@ nordcan_metadata_entity_by_sex  <- function() {
 #' @rdname nordcan_metadata
 #' @importFrom dbc assert_prod_input_is_character_nonNA_atom
 #' assert_prod_input_atom_is_in_set
+#' @param entity_no_set_name `[character]` (mandatory, no default)
+#'
+#' name of entity number set; e.g. "all"
 nordcan_metadata_entity_no_set <- function(entity_no_set_name) {
   dbc::assert_prod_input_is_character_nonNA_atom(entity_no_set_name)
   entity_no_set_names <- c(

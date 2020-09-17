@@ -22,6 +22,28 @@ get_global_nordcan_settings()
 
 root directory for any and all (temporarily) stored NORDCAN data; if it
 does not exist it is attempted to be created}
+
+\item{participant_name}{\verb{[character]} (mandatory, no default)
+
+name of NORDCAN participant; e.g. "Denmark" or "Sweden"}
+
+\item{stat_cancer_record_count_first_year}{\verb{[integer]} (mandatory, no default)
+
+first year for which to compute the cancer record count statistics;
+e.g. \code{1953L}}
+
+\item{stat_prevalent_subject_count_first_year}{\verb{[integer]} (mandatory, no default)
+
+first year for which to compute the prevalent patient count statistics;
+e.g. \code{1953L}}
+
+\item{stat_cancer_death_count_first_year}{\verb{[integer]} (mandatory, no default)
+
+first year for the cancer death count statistics; e.g. \code{1953L}}
+
+\item{stat_survival_follow_up_first_year}{\verb{[integer]} (mandatory, no default)
+
+starting year for survival estimation in 5-year periods; e.g. \code{1953L}}
 }
 \description{
 Set and get settings for NORDCAN software.
