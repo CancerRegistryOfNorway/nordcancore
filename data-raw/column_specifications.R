@@ -408,3 +408,8 @@ column_specification_list[entity_column_names()] <-
       levels = unique(dt[[col_nm]])
     )
   })
+
+column_specification_list[["entity"]] <- list(
+  format = "Categorical",
+  levels = unique(unlist(column_specification_list[entity_column_names()]))
+)
