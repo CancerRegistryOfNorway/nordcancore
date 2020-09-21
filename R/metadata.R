@@ -413,6 +413,10 @@ nordcan_metadata_icd_by_version_to_entity <- function() {
     j = "icd_version" := as.integer(sub("^icd", "", icd_to_entity$icd_version))
   ]
 
-  return(unique(icd_to_entity, by = names(icd_to_entity))[])
+  icd_to_entity <- unique(icd_to_entity, by = names(icd_to_entity))
+  keep <- !is.na(icd_to_entity[["icd_code"]])
+  icd_to_entity <- icd_to_entity[keep, ]
+
+  return(icd_to_entity[])
 }
 
