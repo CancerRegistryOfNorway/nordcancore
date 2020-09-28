@@ -83,3 +83,5 @@ pop_endofyear;TRUE;;;;;;;;;;;;;;;TRUE;;;;
 pop_midyear;TRUE;;;;;;;;;;;;;;;TRUE;;;;
 prob;TRUE;;;;;;;;;;;;;;;;;;TRUE;
 entity;TRUE;;;;;;;;;;;;;;;;;TRUE;;TRUE
+observation_year;;;;;;;;;;;;;;;;;;;;TRUE
+full_years_since_entry;;;;;;;;;;;;;;;;;;;;TRUE
