@@ -18,7 +18,6 @@ month_level_space <- function() {
 
 
 
-#' @importFrom data.table year
 year_level_space <- function() {
   1800:data.table::year(Sys.Date())
 }
@@ -32,7 +31,6 @@ year_level_space <- function() {
 
 #' @rdname nordcan_metadata_column_specifications
 #' @export
-#' @importFrom dbc assert_is_character_nonNA_atom
 #' @return
 #' - `nordcan_metadata_column_format`: a `character` string that names the format; e.g.
 #'   `"ID"` or `"Date"`
@@ -50,7 +48,6 @@ nordcan_metadata_column_format <- function(column_name) {
 
 #' @rdname nordcan_metadata_column_specifications
 #' @export
-#' @importFrom dbc assert_is_character_nonNA_atom
 #' @return
 #' - `nordcan_metadata_column_specifications`: a `list` of specifications; elements of
 #'   the list vary by format,

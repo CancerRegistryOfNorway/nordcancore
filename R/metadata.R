@@ -45,7 +45,6 @@ nordcan_metadata_column_restrictions_by_global_settings <- function() {
 #' @details
 #' - `nordcan_metadata_column_level_space_list` retrieves a `list` which
 #' determines allowed levels for each column specified in `col_nms`
-#' @importFrom dbc assert_is_character_nonNA_vector
 #' @export
 nordcan_metadata_column_level_space_list <- function(col_nms) {
   dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
@@ -84,10 +83,6 @@ nordcan_metadata_column_level_space_list <- function(col_nms) {
 #' @details
 #' - `nordcan_metadata_column_level_space_dt_list` retrieves a `list` of  `data.table`s,
 #'   each of which a set of columns named in `col_nms`
-#' @importFrom data.table is.data.table
-#' @importFrom dbc assert_is_character_nonNA_vector
-#' assert_prod_output_is_data.table_with_required_names
-#' report_to_assertion tests_to_report
 #' @importFrom data.table .SD
 #' @export
 nordcan_metadata_column_level_space_dt_list <- function(col_nms) {
@@ -123,10 +118,6 @@ nordcan_metadata_column_level_space_dt_list <- function(col_nms) {
 #' @details
 #' - `nordcan_metadata_column_level_space_dt` retrieves a `data.table` which
 #' determines allowed combinations of `col_nms`
-#' @importFrom data.table is.data.table
-#' @importFrom dbc assert_is_character_nonNA_vector
-#' assert_prod_output_is_data.table_with_required_names
-#' report_to_assertion tests_to_report
 #' @export
 nordcan_metadata_column_level_space_dt <- function(col_nms) {
   dbc::assert_prod_input_is_character_nonNA_vector(col_nms)
@@ -292,7 +283,6 @@ nordcan_metadata_nordcan_year <- function() {
 
 #' @export
 #' @rdname nordcan_metadata
-#' @importFrom data.table setDT copy
 nordcan_metadata_icd10_to_entity <- function() {
   data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_to_entity", "nordcancore")
@@ -301,7 +291,6 @@ nordcan_metadata_icd10_to_entity <- function() {
 
 #' @export
 #' @rdname nordcan_metadata
-#' @importFrom data.table setDT copy
 nordcan_metadata_entity_usage_info <- function() {
   data.table::setDT(data.table::copy(
     get_internal_dataset("entity_usage_info", "nordcancore")
@@ -310,7 +299,6 @@ nordcan_metadata_entity_usage_info <- function() {
 
 #' @export
 #' @rdname nordcan_metadata
-#' @importFrom data.table setDT copy
 nordcan_metadata_icd10_vs_icd7_icd8_icd9 <- function() {
   data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_vs_icd7_icd8_icd9", "nordcancore")
@@ -359,8 +347,6 @@ nordcan_metadata_entity_by_sex  <- function() {
 
 #' @export
 #' @rdname nordcan_metadata
-#' @importFrom dbc assert_prod_input_is_character_nonNA_atom
-#' assert_prod_input_atom_is_in_set
 #' @param entity_no_set_name `[character]` (mandatory, no default)
 #'
 #' name of entity number set; e.g. "all"
@@ -393,7 +379,7 @@ nordcan_metadata_entity_no_set <- function(entity_no_set_name) {
 
 #' @export
 #' @rdname nordcan_metadata
-#' @importFrom data.table melt :=
+#' @importFrom data.table :=
 nordcan_metadata_icd_by_version_to_entity <- function() {
   icd_conversion <- nordcan_metadata_icd10_vs_icd7_icd8_icd9()
   icd10_to_entity <- nordcan_metadata_icd10_to_entity()
