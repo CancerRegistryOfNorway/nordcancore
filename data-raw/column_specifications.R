@@ -335,7 +335,7 @@ column_specification_list <- list(
   icd_version = list(
     format = "String"
   ),
-  death_count = list(
+  cancer_death_count = list(
     format = "Integer",
     min = 0L, max = 1e6L
   ),

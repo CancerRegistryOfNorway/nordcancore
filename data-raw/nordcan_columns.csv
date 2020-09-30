@@ -77,7 +77,7 @@ icd9;TRUE;;;;;;;;;;;;;;TRUE;;;;;
 agegroup;TRUE;;;;;;;;;;;;;;;TRUE;TRUE;TRUE;;TRUE
 icd_code;TRUE;;;;;;;;;;;;;;;;TRUE;;;TRUE
 icd_version;TRUE;;;;;;;;;;;;;;;;TRUE;;;TRUE
-death_count;TRUE;;;;;;;;;;;;;;;;TRUE;TRUE;;
+cancer_death_count;TRUE;;;;;;;;;;;;;;;;TRUE;TRUE;;
 year;TRUE;;;;;;;;;;;;;;;TRUE;TRUE;TRUE;TRUE;TRUE
 pop_endofyear;TRUE;;;;;;;;;;;;;;;TRUE;;;;
 pop_midyear;TRUE;;;;;;;;;;;;;;;TRUE;;;;
