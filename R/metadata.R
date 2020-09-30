@@ -299,9 +299,9 @@ nordcan_metadata_entity_usage_info <- function() {
 
 #' @export
 #' @rdname nordcan_metadata
-nordcan_metadata_icd10_vs_icd7_icd8_icd9 <- function() {
+nordcan_metadata_icd10_vs_icd67_icd8_icd9 <- function() {
   data.table::setDT(data.table::copy(
-    get_internal_dataset("icd10_vs_icd7_icd8_icd9", "nordcancore")
+    get_internal_dataset("icd10_vs_icd67_icd8_icd9", "nordcancore")
   ))[]
 }
 
@@ -377,32 +377,71 @@ nordcan_metadata_entity_no_set <- function(entity_no_set_name) {
 
 
 
+nordcan_metadata_icd_by_version_to_entity_cache_env <- new.env()
+nordcan_metadata_icd_by_version_to_entity_cache_env[["cache"]] <- NULL
 #' @export
 #' @rdname nordcan_metadata
 #' @importFrom data.table :=
 nordcan_metadata_icd_by_version_to_entity <- function() {
-  icd_conversion <- nordcan_metadata_icd10_vs_icd7_icd8_icd9()
+  cached <- nordcan_metadata_icd_by_version_to_entity_cache_env[["cache"]]
+  if (!is.null(cached)){
+    return(cached[])
+  }
+  icd_conversion <- nordcan_metadata_icd10_vs_icd67_icd8_icd9()
   icd10_to_entity <- nordcan_metadata_icd10_to_entity()
-  icd_to_entity <- merge(icd10_to_entity, icd_conversion, on = "icd10")
-  icd_col_nms <- names(icd_to_entity)[grepl("^icd", names(icd_to_entity))]
+  icd_code_col_nms <- names(icd_conversion)[
+    grepl("^icd[0-9]+$", names(icd_conversion))
+  ]
+  icd_to_entity <- merge(icd10_to_entity,
+                         icd_conversion[, icd_code_col_nms, with = FALSE],
+                         by = "icd10")
   entity_col_nms <- nordcan_metadata_column_name_set(
     "column_name_set_entity"
   )
   icd_to_entity <- data.table::melt(
     icd_to_entity,
     id.vars = entity_col_nms,
-    measure.vars = icd_col_nms,
+    measure.vars = icd_code_col_nms,
     variable.name = "icd_version",
     value.name = "icd_code"
   )
   icd_to_entity[
     j = "icd_version" := as.integer(sub("^icd", "", icd_to_entity$icd_version))
   ]
+  icd_to_entity <- rbind(
+    icd_to_entity[icd_to_entity$icd_version != 67, ],
+    icd_to_entity[icd_to_entity$icd_version == 67, ][, "icd_version" := 6L][],
+    icd_to_entity[icd_to_entity$icd_version == 67, ][, "icd_version" := 7L][]
+  )
+
+  # if user has 4-char code and we have only a matching 3-char definition,
+  # we want to use that definition rather than no definition at all.
+  # we create fake 4-char definitions based on the 3-char definition while
+  # avoiding any pre-existing ones (real 4-char definitions)
+  short_icd_to_entity <- icd_to_entity[
+    nchar(icd_code) == 3L,
+  ]
+  long_icd_to_entity <- short_icd_to_entity[
+    j = list(long_icd_code = paste0(icd_code, 0:9)),
+    keyby = eval(names(short_icd_to_entity))
+  ]
+  long_icd_to_entity[, "icd_code" := NULL]
+  data.table::setnames(long_icd_to_entity, "long_icd_code", "icd_code")
+  long_icd_to_entity <- long_icd_to_entity[
+    !long_icd_to_entity$icd_code %in% icd_to_entity$icd_code,
+  ]
+
+  icd_to_entity <- rbind(icd_to_entity, long_icd_to_entity)
 
   icd_to_entity <- unique(icd_to_entity, by = names(icd_to_entity))
   keep <- !is.na(icd_to_entity[["icd_code"]])
   icd_to_entity <- icd_to_entity[keep, ]
 
+  data.table::setkeyv(icd_to_entity, c("icd_version", "icd_code"))
+  data.table::setcolorder(icd_to_entity, c("icd_version", "icd_code"))
+
+  nordcan_metadata_icd_by_version_to_entity_cache_env[["cache"]] <-
+    icd_to_entity
   return(icd_to_entity[])
 }
 

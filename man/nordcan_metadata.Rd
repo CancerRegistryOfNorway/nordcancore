@@ -5,7 +5,7 @@
 \alias{nordcan_metadata_nordcan_year}
 \alias{nordcan_metadata_icd10_to_entity}
 \alias{nordcan_metadata_entity_usage_info}
-\alias{nordcan_metadata_icd10_vs_icd7_icd8_icd9}
+\alias{nordcan_metadata_icd10_vs_icd67_icd8_icd9}
 \alias{nordcan_metadata_entity_by_sex_icd10}
 \alias{nordcan_metadata_entity_by_sex}
 \alias{nordcan_metadata_entity_no_set}
@@ -18,7 +18,7 @@ nordcan_metadata_icd10_to_entity()
 
 nordcan_metadata_entity_usage_info()
 
-nordcan_metadata_icd10_vs_icd7_icd8_icd9()
+nordcan_metadata_icd10_vs_icd67_icd8_icd9()
 
 nordcan_metadata_entity_by_sex_icd10()
 
