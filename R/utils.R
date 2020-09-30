@@ -227,3 +227,110 @@ nordcan_iarccrgtools_tool_names <- function() {
 }
 
 
+
+#' @title Random Names
+#' @description
+#' Create unique names for objects, files, etc. that are guaranteed to not
+#' already exist.
+#' @param n_random_names `[integer]` (mandatory, default `1L`)
+#'
+#' generate this many random names
+#' @param exclude_names `[character]` (optional, default `character(0L)`)
+#' names are generated until none of them is one the names
+#' supplied here.
+#' @param name_length `[integer]` (mandatory, default `10L`)
+#'
+#' length of each random name
+#' @param character_pool `[character]` (mandatory, default `letters`)
+#'
+#' vector of characters (each must be a string of length one) to sample from
+#' when generating random names; the first character in any random name is
+#' always generated from `letters` despite what is supplied here
+#' @param transform `[function]` (mandatory, default `identity`)
+#'
+#' this transformation is applied first before checking whether
+#' they already exist in `exclude_names`; the function must have the argument
+#' `x` to accept the current random names and it must output them after
+#' any transformation (such as adding a file extension; see **Examples**)
+#' @param n_max_tries `[integer]` (mandatory, default `1000L`)
+#'
+#' sampling of an individual random name is attempted this many times before
+#' giving up (raising an error); one may need to give if for some reason
+#' there are so many names to avoid or the pool of characters is so small
+#' that no random name can be generated
+#' @examples
+#'
+#' # avoiding writing over a pre-existing file
+#' random_names(exclude_names = "my_file.csv",
+#'              transform = function(x) paste0(x, ".csv"))
+#'
+#' # avoiding writing over a pre-existing file path
+#' random_names(exclude_names = "path/to/my_file.csv",
+#'              transform = function(x) paste0("path/to/", x, ".csv"))
+#'
+#' # avoiding writing over a pre-existing file path for multiple files
+#' random_names(n_random_names = 10L,
+#'              exclude_names = "path/to/my_file.csv",
+#'              transform = function(x) paste0("path/to/", x, ".csv"))
+#'
+#' @export
+random_names <- function(
+  n_random_names = 1L,
+  exclude_names = character(0L),
+  name_length = 10L,
+  character_pool = letters,
+  transform = identity,
+  n_max_tries = 1000L
+  ) {
+  dbc::assert_is_integer_nonNA_gtzero_atom(n_random_names)
+  dbc::assert_is_character_vector(exclude_names)
+  dbc::assert_is_integer_nonNA_gtzero_atom(name_length)
+  dbc::assert_is_character_nonNA_vector(character_pool)
+  dbc::assert_is_function(transform)
+  dbc::assert_is_integer_nonNA_gtzero_atom(n_max_tries)
+
+  if (is.null(transform)) {
+    transform <- function(x) x
+  }
+  exclude_names <- union(exclude_names, NA_character_)
+  if (n_random_names == 1L) {
+    name <- NA_character_
+
+    for (try_no in 1:n_max_tries) {
+      name_start <- sample(letters, size = 1L)
+      name_end <- paste0(
+        sample(character_pool, size = name_length - 1L, replace = TRUE),
+        collapse = ""
+      )
+      name <- paste0(name_start, name_end)
+      name <- transform(name)
+      if (!name %in% exclude_names) {
+        break
+      }
+    }
+    if (try_no == n_max_tries) {
+      stop("could not generate random name after n_max_tries = ",
+           n_max_tries)
+    }
+    return(name)
+  } else {
+    # browser()
+    arg_list <- mget(names(formals(random_names)))
+    arg_list[["n_random_names"]] <- 1L
+    names <- rep(NA_character_, n_random_names)
+    for (i in 1:n_random_names) {
+      names[i] <- do.call(random_names, arg_list)
+      arg_list[["exclude_names"]] <- union(
+        arg_list[["exclude_names"]], names[i]
+      )
+    }
+    return(names)
+  }
+
+}
+
+
+
+
+
+

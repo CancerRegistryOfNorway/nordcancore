@@ -25,12 +25,29 @@ download.file(
 entity_usage_info <- data.table::fread(tf_entity_usage)
 icd10_to_entity <- data.table::fread(tf_icd10_to_entity)
 icd10_to_entity[, "icd10" := toupper(icd10)]
+# tmp <- icd10_to_entity[nchar(icd10) == 3L, ]
+# tmp <- tmp[
+#   j = list(icd10 = paste0(icd10, 0:9),
+#            entity_level_10,
+#            entity_level_11,
+#            entity_level_12,
+#            entity_level_20,
+#            entity_level_30),
+#   by = list(icd10_3 = icd10)
+# ]
+# tmp <- tmp[!icd10 %in% icd10_to_entity[["icd10"]], ]
+# tmp[, "icd10_3" := NULL]
+# icd10_to_entity <- rbind(icd10_to_entity, tmp)
+data.table::setkeyv(icd10_to_entity, "icd10")
+
 icd10_vs_icd7_icd8_icd9 <- data.table::fread(tf_icds)
 icd10_vs_icd7_icd8_icd9[
   j = names(icd10_vs_icd7_icd8_icd9) := lapply(.SD, function(col) {
     toupper(as.character(col))
   })
 ]
+
+
 regions <- data.table::fread(tf_regions)
 nordcan_columns <- data.table::fread("data-raw/nordcan_columns.csv")
 
