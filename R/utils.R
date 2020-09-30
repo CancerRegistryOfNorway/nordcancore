@@ -65,8 +65,6 @@ level_space_list_to_level_space_data_table <- function(
 
 #' @export
 #' @rdname package_data_utils
-#' @importFrom utils data
-#' @importFrom dbc assert_is_character_nonNA_atom
 get_exported_dataset_names <- function(package_name) {
   dbc::assert_is_character_nonNA_atom(package_name)
   dataset_names <- utils::data(package = package_name)
@@ -80,7 +78,6 @@ get_exported_dataset_names <- function(package_name) {
 #' @param dataset_name `[character]` (mandatory, no default)
 #'
 #' name of dataset to retrieve.
-#' @importFrom dbc assert_is_character_nonNA_atom
 get_exported_dataset <- function(dataset_name, package_name) {
   dbc::assert_is_character_nonNA_atom(dataset_name)
   dbc::assert_is_character_nonNA_atom(package_name)
@@ -103,9 +100,6 @@ get_exported_dataset <- function(dataset_name, package_name) {
 
 #' @export
 #' @rdname package_data_utils
-#' @importFrom data.table is.data.table
-#' @importFrom utils maintainer
-#' @importFrom dbc assert_is_character_nonNA_atom
 get_internal_dataset <- function(dataset_name, package_name) {
   dbc::assert_is_character_nonNA_atom(dataset_name)
   dbc::assert_is_character_nonNA_atom(package_name)
@@ -184,7 +178,6 @@ nordcan_metadata_column_name_set_names <- function() {
 #' @return
 #' - `nordcan_metadata_column_name_set`: a `character` vector of names in queried set
 #' @export
-#' @importFrom dbc assert_is_character_nonNA_atom assert_atom_is_in_set
 nordcan_metadata_column_name_set <- function(column_name_set_name) {
   dbc::assert_is_character_nonNA_atom(column_name_set_name)
   dt <- get_internal_dataset("nordcan_columns", package_name = "nordcancore")
