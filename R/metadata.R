@@ -16,13 +16,8 @@
 nordcan_metadata_column_restrictions_by_global_settings <- function() {
   gs <- get_global_nordcan_settings()
   nordcan_year <- nordcan_metadata_nordcan_year()
-  region_levels <- nordcan_metadata_column_specifications("region")[["levels"]]
-  participant_name <- gs[["participant_name"]]
-  participant_region_no <- region_levels[participant_name]
-  region_space <- region_levels[
-    substr(region_levels, 1L, 1L) == substr(participant_region_no, 1L, 1L)
-  ]
-  region_space <- setdiff(region_space, participant_region_no)
+  participant_info <- nordcan_metadata_participant_info()
+  region_number_space <- participant_info[["column_limits"]][["region"]]
   list(
     yoi = list(
       levels = gs[["stat_cancer_record_count_first_year"]]:nordcan_year
@@ -31,7 +26,7 @@ nordcan_metadata_column_restrictions_by_global_settings <- function() {
       levels = gs[["stat_cancer_death_count_first_year"]]:nordcan_year
     ),
     region = list(
-      levels = region_space
+      levels = region_number_space
     ),
     period = list(
       levels = rev(seq(
@@ -444,4 +439,37 @@ nordcan_metadata_icd_by_version_to_entity <- function() {
     icd_to_entity
   return(icd_to_entity[])
 }
+
+
+
+
+
+#' @export
+#' @rdname nordcan_metadata
+nordcan_metadata_participant_info <- function() {
+  gs <- get_global_nordcan_settings()
+
+  region_levels <- nordcan_metadata_column_specifications("region")[["levels"]]
+  name <- gs[["participant_name"]]
+  topregion_number <- unname(region_levels[name])
+  region_number_space <- region_levels[
+    substr(region_levels, 1L, 1L) == substr(topregion_number, 1L, 1L)
+  ]
+  region_number_space <- setdiff(region_number_space, topregion_number)
+  if (length(region_number_space) == 0L) {
+    # small participants only have the top region and no subregions
+    region_number_space <- topregion_number
+  }
+
+  list(
+    name = name,
+    topregion_number = topregion_number,
+    column_limits = list(
+      region = region_number_space
+    )
+  )
+}
+
+
+
 
