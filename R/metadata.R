@@ -413,6 +413,7 @@ nordcan_metadata_icd_by_version_to_entity <- function() {
   # we want to use that definition rather than no definition at all.
   # we create fake 4-char definitions based on the 3-char definition while
   # avoiding any pre-existing ones (real 4-char definitions)
+  icd_code <- NULL # to appease R CMD CHECJ
   short_icd_to_entity <- icd_to_entity[
     nchar(icd_code) == 3L,
   ]
