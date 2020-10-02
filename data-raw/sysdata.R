@@ -46,11 +46,12 @@ column_specification_list <- ne$column_specification_list
 joint_categorical_column_spaces <- ne$joint_categorical_column_spaces
 
 nordcan_version <- readLines("data-raw/nordcan_version.txt")
+nordcan_year <- as.integer(readLines("data-raw/nordcan_year.txt"))
 
 usethis::use_data(
   column_specification_list, joint_categorical_column_spaces,
   nordcan_columns, entity_usage_info, icd10_to_entity, icd10_vs_icd67_icd8_icd9,
-  regions, nordcan_version,
+  regions, nordcan_version, nordcan_year,
   internal = TRUE, overwrite = TRUE
 )
 

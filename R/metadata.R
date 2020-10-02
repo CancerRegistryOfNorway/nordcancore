@@ -214,6 +214,11 @@ set_global_nordcan_settings <- function(
     global_settings_env[[arg_nm]] <- arg_value
   }))
 
+  if (grepl("\\s", global_settings_env[["work_dir"]])) {
+    stop("work_dir = ", deparse(global_settings_env[["work_dir"]]),
+         " has a whitespace ( ); please ensure that the full path to your ",
+         "working directory does not contain any whitespaces")
+  }
   global_settings_env[["work_dir"]] <- normalizePath(
     global_settings_env[["work_dir"]], mustWork = FALSE
   )
@@ -273,7 +278,7 @@ get_global_nordcan_settings <- function() {
 #' - `nordcan_metadata_nordcan_year` just returns the current NORDCAN year
 #'   as an integer.
 nordcan_metadata_nordcan_year <- function() {
-  2018L
+  get_internal_dataset("nordcan_year", "nordcancore")
 }
 
 #' @export
