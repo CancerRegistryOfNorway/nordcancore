@@ -472,4 +472,8 @@ nordcan_metadata_participant_info <- function() {
 
 
 
-
+#' @export
+#' @rdname nordcan_metadata
+nordcan_metadata_nordcan_version <- function() {
+  get_internal_dataset("nordcan_version", "nordcancore")
+}

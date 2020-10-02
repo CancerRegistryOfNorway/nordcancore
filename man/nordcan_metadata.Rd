@@ -11,6 +11,7 @@
 \alias{nordcan_metadata_entity_no_set}
 \alias{nordcan_metadata_icd_by_version_to_entity}
 \alias{nordcan_metadata_participant_info}
+\alias{nordcan_metadata_nordcan_version}
 \title{NORDCAN Metadata}
 \usage{
 nordcan_metadata_nordcan_year()
@@ -30,6 +31,8 @@ nordcan_metadata_entity_no_set(entity_no_set_name)
 nordcan_metadata_icd_by_version_to_entity()
 
 nordcan_metadata_participant_info()
+
+nordcan_metadata_nordcan_version()
 }
 \arguments{
 \item{entity_no_set_name}{\verb{[character]} (mandatory, no default)
