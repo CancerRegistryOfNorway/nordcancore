@@ -178,6 +178,11 @@ nordcan_participant_names <- function() {
 #' @param stat_survival_follow_up_first_year
 #' `[integer]` (mandatory, no default)
 #'
+#'
+#' first year for regional data; e.g. `1953L`
+#' @param regional_data_first_year
+#' `[integer]` (mandatory, no default)
+#'
 #' starting year for survival estimation in 5-year periods; e.g. `1953L`
 #' @export
 set_global_nordcan_settings <- function(
@@ -186,7 +191,8 @@ set_global_nordcan_settings <- function(
   stat_cancer_record_count_first_year,
   stat_prevalent_subject_count_first_year,
   stat_cancer_death_count_first_year,
-  stat_survival_follow_up_first_year
+  stat_survival_follow_up_first_year,
+  regional_data_first_year
 ) {
   arg_nms <- names(formals(set_global_nordcan_settings))
   invisible(lapply(arg_nms, function(arg_nm) {
