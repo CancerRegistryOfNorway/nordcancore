@@ -51,6 +51,7 @@ icd10;TRUE;;TRUE;TRUE;;;;;;;;;;;;;;;;TRUE
 entity_level_10;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 entity_level_11;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 entity_level_12;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
+entity_level_13;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 entity_level_20;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 entity_level_30;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 agegroup;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
