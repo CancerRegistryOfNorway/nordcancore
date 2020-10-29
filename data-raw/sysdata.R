@@ -22,8 +22,8 @@ download.file(
   destfile = tf_regions
 )
 
-entity_usage_info <- data.table::fread("../NORDCAN/specifications/entity_usage_info.csv")
-icd10_to_entity <- data.table::fread("../NORDCAN/specifications/icd10_to_entity_columns.csv")
+entity_usage_info <- data.table::fread(tf_entity_usage)
+icd10_to_entity <- data.table::fread(tf_icd10_to_entity)
 icd10_to_entity[, "icd10" := toupper(icd10)]
 data.table::setkeyv(icd10_to_entity, "icd10")
 
