@@ -178,12 +178,11 @@ nordcan_participant_names <- function() {
 #' @param stat_survival_follow_up_first_year
 #' `[integer]` (mandatory, no default)
 #'
-#'
-#' first year for regional data; e.g. `1953L`
+#' starting year for survival estimation in 5-year periods; e.g. `1953L`
 #' @param regional_data_first_year
 #' `[integer]` (mandatory, no default)
 #'
-#' starting year for survival estimation in 5-year periods; e.g. `1953L`
+#' first year for regional data; e.g. `1953L`
 #' @export
 set_global_nordcan_settings <- function(
   work_dir,

@@ -12,7 +12,8 @@ set_global_nordcan_settings(
   stat_cancer_record_count_first_year,
   stat_prevalent_subject_count_first_year,
   stat_cancer_death_count_first_year,
-  stat_survival_follow_up_first_year
+  stat_survival_follow_up_first_year,
+  regional_data_first_year
 )
 
 get_global_nordcan_settings()
@@ -44,6 +45,10 @@ first year for the cancer death count statistics; e.g. \code{1953L}}
 \item{stat_survival_follow_up_first_year}{\verb{[integer]} (mandatory, no default)
 
 starting year for survival estimation in 5-year periods; e.g. \code{1953L}}
+
+\item{regional_data_first_year}{\verb{[integer]} (mandatory, no default)
+
+first year for regional data; e.g. \code{1953L}}
 }
 \description{
 Set and get settings for NORDCAN software.
