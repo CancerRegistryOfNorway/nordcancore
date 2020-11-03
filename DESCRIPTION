@@ -2,7 +2,6 @@ Package: nordcancore
 Type: Package
 Title: NORDCAN Core Utilities and Metadata
 Version: 0.5.1.1
-Depends: R (>= 4.0.0)
 Authors@R: c(
   person("Huidong", "Tian", email = "huidong.tian@kreftregisteret.no", role = c("aut", "cre")), 
   person("Joonas", "Miettinen", email = "joonas.miettinen@cancer.fi", role = "aut")
@@ -18,6 +17,6 @@ RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
 Remotes: github::WetRobot/dbc
 Depends: 
-    R (>= 2.10)
+    R (>= 4.0.0)
 Suggests: 
     testthat
