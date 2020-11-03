@@ -28,7 +28,7 @@ nordcan_metadata_column_restrictions_by_global_settings <- function() {
     region = list(
       levels = region_number_space
     ),
-    period = list(
+    period_5 = list(
       levels = rev(seq(
         nordcan_year + 1L, gs[["stat_cancer_record_count_first_year"]], -5L
       )[-1L])

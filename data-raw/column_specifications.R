@@ -264,7 +264,7 @@ column_specification_list <- list(
     format = "Categorical",
     levels = 1:6
   ),
-  period = list(
+  period_5 = list(
     format = "Categorical",
     levels = 1800L:data.table::year(Sys.Date())
   ),

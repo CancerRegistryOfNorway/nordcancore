@@ -58,7 +58,7 @@ agegroup;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 agr_all_ages;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 agr_bone;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 agr_all_sites;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
-period;TRUE;;TRUE;TRUE;;;;;;;;;;;;;;;;TRUE
+period_5;TRUE;;TRUE;TRUE;;;;;;;;;;;;;;;;TRUE
 excl_imp_error;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_imp_icd10conversion;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_imp_benign;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
