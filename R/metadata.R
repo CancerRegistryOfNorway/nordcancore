@@ -344,7 +344,15 @@ nordcan_metadata_entity_by_sex_icd10 <- function() {
 nordcan_metadata_entity_by_sex  <- function() {
   dt <- nordcan_metadata_entity_by_sex_icd10()
   dt[, "icd10" := NULL]
-  return(unique(dt, by = names(dt))[])
+  dt <- unique(dt, by = names(dt))[]
+  brain_dt <- dt[dt$entity_level_20 == 320, ][rep(1L, 2L), ]
+  dbc::assert_prod_interim_is_data.table_with_required_names(
+    dt,
+    required_names = "entity_level_30"
+  )
+  brain_dt[, "entity_level_30" := 316:317]
+  dt <- rbind(dt, brain_dt)
+  return(dt[])
 }
 
 
