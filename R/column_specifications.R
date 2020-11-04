@@ -67,8 +67,7 @@ nordcan_categorical_column_names <- function() {
   unique(unlist(joint_categorical_column_spaces$col_nm_set))
 }
 entity_column_names <- function() {
-  dt <- nordcan_metadata_icd10_to_entity()
-  names(dt)[grepl("^entity", names(dt))]
+  nordcan_metadata_column_name_set("column_name_set_entity")
 }
 
 
