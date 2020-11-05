@@ -356,6 +356,16 @@ nordcan_metadata_entity_by_sex  <- function() {
 }
 
 
+#' @export
+#' @rdname nordcan_metadata
+#' @importFrom data.table :=
+nordcan_metadata_entity  <- function() {
+  dt <- nordcan_metadata_entity_by_sex()
+  dt[, "sex" := NULL]
+  dt <- unique(dt, by = names(dt))
+  return(dt[])
+}
+
 
 
 #' @export
