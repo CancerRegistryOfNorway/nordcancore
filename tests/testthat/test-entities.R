@@ -6,7 +6,7 @@
 
 testthat::test_that("all entities in column level specs", {
   nordcancore::set_global_nordcan_settings(
-    work_dir = getwd(),
+    work_dir = tempdir(),
     participant_name = "Finland",
     stat_cancer_record_count_first_year = 1953L,
     stat_prevalent_subject_count_first_year = 1967L,
