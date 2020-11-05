@@ -373,7 +373,7 @@ random_names <- function(
 #' my_fun(x = df, subset = df$a > 3)
 #' my_fun(x = df, subset = a > 3)
 #' my_fun(x = df, subset = 1:3)
-#'
+#' @export
 handle_subset_arg <- function(
   subset_arg_nm = "subset",
   dataset = emptyenv(),
@@ -451,4 +451,63 @@ handle_subset_arg <- function(
 
   return(subset_value)
 }
+
+
+
+
+#' @export
+#' @describeIn handle_subset_arg intersect two subsetting vectors
+#' @param subset1 `[NULL, integer, logical]` (mandatory, no default)
+#' subset to combine with subset2
+#'
+#' @param subset2 `[NULL, integer, logical]` (mandatory, no default)
+#' subset to combine with subset1
+#'
+#' @details
+#' `subset_and` is used to combine two results of `handle_subset_arg`.
+#' If both `subset1` and `subset2` are logical, this is the same as
+#' `subset1 & subset2`. However, this function handles all the possible pairs
+#' of classes of `subset1` and `subset2` intelligently.
+subset_and <- function(
+  subset1,
+  subset2
+) {
+  dbc::assert_prod_input_is_one_of(
+    x = subset1,
+    funs = c("report_is_NULL", "report_is_logical", "report_is_integer")
+  )
+  dbc::assert_prod_input_is_one_of(
+    x = subset2,
+    funs = c("report_is_NULL", "report_is_logical", "report_is_integer")
+  )
+  if (is.null(subset1) && is.null(subset2)) {
+    return(NULL)
+  }
+  if (is.null(subset1)) {
+    return(subset2)
+  }
+  if (is.null(subset2)) {
+    return(subset1)
+  }
+  if (is.logical(subset1) && is.logical(subset2)) {
+    return(subset1 & subset2)
+  } else if (is.integer(subset1) && is.integer(subset2)) {
+    return(intersect(subset1, subset2))
+  } else {
+    sl <- list(subset1, subset2)
+    sl <- lapply(sl, function(s) {
+      if (is.logical(s)) {
+        which(s)
+      } else {
+        s
+      }
+    })
+    subset1 <- sl[[1L]]
+    subset2 <- sl[[2L]]
+    return(intersect(subset1, subset2))
+  }
+}
+
+
+
 
