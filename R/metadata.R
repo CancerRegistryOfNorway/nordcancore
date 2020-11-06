@@ -289,9 +289,37 @@ nordcan_metadata_nordcan_year <- function() {
 #' @export
 #' @rdname nordcan_metadata
 nordcan_metadata_icd10_to_entity <- function() {
-  data.table::setDT(data.table::copy(
+  dt <- data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_to_entity", "nordcancore")
-  ))[]
+  ))
+  stopifnot(
+    nchar(dt[["icd10"]]) %in% 3:4
+  )
+  icd10_char3_space <- unique(substr(unique(dt[["icd10"]]), 1L, 3L))
+  icd10_char4_space_dt <- data.table::CJ(
+    base = icd10_char3_space,
+    fourth_char = 0:9
+  )
+  icd10_char4_space <- paste0(icd10_char4_space_dt[["base"]],
+                              icd10_char4_space_dt[["fourth_char"]])
+  add_icd10_char4 <- setdiff(icd10_char4_space, dt[["icd10"]])
+  char3_of_add_icd10_char4 <- substr(add_icd10_char4, 1L, 3L)
+  char3_exists <- char3_of_add_icd10_char4 %in% dt[["icd10"]]
+  add_icd10_char4 <- add_icd10_char4[char3_exists]
+  char3_of_add_icd10_char4 <- char3_of_add_icd10_char4[char3_exists]
+
+  add_dt <- dt[dt[["icd10"]] %in% char3_of_add_icd10_char4, ]
+  add_dt <- add_dt[
+    i = data.table::data.table(icd10 = char3_of_add_icd10_char4),
+    on = "icd10"
+  ]
+  add_dt[, "icd10" := add_icd10_char4]
+
+  dt <- rbind(dt, add_dt)
+  dt <- unique(dt, by = names(dt))
+  data.table::setkeyv(dt, names(dt))
+
+  return(dt[])
 }
 
 #' @export
@@ -441,7 +469,7 @@ nordcan_metadata_icd_by_version_to_entity <- function() {
   # we want to use that definition rather than no definition at all.
   # we create fake 4-char definitions based on the 3-char definition while
   # avoiding any pre-existing ones (real 4-char definitions)
-  icd_code <- NULL # to appease R CMD CHECJ
+  icd_code <- NULL # to appease R CMD CHECK
   short_icd_to_entity <- icd_to_entity[
     nchar(icd_code) == 3L,
   ]
@@ -451,9 +479,16 @@ nordcan_metadata_icd_by_version_to_entity <- function() {
   ]
   long_icd_to_entity[, "icd_code" := NULL]
   data.table::setnames(long_icd_to_entity, "long_icd_code", "icd_code")
-  long_icd_to_entity <- long_icd_to_entity[
-    !long_icd_to_entity$icd_code %in% icd_to_entity$icd_code,
+  long_icd_to_entity[, "exists" := FALSE]
+  long_icd_to_entity[
+    i = icd_to_entity,
+    on = c("icd_version", "icd_code"),
+    j = "exists" := TRUE
   ]
+  long_icd_to_entity <- long_icd_to_entity[
+    long_icd_to_entity[["exists"]] == FALSE,
+  ]
+  long_icd_to_entity[, "exists" := NULL]
 
   icd_to_entity <- rbind(icd_to_entity, long_icd_to_entity)
 
