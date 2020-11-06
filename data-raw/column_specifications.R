@@ -2,7 +2,9 @@
 devtools::load_all()
 
 column_specification_list <- list(
-  pat           = list(format = "String"),
+  ## max_nchars can be NULL (which means not specified), or a intger number.
+  ## digit_only means the string contains only 0-9.
+  pat           = list(format = "String", max_nchars = 15, digit_only = TRUE),
 
   date_of_birth = list(format = "Date",
                        min = as.Date("1800-01-01"),
@@ -25,11 +27,11 @@ column_specification_list <- list(
                          )
                        }),
 
-  geo_code = list(format = "String"),
+  geo_code = list(format = "String", max_nchars = 10, digit_only = FALSE),
 
-  geo_label = list(format = "String"),
+  geo_label = list(format = "String", max_nchars = 50, digit_only = FALSE),
 
-  tum  = list(format = "ID"),
+  tum  = list(format = "String", max_nchars = 15, digit_only = TRUE),
 
   tum_sequence = list(format = "Numeric",
                       min = 1L, max = 50L),
@@ -91,11 +93,6 @@ column_specification_list <- list(
                  levels = c("No (not found at autopsy)" = 0L,
                             "Yes (found at autopsy)" = 1L,
                             "Unknown" = 9L)),
-
-
-
-
-
 
   vit_sta = list(format = "Categorical",
                  levels = c("Alive" = 1L,
@@ -269,7 +266,7 @@ column_specification_list <- list(
     levels = 1800L:data.table::year(Sys.Date())
   ),
   excl_imp_error = list(
-    format = "String"
+    format = "String", max_nchars = NULL, digit_only = FALSE
   ),
   excl_imp_icd10conversion = list(
     format = "Categorical",
@@ -316,10 +313,10 @@ column_specification_list <- list(
     levels = c(Included = 0L, excluded = 1L)
   ),
   clinical_stage = list(
-    format = "String"
+    format = "String",max_nchars = NULL, digit_only = FALSE
   ),
   pathological_stage = list(
-    format = "String"
+    format = "String", max_nchars = NULL, digit_only = FALSE
   ),
   tnm_group = list(
     format = "Integer",
@@ -330,10 +327,10 @@ column_specification_list <- list(
     levels = year_level_space()
   ),
   icd_code = list(
-    format = "String"
+    format = "String", max_nchars = NULL, digit_only = FALSE
   ),
   icd_version = list(
-    format = "String"
+    format = "String", max_nchars = NULL, digit_only = FALSE
   ),
   cancer_death_count = list(
     format = "Integer",
