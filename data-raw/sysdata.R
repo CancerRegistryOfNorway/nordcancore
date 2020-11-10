@@ -1,33 +1,29 @@
 
+
+# libraries ---------------------------------------------------------------
 library("data.table")
+pkgload::load_all(".")
 
-tf_entity_usage <- tempfile(fileext = ".csv")
-download.file(
-  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/entity_usage_info.csv ",
-  destfile = tf_entity_usage
+# entity_usage_info ------------------------------------------------------------
+entity_usage_info <- data.table::fread(
+  specification_dataset_source("entity_usage_info")
 )
-tf_icd10_to_entity <- tempfile(fileext = ".csv")
-download.file(
-  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/icd10_to_entity_columns.csv",
-  destfile = tf_icd10_to_entity
-)
-tf_icds <- tempfile(fileext = ".csv")
-download.file(
-  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/icd10_vs_icd67_icd8_icd9.csv",
-  destfile = tf_icds
-)
-tf_regions <- tempfile(fileext = ".csv")
-download.file(
-  url = "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/specifications/regions.csv",
-  destfile = tf_regions
-)
+# these entity numbers NOT USED in 9.0.
+entity_usage_info <- entity_usage_info[
+  !entity %in% c(51L, 318L),
+  ]
 
-entity_usage_info <- data.table::fread(tf_entity_usage)
-icd10_to_entity <- data.table::fread(tf_icd10_to_entity)
+# icd10_to_entity --------------------------------------------------------------
+icd10_to_entity <- data.table::fread(
+  specification_dataset_source("icd10_to_entity")
+)
 icd10_to_entity[, "icd10" := toupper(icd10)]
 data.table::setkeyv(icd10_to_entity, "icd10")
 
-icd10_vs_icd67_icd8_icd9 <- data.table::fread(tf_icds)
+# icd10_vs_icd67_icd8_icd9 ------------------------------------------------
+icd10_vs_icd67_icd8_icd9 <- data.table::fread(
+  specification_dataset_source("icd10_vs_icd67_icd8_icd9")
+)
 icd_code_col_nms <- setdiff(names(icd10_vs_icd67_icd8_icd9), "icd10_label")
 icd10_vs_icd67_icd8_icd9[
   j = (icd_code_col_nms) := lapply(.SD, function(col) {
@@ -36,18 +32,25 @@ icd10_vs_icd67_icd8_icd9[
   .SDcols = icd_code_col_nms
 ]
 
+# regions ----------------------------------------------------------------------
+regions <- data.table::fread(
+  specification_dataset_source("regions")
+)
 
-regions <- data.table::fread(tf_regions)
+# nordcan_columns --------------------------------------------------------------
 nordcan_columns <- data.table::fread("data-raw/nordcan_columns.csv")
 
+# column_specification_list, joint_categorical_column_spaces -------------------
 ne <- new.env()
 source("data-raw/column_specifications.R", local = ne)
 column_specification_list <- ne$column_specification_list
 joint_categorical_column_spaces <- ne$joint_categorical_column_spaces
 
+# nordcan_version, nordcan_year ------------------------------------------------
 nordcan_version <- readLines("data-raw/nordcan_version.txt")
 nordcan_year <- as.integer(readLines("data-raw/nordcan_year.txt"))
 
+# save everything --------------------------------------------------------------
 usethis::use_data(
   column_specification_list, joint_categorical_column_spaces,
   nordcan_columns, entity_usage_info, icd10_to_entity, icd10_vs_icd67_icd8_icd9,
