@@ -327,10 +327,10 @@ column_specification_list <- list(
     levels = year_level_space()
   ),
   icd_code = list(
-    format = "String", max_nchars = NULL, digit_only = FALSE
+    format = "String", max_nchars = 4L, digit_only = FALSE
   ),
   icd_version = list(
-    format = "String", max_nchars = NULL, digit_only = FALSE
+    format = "Integer", min = 6L, max = 10L
   ),
   cancer_death_count = list(
     format = "Integer",
