@@ -9,9 +9,7 @@ testthat::test_that("all entities in column level specs", {
     work_dir = tempdir(),
     participant_name = "Finland",
     stat_cancer_record_count_first_year = 1953L,
-    stat_prevalent_subject_count_first_year = 1967L,
     stat_cancer_death_count_first_year = 1953L,
-    stat_survival_follow_up_first_year = 1967L,
     regional_data_first_year = 1953L
   )
   entity_no_set <- nordcan_metadata_entity_no_set("all")

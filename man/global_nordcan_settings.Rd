@@ -10,9 +10,7 @@ set_global_nordcan_settings(
   work_dir,
   participant_name,
   stat_cancer_record_count_first_year,
-  stat_prevalent_subject_count_first_year,
   stat_cancer_death_count_first_year,
-  stat_survival_follow_up_first_year,
   regional_data_first_year
 )
 
@@ -33,18 +31,9 @@ name of NORDCAN participant; e.g. "Denmark" or "Sweden"}
 first year for which to compute the cancer record count statistics;
 e.g. \code{1953L}}
 
-\item{stat_prevalent_subject_count_first_year}{\verb{[integer]} (mandatory, no default)
-
-first year for which to compute the prevalent patient count statistics;
-e.g. \code{1953L}}
-
 \item{stat_cancer_death_count_first_year}{\verb{[integer]} (mandatory, no default)
 
 first year for the cancer death count statistics; e.g. \code{1953L}}
-
-\item{stat_survival_follow_up_first_year}{\verb{[integer]} (mandatory, no default)
-
-starting year for survival estimation in 5-year periods; e.g. \code{1953L}}
 
 \item{regional_data_first_year}{\verb{[integer]} (mandatory, no default)
 
@@ -52,4 +41,10 @@ first year for regional data; e.g. \code{1953L}}
 }
 \description{
 Set and get settings for NORDCAN software.
+}
+\details{
+Some first years for statistics are set using \code{set_global_nordcan_settings}.
+However, the first year for survival is fixed to
+\code{nordcancore::nordcan_metadata_nordcan_year() - 29L}. Likewise the first
+year for prevalence is fixed to \code{stat_cancer_record_count_first_year + 20L}.
 }
