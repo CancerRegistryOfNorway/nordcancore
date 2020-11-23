@@ -223,8 +223,8 @@ set_global_nordcan_settings <- function(
   }
 
   last_year <- nordcan_metadata_nordcan_year()
-  # survival: 30 latest years, e.g. with last year 2018 -> years 1989-2018
-  global_settings_env[["stat_survival_follow_up_first_year"]] <- last_year - 29L
+  # survival: 50 latest years, e.g. with last year 2018 -> years 1969-2018
+  global_settings_env[["stat_survival_follow_up_first_year"]] <- last_year - 49L
 
   # prevalence: 20 years after first year of incidence, e.g. 1953 -> 1973
   global_settings_env[["stat_prevalent_subject_count_first_year"]] <- {
