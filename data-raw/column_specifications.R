@@ -376,20 +376,36 @@ joint_categorical_column_spaces <- local({
   names(level_spaces) <- categ_col_nms
   level_spaces["sex"] <- NULL
 
-  sex_entity_dt <- nordcan_metadata_entity_by_sex()
-  data.table::setDT(sex_entity_dt)
-  sex_entity_dt <- rbind(
-    data.table::set(sex_entity_dt[sex_entity_dt$sex == 0L, ], j = "sex",
+  sex_entity_level_dt <- nordcan_metadata_entity_by_sex()
+  data.table::setDT(sex_entity_level_dt)
+  sex_entity_level_dt <- rbind(
+    data.table::set(sex_entity_level_dt[sex_entity_level_dt$sex == 0L, ], j = "sex",
                     value = 1L)[],
-    data.table::set(sex_entity_dt[sex_entity_dt$sex == 0L, ], j = "sex",
+    data.table::set(sex_entity_level_dt[sex_entity_level_dt$sex == 0L, ], j = "sex",
                     value = 2L)[],
-    sex_entity_dt[sex_entity_dt$sex == 1L, ],
-    sex_entity_dt[sex_entity_dt$sex == 2L, ]
+    sex_entity_level_dt[sex_entity_level_dt$sex == 1L, ],
+    sex_entity_level_dt[sex_entity_level_dt$sex == 2L, ]
   )
-  sex_entity_dt <- sex_entity_dt[!entity_level_30 %in% c(888L, 999L), ]
-  data.table::setkeyv(sex_entity_dt, names(sex_entity_dt))
+  sex_entity_level_dt <- sex_entity_level_dt[!entity_level_30 %in% c(888L, 999L), ]
+  data.table::setkeyv(sex_entity_level_dt, names(sex_entity_level_dt))
+  level_spaces[["sex_entity_level"]] <- sex_entity_level_dt
 
+  entity_col_nms <- names(sex_entity_level_dt)[grepl(
+    "entity", names(sex_entity_level_dt)
+  )]
+  sex_entity_dt <- data.table::melt(
+    sex_entity_level_dt,
+    id.vars = "sex",
+    measure.vars = entity_col_nms,
+    value.name = "entity"
+  )
+  sex_entity_dt[, "variable" := NULL]
+  sex_entity_dt <- unique(sex_entity_dt, by = names(sex_entity_dt))
+  sex_entity_dt <- sex_entity_dt[!is.na(entity), ]
+  data.table::setkeyv(sex_entity_dt, names(sex_entity_dt))
+  sex_entity_dt <- sex_entity_dt[!entity %in% c(888L, 999L), ]
   level_spaces[["sex_entity"]] <- sex_entity_dt
+
   out <- data.table::data.table(
     col_nm_set = lapply(level_spaces, names),
     joint_level_space = level_spaces
