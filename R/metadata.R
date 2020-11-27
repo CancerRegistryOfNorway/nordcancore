@@ -87,7 +87,9 @@ nordcan_metadata_column_level_space_dt_list <- function(col_nms) {
   )
   col_nm_sets <- lapply(joint_categorical_column_spaces[["col_nm_set"]],
                         intersect, y = col_nms)
-  wh_to_use <- which(vapply(col_nm_sets, length, integer(1L)) > 0L)
+  wh_to_use <- which(
+    vapply(col_nm_sets, length, integer(1L)) > 0L & !duplicated(col_nm_sets)
+  )
   restrictions <- nordcan_metadata_column_restrictions_by_global_settings()
   output <- lapply(wh_to_use, function(wh) {
     dt <- joint_categorical_column_spaces[["joint_level_space"]][[wh]]
@@ -123,6 +125,8 @@ nordcan_metadata_column_level_space_dt <- function(col_nms) {
   output <- level_space_list_to_level_space_data_table(
     nordcan_metadata_column_level_space_dt_list(col_nms = col_nms)
   )
+  data.table::setcolorder(output, col_nms)
+  data.table::setkeyv(output, col_nms)
 
   dbc::assert_prod_output_is_data.table_with_required_names(
     output,
