@@ -527,3 +527,69 @@ specification_dataset_source <- function(dataset_name) {
     regions = paste0(url_prefix, "regions.csv")
   )
 }
+
+
+
+
+
+#' @title Code Documentation
+#' @description
+#' Using package **codedoc** capabilities, extract documentation blocks from
+#' your source code (using [codedoc::extract_keyed_comment_blocks_])
+#' to be added to the R documentation for that object.
+#' @param text_file_paths `[character]` (mandatory, no default)
+#'
+#' passed to [codedoc::extract_keyed_comment_blocks_]
+#' @param regex `[character]` (mandatory, no default)
+#'
+#' regular expression used to identify which comment blocks to retain;
+#' see [codedoc::extract_keyed_comment_blocks_]; the regex is applied to
+#' retain only those results that pertain to the keys that match the regex
+#' @param tag `[character]` (mandatory, default `"@details"`)
+#'
+#' tag under which the extracted text should appear
+#' @param extract_arg_list `[list]` (optional, default `list()`)
+#'
+#' additional args passed to [codedoc::extract_keyed_comment_blocks_], other
+#' than `text_file_paths`
+#'
+#' @param grepl_arg_list `[list]` (optional, default `list(perl = TRUE)`)
+#'
+#' additional args passed to [base::grepl], other than `pattern` and `x`.
+#'
+#' @details
+#'
+#' so you have a roxygen block for your object you want to document. to
+#' include programmatically generated lines into the doc, use the `@eval`
+#' tag like so:
+#'
+#' `#' @eval nordcancore::object_code_documentation("R/my_script.R", "my_obj")`
+#' @export
+object_code_documentation <- function(
+  text_file_paths,
+  regex,
+  tag = "@details",
+  extract_arg_list = list(),
+  grepl_arg_list = list(perl = TRUE)
+  ) {
+  dbc::assert_user_input_file_exists(text_file_paths)
+  dbc::assert_user_input_is_character_nonNA_atom(regex)
+  dbc::assert_user_input_is_character_nonNA_atom(tag)
+  dbc::assert_user_input_is_list(extract_arg_list)
+  dbc::assert_user_input_is_list(grepl_arg_list)
+
+  extract_arg_list[["text_file_paths"]] <- text_file_paths
+  df <- do.call(codedoc::extract_keyed_comment_blocks_, extract_arg_list)
+
+  grepl_arg_list[["pattern"]] <- regex
+  grepl_arg_list[["x"]] <- df[["key"]]
+  is_match <- do.call(grepl, grepl_arg_list)
+  df <- df[is_match, ]
+  lines <- unlist(df[["comment_block"]])
+  lines <- c(tag, "", lines)
+  return(lines)
+}
+
+
+
+
