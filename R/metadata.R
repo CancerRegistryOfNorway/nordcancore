@@ -300,12 +300,26 @@ nordcan_metadata_nordcan_year <- function() {
 #' @export
 #' @rdname nordcan_metadata
 nordcan_metadata_icd10_to_entity <- function() {
+  # @codedoc_comment_block entity
+  # Table icd10_to_entity is made available to other packages via the function
+  #  nordcan_metadata_icd10_to_entity .
+  # @codedoc_comment_blcok entity
   dt <- data.table::setDT(data.table::copy(
     get_internal_dataset("icd10_to_entity", "nordcancore")
   ))
   stopifnot(
     nchar(dt[["icd10"]]) %in% 3:4
   )
+  # @codedoc_comment_block entity
+  # The function `nordcan_metadata_icd10_to_entity` also makes sure that all
+  # four-character ICD-10 codes, for which no other entity has been defined,
+  # inherit the entity from the corresponding three-character ICD-10 code,
+  # if that has been defined. E.g. if "C12" has an entity defined but "C123"
+  # does not, than it gets the same entity as "C12". This is accomplished
+  # by creating new four-character codes based on the three-character code
+  # (i.e. pre-existing four-character codes are of course preferred and new
+  # four-character codes are only created if they did not exist).
+  # @codedoc_comment_blcok entity
   icd10_char3_space <- unique(substr(unique(dt[["icd10"]]), 1L, 3L))
   icd10_char4_space_dt <- data.table::CJ(
     base = icd10_char3_space,
