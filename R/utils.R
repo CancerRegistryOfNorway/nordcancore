@@ -545,9 +545,12 @@ specification_dataset_source <- function(dataset_name) {
 #' regular expression used to identify which comment blocks to retain;
 #' see [codedoc::extract_keyed_comment_blocks_]; the regex is applied to
 #' retain only those results that pertain to the keys that match the regex
-#' @param tag `[character]` (mandatory, default `"@details"`)
+#' @param head `[character]` (mandatory, default `"@details"`)
 #'
-#' tag under which the extracted text should appear
+#' these lines will be at the head of the output vector
+#' @param tail `[character]` (mandatory, default `"@details"`)
+#'
+#' these lines will be at the tail of the output vector
 #' @param extract_arg_list `[list]` (optional, default `list()`)
 #'
 #' additional args passed to [codedoc::extract_keyed_comment_blocks_], other
@@ -568,13 +571,16 @@ specification_dataset_source <- function(dataset_name) {
 object_code_documentation <- function(
   text_file_paths,
   regex,
-  tag = "@details",
+  head = "@details",
+  tail = character(0L),
   extract_arg_list = list(),
   grepl_arg_list = list(perl = TRUE)
   ) {
+  requireNamespace("codedoc")
   dbc::assert_user_input_file_exists(text_file_paths)
   dbc::assert_user_input_is_character_nonNA_atom(regex)
-  dbc::assert_user_input_is_character_nonNA_atom(tag)
+  dbc::assert_user_input_is_character_nonNA_vector(head)
+  dbc::assert_user_input_is_character_nonNA_vector(tail)
   dbc::assert_user_input_is_list(extract_arg_list)
   dbc::assert_user_input_is_list(grepl_arg_list)
 
@@ -586,7 +592,7 @@ object_code_documentation <- function(
   is_match <- do.call(grepl, grepl_arg_list)
   df <- df[is_match, ]
   lines <- unlist(df[["comment_block"]])
-  lines <- c(tag, "", lines)
+  lines <- c(head, "", lines, tail)
   return(lines)
 }
 

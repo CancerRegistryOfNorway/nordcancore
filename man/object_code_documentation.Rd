@@ -7,7 +7,8 @@
 object_code_documentation(
   text_file_paths,
   regex,
-  tag = "@details",
+  head = "@details",
+  tail = character(0L),
   extract_arg_list = list(),
   grepl_arg_list = list(perl = TRUE)
 )
@@ -23,9 +24,13 @@ regular expression used to identify which comment blocks to retain;
 see \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks_}; the regex is applied to
 retain only those results that pertain to the keys that match the regex}
 
-\item{tag}{\verb{[character]} (mandatory, default \code{"@details"})
+\item{head}{\verb{[character]} (mandatory, default \code{"@details"})
 
-tag under which the extracted text should appear}
+these lines will be at the head of the output vector}
+
+\item{tail}{\verb{[character]} (mandatory, default \code{"@details"})
+
+these lines will be at the tail of the output vector}
 
 \item{extract_arg_list}{\verb{[list]} (optional, default \code{list()})
 
@@ -46,5 +51,5 @@ so you have a roxygen block for your object you want to document. to
 include programmatically generated lines into the doc, use the \verb{@eval}
 tag like so:
 
-\verb{#' @eval object_code_documentation("R/my_script.R", "my_obj")}
+\verb{#' @eval nordcancore::object_code_documentation("R/my_script.R", "my_obj")}
 }
