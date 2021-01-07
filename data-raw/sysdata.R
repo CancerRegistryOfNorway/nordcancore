@@ -19,7 +19,7 @@ entity_usage_info <- entity_usage_info[
 # nordcancore in script data-raw/sysdata.R. The table is downloaded from
 # `r specification_dataset_source("icd10_to_entity")` and added to the package
 # as an internal object.
-# @codedoc_comment_blcok entity
+# @codedoc_comment_block entity
 icd10_to_entity <- data.table::fread(
   specification_dataset_source("icd10_to_entity")
 )
