@@ -17,7 +17,9 @@ entity_usage_info <- entity_usage_info[
 # @codedoc_comment_block entity
 # The ICD-10 to entity conversion table, icd10_to_entity, is added to package
 # nordcancore in script data-raw/sysdata.R. The table is downloaded from
-# `r specification_dataset_source("icd10_to_entity")` and added to the package
+# `nordcancore::specification_dataset_source("icd10_to_entity")`
+# (`r nordcancore::specification_dataset_source("icd10_to_entity")`)
+# and added to the package
 # as an internal object.
 # @codedoc_comment_block entity
 icd10_to_entity <- data.table::fread(
