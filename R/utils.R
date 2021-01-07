@@ -511,24 +511,34 @@ subset_and <- function(
 
 
 
+#' @title Specification Dataset Sources
+#' @description
+#' Retrieve sources of specification datasets.
+#' @param dataset_name `[character]` (mandatory, no default)
+#' name of a dataset
+#' @export
 specification_dataset_source <- function(dataset_name) {
   dbc::assert_is_character_nonNA_atom(dataset_name)
+  dbc::assert_atom_is_in_set(
+    x = dataset_name,
+    set = names(specification_dataset_sources)
+  )
+
+  specification_dataset_sources[[dataset_name]]
+}
+specification_dataset_sources <- local({
   url_prefix <- paste0(
     "https://raw.githubusercontent.com/CancerRegistryOfNorway/NORDCAN/master/",
     "specifications/"
   )
-  switch(
-    dataset_name,
-    stop("No source defined for dataset_name = ", deparse(dataset_name)),
+  list(
     entity_usage_info = paste0(url_prefix, "entity_usage_info.csv"),
     icd10_to_entity = paste0(url_prefix, "icd10_to_entity_columns.csv"),
     icd10_vs_icd67_icd8_icd9 = paste0(url_prefix,
                                       "icd10_vs_icd67_icd8_icd9.csv"),
     regions = paste0(url_prefix, "regions.csv")
   )
-}
-
-
+})
 
 
 
