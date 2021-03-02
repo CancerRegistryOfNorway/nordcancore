@@ -15,7 +15,7 @@
 
 nordcan_metadata_column_restrictions_by_global_settings <- function() {
   gs <- get_global_nordcan_settings()
-  nordcan_year <- nordcan_metadata_nordcan_year()
+  nordcan_year <- gs$last_year
   participant_info <- nordcan_metadata_participant_info()
   region_number_space <- participant_info[["column_limits"]][["region"]]
   list(
@@ -125,6 +125,9 @@ nordcan_metadata_column_level_space_dt <- function(col_nms) {
   output <- level_space_list_to_level_space_data_table(
     nordcan_metadata_column_level_space_dt_list(col_nms = col_nms)
   )
+
+  output <- unique(output)
+
   data.table::setcolorder(output, col_nms)
   data.table::setkeyv(output, col_nms)
 
@@ -183,7 +186,7 @@ nordcan_participant_names <- function() {
 #'
 #' Some first years for statistics are set using `set_global_nordcan_settings`.
 #' However, the first year for survival is fixed to
-#' `nordcancore::nordcan_metadata_nordcan_year() - 29L`. Likewise the first
+#' `nordcancore::global_settings_env[["last_year"]] - 29L`. Likewise the first
 #' year for prevalence is fixed to `stat_cancer_record_count_first_year + 20L`.
 #'
 #' @export
@@ -192,7 +195,8 @@ set_global_nordcan_settings <- function(
   participant_name,
   stat_cancer_record_count_first_year,
   stat_cancer_death_count_first_year,
-  regional_data_first_year
+  regional_data_first_year,
+  last_year
 ) {
   arg_nms <- names(formals(set_global_nordcan_settings))
   invisible(lapply(arg_nms, function(arg_nm) {
@@ -226,7 +230,6 @@ set_global_nordcan_settings <- function(
          "working directory does not contain any whitespaces")
   }
 
-  last_year <- nordcan_metadata_nordcan_year()
   # survival: 50 latest years, e.g. with last year 2018 -> years 1969-2018
   global_settings_env[["stat_survival_follow_up_first_year"]] <- last_year - 49L
 
@@ -288,14 +291,6 @@ get_global_nordcan_settings <- function() {
 #' Retrieve definition tables on NORDCAN datasets and their contents.
 #' @name nordcan_metadata
 
-#' @export
-#' @rdname nordcan_metadata
-#' @details
-#' - `nordcan_metadata_nordcan_year` just returns the current NORDCAN year
-#'   as an integer.
-nordcan_metadata_nordcan_year <- function() {
-  get_internal_dataset("nordcan_year", "nordcancore")
-}
 
 #' @export
 #' @rdname nordcan_metadata
