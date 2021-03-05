@@ -2,7 +2,6 @@
 % Please edit documentation in R/metadata.R
 \name{nordcan_metadata}
 \alias{nordcan_metadata}
-\alias{nordcan_metadata_nordcan_year}
 \alias{nordcan_metadata_icd10_to_entity}
 \alias{nordcan_metadata_entity_usage_info}
 \alias{nordcan_metadata_icd10_vs_icd67_icd8_icd9}
@@ -15,8 +14,6 @@
 \alias{nordcan_metadata_nordcan_version}
 \title{NORDCAN Metadata}
 \usage{
-nordcan_metadata_nordcan_year()
-
 nordcan_metadata_icd10_to_entity()
 
 nordcan_metadata_entity_usage_info()
@@ -44,10 +41,4 @@ name of entity number set; e.g. "all"}
 }
 \description{
 Retrieve definition tables on NORDCAN datasets and their contents.
-}
-\details{
-\itemize{
-\item \code{nordcan_metadata_nordcan_year} just returns the current NORDCAN year
-as an integer.
-}
 }

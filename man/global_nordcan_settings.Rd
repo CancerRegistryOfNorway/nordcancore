@@ -11,7 +11,8 @@ set_global_nordcan_settings(
   participant_name,
   stat_cancer_record_count_first_year,
   stat_cancer_death_count_first_year,
-  regional_data_first_year
+  regional_data_first_year,
+  last_year
 )
 
 get_global_nordcan_settings()
@@ -45,6 +46,6 @@ Set and get settings for NORDCAN software.
 \details{
 Some first years for statistics are set using \code{set_global_nordcan_settings}.
 However, the first year for survival is fixed to
-\code{nordcancore::nordcan_metadata_nordcan_year() - 29L}. Likewise the first
+\code{nordcancore::global_settings_env[["last_year"]] - 29L}. Likewise the first
 year for prevalence is fixed to \code{stat_cancer_record_count_first_year + 20L}.
 }
