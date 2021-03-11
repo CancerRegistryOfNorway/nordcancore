@@ -15,22 +15,21 @@
 
 nordcan_metadata_column_restrictions_by_global_settings <- function() {
   gs <- get_global_nordcan_settings()
-  nordcan_year <- gs$last_year
   participant_info <- nordcan_metadata_participant_info()
   region_number_space <- participant_info[["column_limits"]][["region"]]
   list(
     yoi = list(
-      levels = gs[["stat_cancer_record_count_first_year"]]:nordcan_year
+      levels = gs[["first_year_incidence"]]:gs[["last_year_incidence"]]
     ),
     yof = list(
-      levels = gs[["stat_cancer_death_count_first_year"]]:nordcan_year
+      levels = gs[["first_year_mortality"]]:gs[["last_year_mortality"]]
     ),
     region = list(
       levels = region_number_space
     ),
     period_5 = list(
       levels = rev(seq(
-        nordcan_year + 1L, gs[["stat_cancer_record_count_first_year"]], -5L
+        gs[["last_year_survival"]] + 1L, gs[["first_year_incidence"]], -5L
       )[-1L])
     )
   )
@@ -169,15 +168,15 @@ nordcan_participant_names <- function() {
 #' @param participant_name `[character]` (mandatory, no default)
 #'
 #' name of NORDCAN participant; e.g. "Denmark" or "Sweden"
-#' @param stat_cancer_record_count_first_year `[integer]` (mandatory, no default)
+#' @param first_year_incidence `[integer]` (mandatory, no default)
 #'
 #' first year for which to compute the cancer record count statistics;
 #' e.g. `1953L`
-#' @param stat_cancer_death_count_first_year
+#' @param first_year_mortality
 #' `[integer]` (mandatory, no default)
 #'
 #' first year for the cancer death count statistics; e.g. `1953L`
-#' @param regional_data_first_year
+#' @param first_year_region
 #' `[integer]` (mandatory, no default)
 #'
 #' first year for regional data; e.g. `1953L`
@@ -186,17 +185,19 @@ nordcan_participant_names <- function() {
 #'
 #' Some first years for statistics are set using `set_global_nordcan_settings`.
 #' However, the first year for survival is fixed to
-#' `nordcancore::global_settings_env[["last_year"]] - 29L`. Likewise the first
-#' year for prevalence is fixed to `stat_cancer_record_count_first_year + 20L`.
+#' `nordcancore::global_settings_env[["last_year_survival"]] - 29L`. Likewise the first
+#' year for prevalence is fixed to `first_year_incidence + 20L`.
 #'
 #' @export
 set_global_nordcan_settings <- function(
   work_dir,
   participant_name,
-  stat_cancer_record_count_first_year,
-  stat_cancer_death_count_first_year,
-  regional_data_first_year,
-  last_year
+  first_year_incidence,
+  first_year_mortality,
+  first_year_region,
+  last_year_incidence,
+  last_year_mortality,
+  last_year_survival
 ) {
   arg_nms <- names(formals(set_global_nordcan_settings))
   invisible(lapply(arg_nms, function(arg_nm) {
@@ -231,11 +232,11 @@ set_global_nordcan_settings <- function(
   }
 
   # survival: 50 latest years, e.g. with last year 2018 -> years 1969-2018
-  global_settings_env[["stat_survival_follow_up_first_year"]] <- last_year - 49L
+  global_settings_env[["first_year_survival"]] <- last_year_survival - 49L
 
   # prevalence: 20 years after first year of incidence, e.g. 1953 -> 1973
-  global_settings_env[["stat_prevalent_subject_count_first_year"]] <- {
-    global_settings_env[["stat_cancer_record_count_first_year"]] + 20L
+  global_settings_env[["first_year_prevalence"]] <- {
+    global_settings_env[["first_year_incidence"]] + 20L
   }
 
   global_settings_env[["work_dir"]] <- normalizePath(
@@ -243,12 +244,10 @@ set_global_nordcan_settings <- function(
   )
 
   global_settings_env[["iarccrgtools_work_dir"]] <- normalizePath(paste0(
-    global_settings_env[["work_dir"]],
-    "/iarccrgtools"
+    global_settings_env[["work_dir"]], "/iarccrgtools"
   ), mustWork = FALSE)
   global_settings_env[["survival_work_dir"]] <- normalizePath(paste0(
-    global_settings_env[["work_dir"]],
-    "/survival"
+    global_settings_env[["work_dir"]], "/survival"
   ), mustWork = FALSE)
 
   dir_setting_names <- c("work_dir", "iarccrgtools_work_dir",

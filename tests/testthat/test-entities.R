@@ -7,11 +7,13 @@
 testthat::test_that("all entities in column level specs", {
   nordcancore::set_global_nordcan_settings(
     work_dir = tempdir(),
-    participant_name = "Finland",
-    stat_cancer_record_count_first_year = 1953L,
-    stat_cancer_death_count_first_year = 1953L,
-    regional_data_first_year = 1953L,
-    last_year = 2018L
+    participant_name = "Norway",
+    first_year_incidence = 1953L,
+    first_year_mortality = 1953L,
+    first_year_region = 1953L,
+    last_year_incidence = 2018L,
+    last_year_mortality = 2018L,
+    last_year_survival = 2018L
   )
   entity_no_set <- nordcan_metadata_entity_no_set("all")
   entity_no_set <- setdiff(entity_no_set, c(888L, 999L))
