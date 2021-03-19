@@ -539,7 +539,7 @@ nordcan_metadata_participant_info <- function() {
     substr(region_levels, 1L, 1L) == substr(topregion_number, 1L, 1L)
   ]
   has_sub_regions <- TRUE
-  region_number_space <- setdiff(region_number_space, topregion_number)
+  # region_number_space <- setdiff(region_number_space, topregion_number)
   if (length(region_number_space) == 0L) {
     # small participants only have the top region and no subregions
     region_number_space <- topregion_number
