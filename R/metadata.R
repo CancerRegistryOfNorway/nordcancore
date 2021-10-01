@@ -238,6 +238,13 @@ set_global_nordcan_settings <- function(
   global_settings_env[["first_year_prevalence"]] <- {
     global_settings_env[["first_year_incidence"]] + 20L
   }
+  # regional prevalence: 20 years after first of regional stats
+  if (first_year_region < first_year_incidence) {
+    stop("first_year_region cannot be smaller than first_year_incidence")
+  }
+  global_settings_env[["first_year_regional_prevalence"]] <- {
+    global_settings_env[["first_year_region"]] + 20L
+  }
 
   global_settings_env[["work_dir"]] <- normalizePath(
     global_settings_env[["work_dir"]], mustWork = FALSE
