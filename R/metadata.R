@@ -65,8 +65,8 @@ nordcan_metadata_column_level_space_list <- function(col_nms) {
     return(levels)
   })
   names(output) <- col_nms
-  dbc::report_to_assertion(dbc::tests_to_report(
-    tests = c(
+  dbc::report_to_assertion(dbc::expressions_to_report(
+    expressions = c(
       "vapply(output, is.integer, logical(1L))"
     )
   ), assertion_type = "prod_output")
@@ -135,8 +135,8 @@ nordcan_metadata_column_level_space_dt <- function(col_nms) {
     required_names = col_nms
   )
   dbc::report_to_assertion(
-    dbc::tests_to_report(
-      tests = paste0(
+    dbc::expressions_to_report(
+      expressions = paste0(
         "!duplicated(output, by = ", paste0(deparse(col_nms), collapse = ""),")"
       )
     ),
