@@ -38,9 +38,20 @@ e.g. \code{1953L}}
 
 first year for the cancer death count statistics; e.g. \code{1953L}}
 
-\item{first_year_region}{\verb{[integer]} (mandatory, no default)
+\item{first_year_region}{\verb{[integer]} (mandatory, no default)}
 
-first year for regional data; e.g. \code{1953L}}
+\item{last_year_incidence}{\verb{[integer]} (mandatory, no default)
+
+Last year for which to compute the cancer record count statistics;
+e.g. \code{2019L}}
+
+\item{last_year_mortality}{\verb{[integer]} (mandatory, no default)
+
+Last year for the cancer death count statistics; e.g. \code{2019L}}
+
+\item{last_year_survival}{\verb{[integer]} (mandatory, no default)
+
+Last year for survival analysis; e.g. \code{2019L}}
 }
 \description{
 Set and get settings for NORDCAN software.

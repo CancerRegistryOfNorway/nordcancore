@@ -179,7 +179,20 @@ nordcan_participant_names <- function() {
 #' @param first_year_region
 #' `[integer]` (mandatory, no default)
 #'
-#' first year for regional data; e.g. `1953L`
+#' @param last_year_incidence `[integer]` (mandatory, no default)
+#'
+#' Last year for which to compute the cancer record count statistics;
+#' e.g. `2019L`
+#'
+#' @param last_year_mortality
+#' `[integer]` (mandatory, no default)
+#'
+#' Last year for the cancer death count statistics; e.g. `2019L`
+#'
+#' @param last_year_survival
+#' `[integer]` (mandatory, no default)
+#'
+#' Last year for survival analysis; e.g. `2019L`
 #'
 #' @details
 #'
