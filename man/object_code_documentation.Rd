@@ -16,12 +16,12 @@ object_code_documentation(
 \arguments{
 \item{text_file_paths}{\verb{[character]} (mandatory, no default)
 
-passed to \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks_}}
+passed to \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks}}
 
 \item{regex}{\verb{[character]} (mandatory, no default)
 
 regular expression used to identify which comment blocks to retain;
-see \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks_}; the regex is applied to
+see \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks}; the regex is applied to
 retain only those results that pertain to the keys that match the regex}
 
 \item{head}{\verb{[character]} (mandatory, default \code{"@details"})
@@ -34,7 +34,7 @@ these lines will be at the tail of the output vector}
 
 \item{extract_arg_list}{\verb{[list]} (optional, default \code{list()})
 
-additional args passed to \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks_}, other
+additional args passed to \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks}, other
 than \code{text_file_paths}}
 
 \item{grepl_arg_list}{\verb{[list]} (optional, default \code{list(perl = TRUE)})
@@ -43,7 +43,7 @@ additional args passed to \link[base:grep]{base::grepl}, other than \code{patter
 }
 \description{
 Using package \strong{codedoc} capabilities, extract documentation blocks from
-your source code (using \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks_})
+your source code (using \link[codedoc:extract_keyed_comment_blocks]{codedoc::extract_keyed_comment_blocks})
 to be added to the R documentation for that object.
 }
 \details{

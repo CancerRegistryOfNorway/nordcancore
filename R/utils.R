@@ -545,15 +545,15 @@ specification_dataset_sources <- local({
 #' @title Code Documentation
 #' @description
 #' Using package **codedoc** capabilities, extract documentation blocks from
-#' your source code (using [codedoc::extract_keyed_comment_blocks_])
+#' your source code (using [codedoc::extract_keyed_comment_blocks])
 #' to be added to the R documentation for that object.
 #' @param text_file_paths `[character]` (mandatory, no default)
 #'
-#' passed to [codedoc::extract_keyed_comment_blocks_]
+#' passed to [codedoc::extract_keyed_comment_blocks]
 #' @param regex `[character]` (mandatory, no default)
 #'
 #' regular expression used to identify which comment blocks to retain;
-#' see [codedoc::extract_keyed_comment_blocks_]; the regex is applied to
+#' see [codedoc::extract_keyed_comment_blocks]; the regex is applied to
 #' retain only those results that pertain to the keys that match the regex
 #' @param head `[character]` (mandatory, default `"@details"`)
 #'
@@ -563,7 +563,7 @@ specification_dataset_sources <- local({
 #' these lines will be at the tail of the output vector
 #' @param extract_arg_list `[list]` (optional, default `list()`)
 #'
-#' additional args passed to [codedoc::extract_keyed_comment_blocks_], other
+#' additional args passed to [codedoc::extract_keyed_comment_blocks], other
 #' than `text_file_paths`
 #'
 #' @param grepl_arg_list `[list]` (optional, default `list(perl = TRUE)`)
@@ -595,7 +595,7 @@ object_code_documentation <- function(
   dbc::assert_user_input_is_list(grepl_arg_list)
 
   extract_arg_list[["text_file_paths"]] <- text_file_paths
-  df <- do.call(codedoc::extract_keyed_comment_blocks_, extract_arg_list)
+  df <- do.call(codedoc::extract_keyed_comment_blocks, extract_arg_list)
 
   grepl_arg_list[["pattern"]] <- regex
   grepl_arg_list[["x"]] <- df[["key"]]
