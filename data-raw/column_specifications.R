@@ -62,7 +62,8 @@ column_specification_list <- list(
               levels = c("Benign neoplasm" = 0L,
                          "Neoplasm of uncertain and unknown behaviour (uncertain whether benign or malignant, \"borderline\" malignant, incipient cancer, bladder papilloma" = 1L,
                          "In-situ neoplasm (carcinoma in situ/non invasive/preleukaemia/intraepithelial tumor)" = 2L,
-                         "Malignant neoplasm" = 3L)),
+                         "Malignant neoplasm" = 3L,
+                         "Pseudomyxoma" = 6L)),
 
 
 
