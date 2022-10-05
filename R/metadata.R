@@ -238,11 +238,11 @@ set_global_nordcan_settings <- function(
     global_settings_env[[arg_nm]] <- arg_value
   }))
 
-  if (grepl("\\s", global_settings_env[["work_dir"]])) {
-    stop("work_dir = ", deparse(global_settings_env[["work_dir"]]),
-         " has a whitespace ( ); please ensure that the full path to your ",
-         "working directory does not contain any whitespaces")
-  }
+  # if (grepl("\\s", global_settings_env[["work_dir"]])) {
+  #   stop("work_dir = ", deparse(global_settings_env[["work_dir"]]),
+  #        " has a whitespace ( ); please ensure that the full path to your ",
+  #        "working directory does not contain any whitespaces")
+  # }
 
   # survival: 50 latest years, e.g. with last year 2018 -> years 1969-2018
   global_settings_env[["first_year_survival"]] <- last_year_survival - 49L
