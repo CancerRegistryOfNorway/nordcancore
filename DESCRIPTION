@@ -9,7 +9,7 @@ Authors@R: c(
 Maintainer: Huidong Tian <huidong.tian@kreftregisteret.no>
 Description: Contains metadata and general utilities for the NORDCAN R 
   framework.
-License: MIT + file LICENSE
+License: file LICENSE
 Imports: data.table, dbc
 Encoding: UTF-8
 LazyData: true
