@@ -608,4 +608,45 @@ object_code_documentation <- function(
 
 
 
+#' @title Clean unused sensitive data.
+#' @description
+#' A function ask user if they want to remove unused sensitive data once they have finished all calculation.
+#' The function will find the unused sensitive data in current work directory.
+#' @export
+clean_results <- function(dir_result) {
+  msg <- "Do you want to permanently delete all these files?
+They are not needed if you have successfully finished the whole process.
+We recommend deleting these once you have submitted your data.
+These files and directories contain sensitive data. \n
+- cancer_record_dataset.rds
+- iarccrgtools/
+- survival/ \n
+press '1': yes, delete these permanently.
+press '0': no, don't delete anything yet."
+
+  message(msg)
+  input <- readline(prompt = ": ")
+
+  if (input == "1") {
+    if (file.exists("cancer_record_dataset.rds")) {
+      unlink("cancer_record_dataset.rds")
+      if (!file.exists("cancer_record_dataset.rds")) {
+        message("cancer_record_dataset.rds deleted!")
+      }
+    }
+    if (dir.exists("iarccrgtools")) {
+      unlink("iarccrgtools", recursive = TRUE)
+      if (!dir.exists("iarccrgtools")) {
+        message("folder 'iarccrgtools' deleted!")
+      }
+    }
+    if (dir.exists("survival")) {
+      unlink("survival", recursive = TRUE)
+      if (!dir.exists("survival")) {
+        message("folder 'survival' deleted!")
+      }
+    }
+  }
+}
+
 
