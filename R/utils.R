@@ -414,8 +414,9 @@ handle_subset_arg <- function(
   dbc::assert_prod_interim_is_one_of(
     subset_value,
     x_nm = subset_expr_text,
-    funs = c("report_is_NULL", "report_is_logical_vector",
-             "report_is_number_vector")
+    funs = list(dbc::report_is_NULL,
+                dbc::report_is_logical_vector,
+                dbc::report_is_number_vector)
   )
 
   if (anyNA(subset_value)) {
@@ -474,11 +475,15 @@ subset_and <- function(
 ) {
   dbc::assert_prod_input_is_one_of(
     x = subset1,
-    funs = c("report_is_NULL", "report_is_logical", "report_is_integer")
+    funs = list(dbc::report_is_NULL,
+                dbc::report_is_logical,
+                dbc::report_is_integer)
   )
   dbc::assert_prod_input_is_one_of(
     x = subset2,
-    funs = c("report_is_NULL", "report_is_logical", "report_is_integer")
+    funs = list(dbc::report_is_NULL,
+                dbc::report_is_logical,
+                dbc::report_is_integer)
   )
   if (is.null(subset1) && is.null(subset2)) {
     return(NULL)

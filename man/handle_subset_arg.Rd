@@ -62,9 +62,9 @@ of classes of \code{subset1} and \code{subset2} intelligently.
 }
 \section{Functions}{
 \itemize{
-\item \code{subset_and}: intersect two subsetting vectors
-}}
+\item \code{subset_and()}: intersect two subsetting vectors
 
+}}
 \examples{
 
 my_fun <- function(x, subset = NULL) {
