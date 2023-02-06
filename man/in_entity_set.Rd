@@ -7,16 +7,16 @@
 in_entity_set(x, entities)
 }
 \arguments{
-\item{x}{\verb{[data.table]} (mandatory, no default)
+\item{x}{`[data.table]` (mandatory, no default)
 
 dataset in which to look for records in specific entities}
 
-\item{entities}{\verb{[integer]} (mandatory, no default)
+\item{entities}{`[integer]` (mandatory, no default)
 
 set of entities to look for}
 }
 \value{
-Returns a logical vector of length \code{nrow(x)}.
+Returns a logical vector of length `nrow(x)`.
 }
 \description{
 Detect records that have at least one of the supplied entities.

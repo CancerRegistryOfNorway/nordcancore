@@ -14,11 +14,11 @@ get_exported_dataset(dataset_name, package_name)
 get_internal_dataset(dataset_name, package_name)
 }
 \arguments{
-\item{package_name}{\verb{[character]} (mandatory, no default)
+\item{package_name}{`[character]` (mandatory, no default)
 
 name of R package}
 
-\item{dataset_name}{\verb{[character]} (mandatory, no default)
+\item{dataset_name}{`[character]` (mandatory, no default)
 
 name of dataset to retrieve.}
 }

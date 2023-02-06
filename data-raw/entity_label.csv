@@ -1,0 +1,72 @@
+﻿value;label
+10;Lip
+20;Oral Cavity
+30;Salivary glands
+40;Oropharynx
+41;Nasopharynx
+50;Hypopharynx
+51;Pharynx, ill defined
+60;Oesophagus
+70;Stomach
+80;Small intestine
+90;Colon
+100;Rectum
+110;Liver
+120;Gallbladder
+130;Pancreas
+140;Nasal Cavity, middle ear and sinuses
+150;Larynx
+160;Lung
+170;Pleura
+180;Breast
+190;Cervix uteri
+200;Corpus uteri
+210;Uterus, other
+220;Ovary and tubes
+227;Vulva
+228;Vagina
+229;Other female genital organs
+230;Vulva, vagina and other female genital organs
+240;Prostate
+250;Testis
+260;Penis and other male genital organs
+270;Kidney
+280;Bladder and urinary tract
+290;Melanoma of skin
+300;Skin, non-melanoma
+310;Eye
+315;Endocrine tumors of brain and CNS
+316;Meningiomas
+317;Gliomas
+318;Nerve sheet tumors
+319;Other brain and CNS
+320;Brain and CNS excluding endocrine tumors
+321;Brain and CNS including endocrine tumors
+330;Thyroid
+340;Bone
+350;Soft tissues
+360;Non Hodgkin lymphomas
+370;Hodgkin lymphomas
+380;Multiple myelomas
+390;Myelodysplastic syndromes
+392;Myeloproliferative diseases
+394;Other haematopoietic diseases
+401;Acute lymphatic leukaemias
+402;Chronic lymphatic leukaemias
+403;Other and unspecified lymphatic leukaemias
+404;Acute myeloid leukaemias
+405;Chronic myeloid leukaemias
+406;Other and unspecified myeloid leukaemia
+407;Leukaemia, cell unspecified
+410;Other specified cancers
+420;Other and ill-defined cancers
+430;Malignant haematopoietic diseases
+510;Lip, oral cavity and pharynx
+520;Colorectal
+888;Basal cell carcinoma
+970;All sites but non-melanoma skin cancer, breast and prostate
+980;All sites
+990;All sites but non-melanoma skin cancer
+999;Not included in NORDCAN
+105;Anus and anal canal
+400;Leukaemias

@@ -17,7 +17,7 @@ nordcan_metadata_column_level_space_dt_list(col_nms)
 nordcan_metadata_column_level_space_dt(col_nms)
 }
 \arguments{
-\item{col_nms}{\verb{[character]} (mandatory, no default)
+\item{col_nms}{`[character]` (mandatory, no default)
 
 character string vector of columns names for which to retrieve column
 space(s)}
@@ -26,18 +26,12 @@ space(s)}
 Retrieve allowed levels for categorical NORDCAN columns.
 }
 \details{
-\itemize{
-\item \code{nordcan_metadata_column_level_space_list} retrieves a \code{list} which
-determines allowed levels for each column specified in \code{col_nms}
-}
+- `nordcan_metadata_column_level_space_list` retrieves a `list` which
+determines allowed levels for each column specified in `col_nms`
 
-\itemize{
-\item \code{nordcan_metadata_column_level_space_dt_list} retrieves a \code{list} of  \code{data.table}s,
-each of which a set of columns named in \code{col_nms}
-}
+- `nordcan_metadata_column_level_space_dt_list` retrieves a `list` of  `data.table`s,
+  each of which a set of columns named in `col_nms`
 
-\itemize{
-\item \code{nordcan_metadata_column_level_space_dt} retrieves a \code{data.table} which
-determines allowed combinations of \code{col_nms}
-}
+- `nordcan_metadata_column_level_space_dt` retrieves a `data.table` which
+determines allowed combinations of `col_nms`
 }

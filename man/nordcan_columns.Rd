@@ -11,21 +11,17 @@ nordcan_metadata_column_name_set_names()
 nordcan_metadata_column_name_set(column_name_set_name)
 }
 \arguments{
-\item{column_name_set_name}{\verb{[character]} (mandatory, no default)
+\item{column_name_set_name}{`[character]` (mandatory, no default)
 
 name of column name, one of the elements from output of
-\code{nordcan_metadata_column_name_set_names()}; causes all column names for this set to
+`nordcan_metadata_column_name_set_names()`; causes all column names for this set to
 be retrieved}
 }
 \value{
-\itemize{
-\item \code{nordcan_metadata_column_name_set_names}: a \code{character} vector of names of all
-column name sets
-}
+- `nordcan_metadata_column_name_set_names`: a `character` vector of names of all
+  column name sets
 
-\itemize{
-\item \code{nordcan_metadata_column_name_set}: a \code{character} vector of names in queried set
-}
+- `nordcan_metadata_column_name_set`: a `character` vector of names in queried set
 }
 \description{
 Utilities to retrieve information about NORDCAN dataset columns.

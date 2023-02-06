@@ -11,13 +11,11 @@ assert_prod_input_entities(x)
 assert_user_input_entities(x)
 }
 \arguments{
-\item{x}{\verb{[R object]}
+\item{x}{`[R object]`
 
 requirements vary.
-\itemize{
-\item \code{assert_prod_input_entities}: an \code{integer} vector of valid entity numbers
-\item \code{assert_user_input_entities}: an \code{integer} vector of valid entity numbers
-}}
+- `assert_prod_input_entities`: an `integer` vector of valid entity numbers
+- `assert_user_input_entities`: an `integer` vector of valid entity numbers}
 }
 \description{
 Assertions specific to NORDCAN metadata.
