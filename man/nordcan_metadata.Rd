@@ -35,7 +35,7 @@ nordcan_metadata_participant_info()
 nordcan_metadata_nordcan_version()
 }
 \arguments{
-\item{entity_no_set_name}{`[character]` (mandatory, no default)
+\item{entity_no_set_name}{\verb{[character]} (mandatory, no default)
 
 name of entity number set; e.g. "all"}
 }

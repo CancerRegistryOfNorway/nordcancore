@@ -16,49 +16,49 @@ handle_subset_arg(
 subset_and(subset1, subset2)
 }
 \arguments{
-\item{subset_arg_nm}{`[character]` (mandatory, default `"subset"`)
+\item{subset_arg_nm}{\verb{[character]} (mandatory, default \code{"subset"})
 
 name of subset argument of the function where this function is used}
 
-\item{dataset}{`[environment, data.frame]` (optional, default `emptyenv()`)
+\item{dataset}{\verb{[environment, data.frame]} (optional, default \code{emptyenv()})
 
-if `subset` is an expression, it can evaluated in this context;
+if \code{subset} is an expression, it can evaluated in this context;
 see ?eval}
 
-\item{function_env}{`[environment]` (optional, default `parent.frame(1L)`)
+\item{function_env}{\verb{[environment]} (optional, default \code{parent.frame(1L)})
 
-env where to collect `subset` expression from --- the default should work}
+env where to collect \code{subset} expression from --- the default should work}
 
-\item{enclosing_env}{`[environment]` (optional, default `parent.frame(2L)`)
+\item{enclosing_env}{\verb{[environment]} (optional, default \code{parent.frame(2L)})
 
-env where to continue scoping after `dataset`; think of this as the env
-where `dataset` exists if it is a data.frame}
+env where to continue scoping after \code{dataset}; think of this as the env
+where \code{dataset} exists if it is a data.frame}
 
-\item{function_call}{`[call]` (optional, default `sys.call(1L)`)
+\item{function_call}{\verb{[call]} (optional, default \code{sys.call(1L)})
 
 in case a warning is emitted due to NA values in the subset, this call
-is passed to [base::simpleWarning].}
+is passed to \link[base:conditions]{base::simpleWarning}.}
 
-\item{subset1}{`[NULL, integer, logical]` (mandatory, no default)
+\item{subset1}{\verb{[NULL, integer, logical]} (mandatory, no default)
 subset to combine with subset2}
 
-\item{subset2}{`[NULL, integer, logical]` (mandatory, no default)
+\item{subset2}{\verb{[NULL, integer, logical]} (mandatory, no default)
 subset to combine with subset1}
 }
 \description{
 This function is intended to be used inside other functions to handle that
-function's argument `subset`.
+function's argument \code{subset}.
 }
 \details{
-The subset arg can be one of `logical`, `integer`, or `NULL`. `NULL` implies
-no subset. `logical` must be of length `nrow(dataset)`, if `dataset` is a
-data.frame. Similarly, `integer` subset must have values in between
-`-nrow(dataset)` and `nrow(dataset)`.
+The subset arg can be one of \code{logical}, \code{integer}, or \code{NULL}. \code{NULL} implies
+no subset. \code{logical} must be of length \code{nrow(dataset)}, if \code{dataset} is a
+data.frame. Similarly, \code{integer} subset must have values in between
+\code{-nrow(dataset)} and \code{nrow(dataset)}.
 
-`subset_and` is used to combine two results of `handle_subset_arg`.
-If both `subset1` and `subset2` are logical, this is the same as
-`subset1 & subset2`. However, this function handles all the possible pairs
-of classes of `subset1` and `subset2` intelligently.
+\code{subset_and} is used to combine two results of \code{handle_subset_arg}.
+If both \code{subset1} and \code{subset2} are logical, this is the same as
+\code{subset1 & subset2}. However, this function handles all the possible pairs
+of classes of \code{subset1} and \code{subset2} intelligently.
 }
 \section{Functions}{
 \itemize{

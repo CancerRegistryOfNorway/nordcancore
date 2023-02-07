@@ -655,3 +655,49 @@ press '0': no, don't delete anything yet."
 }
 
 
+#' @title Checking whether the directory is empty.
+#'
+#' @export
+dir_check <- function(dir_result, dir_archive) {
+  dir_not_empty <- c(length(list.files(dir_result , recursive = TRUE)) > 0,
+                     length(list.files(dir_archive, recursive = TRUE)) > 0 )
+  if (all(dir_not_empty)) {
+    txt <- "Folder 'dir_result' (%s) and folder 'dir_archive' (%s) are not empty.
+The following process will overwrite the contents of your folder!
+Users should take their own risk of conducting the following process!"
+    message(sprintf(txt, dir_result, dir_archive))
+  } else if (dir_not_empty[1]) {
+    txt <- "Folder 'dir_result' (%s) is not empty.
+The following process will overwrite the contents of your folder!
+Users should take their own risk of conducting the following process!"
+    message(sprintf(txt, dir_result))
+  } else if (dir_not_empty[2]) {
+    txt <- "Folder 'dir_archive' (%s) is not empty.
+The following process will overwrite the contents of your folder!
+Users should take their own risk of conducting the following process!"
+    message(sprintf(txt, dir_archive))
+  }
+}
+
+
+
+#' @title  Export undefined ICD version & codes
+#'
+#' @export
+export_undefined <- function() {
+  if (exists("._undefined")) {
+    write.table(._undefined,
+                file = "undefined_icd_version_and_codes.csv",
+                row.names = FALSE, sep = ";")
+    cat("save to 'undefined_icd_version_and_codes.csv' \n")
+
+    names_order <- names(unprocessed_cancer_death_count_dataset)
+    tmp <- merge(unprocessed_cancer_death_count_dataset, ._undefined,
+                 by = c("icd_version", "icd_code"), all.y = TRUE)
+    fn <- "unprocessed_cancer_death_count_dataset_with_undefined_icd_version_and_codes.csv"
+    write.table(tmp[, ..names_order], file = fn, row.names = FALSE, sep = ";")
+
+    cat("save to 'unprocessed_cancer_death_count_dataset_with_undefined_icd_version_and_codes.csv' \n")
+  }
+
+}

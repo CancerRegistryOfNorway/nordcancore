@@ -14,32 +14,32 @@ random_names(
 )
 }
 \arguments{
-\item{n_random_names}{`[integer]` (mandatory, default `1L`)
+\item{n_random_names}{\verb{[integer]} (mandatory, default \code{1L})
 
 generate this many random names}
 
-\item{exclude_names}{`[character]` (optional, default `character(0L)`)
+\item{exclude_names}{\verb{[character]} (optional, default \code{character(0L)})
 names are generated until none of them is one the names
 supplied here.}
 
-\item{name_length}{`[integer]` (mandatory, default `10L`)
+\item{name_length}{\verb{[integer]} (mandatory, default \code{10L})
 
 length of each random name}
 
-\item{character_pool}{`[character]` (mandatory, default `letters`)
+\item{character_pool}{\verb{[character]} (mandatory, default \code{letters})
 
 vector of characters (each must be a string of length one) to sample from
 when generating random names; the first character in any random name is
-always generated from `letters` despite what is supplied here}
+always generated from \code{letters} despite what is supplied here}
 
-\item{transform}{`[function]` (mandatory, default `identity`)
+\item{transform}{\verb{[function]} (mandatory, default \code{identity})
 
 this transformation is applied first before checking whether
-they already exist in `exclude_names`; the function must have the argument
-`x` to accept the current random names and it must output them after
-any transformation (such as adding a file extension; see **Examples**)}
+they already exist in \code{exclude_names}; the function must have the argument
+\code{x} to accept the current random names and it must output them after
+any transformation (such as adding a file extension; see \strong{Examples})}
 
-\item{n_max_tries}{`[integer]` (mandatory, default `1000L`)
+\item{n_max_tries}{\verb{[integer]} (mandatory, default \code{1000L})
 
 sampling of an individual random name is attempted this many times before
 giving up (raising an error); one may need to give if for some reason

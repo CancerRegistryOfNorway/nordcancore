@@ -20,45 +20,45 @@ set_global_nordcan_settings(
 get_global_nordcan_settings()
 }
 \arguments{
-\item{work_dir}{`[character]` (mandatory, no default)
+\item{work_dir}{\verb{[character]} (mandatory, no default)
 
 root directory for any and all (temporarily) stored NORDCAN data; if it
 does not exist it is attempted to be created}
 
-\item{participant_name}{`[character]` (mandatory, no default)
+\item{participant_name}{\verb{[character]} (mandatory, no default)
 
 name of NORDCAN participant; e.g. "Denmark" or "Sweden"}
 
-\item{first_year_incidence}{`[integer]` (mandatory, no default)
+\item{first_year_incidence}{\verb{[integer]} (mandatory, no default)
 
 first year for which to compute the cancer record count statistics;
-e.g. `1953L`}
+e.g. \code{1953L}}
 
-\item{first_year_mortality}{`[integer]` (mandatory, no default)
+\item{first_year_mortality}{\verb{[integer]} (mandatory, no default)
 
-first year for the cancer death count statistics; e.g. `1953L`}
+first year for the cancer death count statistics; e.g. \code{1953L}}
 
-\item{first_year_region}{`[integer]` (mandatory, no default)}
+\item{first_year_region}{\verb{[integer]} (mandatory, no default)}
 
-\item{last_year_incidence}{`[integer]` (mandatory, no default)
+\item{last_year_incidence}{\verb{[integer]} (mandatory, no default)
 
 Last year for which to compute the cancer record count statistics;
-e.g. `2019L`}
+e.g. \code{2019L}}
 
-\item{last_year_mortality}{`[integer]` (mandatory, no default)
+\item{last_year_mortality}{\verb{[integer]} (mandatory, no default)
 
-Last year for the cancer death count statistics; e.g. `2019L`}
+Last year for the cancer death count statistics; e.g. \code{2019L}}
 
-\item{last_year_survival}{`[integer]` (mandatory, no default)
+\item{last_year_survival}{\verb{[integer]} (mandatory, no default)
 
-Last year for survival analysis; e.g. `2019L`}
+Last year for survival analysis; e.g. \code{2019L}}
 }
 \description{
 Set and get settings for NORDCAN software.
 }
 \details{
-Some first years for statistics are set using `set_global_nordcan_settings`.
+Some first years for statistics are set using \code{set_global_nordcan_settings}.
 However, the first year for survival is fixed to
-`nordcancore::global_settings_env[["last_year_survival"]] - 29L`. Likewise the first
-year for prevalence is fixed to `first_year_incidence + 20L`.
+\code{nordcancore::global_settings_env[["last_year_survival"]] - 29L}. Likewise the first
+year for prevalence is fixed to \code{first_year_incidence + 20L}.
 }

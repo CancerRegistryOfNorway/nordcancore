@@ -10,16 +10,20 @@ nordcan_metadata_column_format(column_name)
 nordcan_metadata_column_specifications(column_name)
 }
 \arguments{
-\item{column_name}{`[character]` (mandatory, no default)
+\item{column_name}{\verb{[character]} (mandatory, no default)
 name of one column for which to retrieve specifications}
 }
 \value{
-- `nordcan_metadata_column_format`: a `character` string that names the format; e.g.
-  `"ID"` or `"Date"`
+\itemize{
+\item \code{nordcan_metadata_column_format}: a \code{character} string that names the format; e.g.
+\code{"ID"} or \code{"Date"}
+}
 
-- `nordcan_metadata_column_specifications`: a `list` of specifications; elements of
-  the list vary by format,
-  but they all have element `format` (character string)
+\itemize{
+\item \code{nordcan_metadata_column_specifications}: a \code{list} of specifications; elements of
+the list vary by format,
+but they all have element \code{format} (character string)
+}
 }
 \description{
 Retrieve NORDCAN column specifications.

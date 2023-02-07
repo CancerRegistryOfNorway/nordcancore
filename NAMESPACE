@@ -3,6 +3,8 @@
 export(assert_prod_input_entities)
 export(assert_user_input_entities)
 export(clean_results)
+export(dir_check)
+export(export_undefined)
 export(get_exported_dataset)
 export(get_exported_dataset_names)
 export(get_global_nordcan_settings)

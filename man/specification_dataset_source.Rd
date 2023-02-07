@@ -7,7 +7,7 @@
 specification_dataset_source(dataset_name)
 }
 \arguments{
-\item{dataset_name}{`[character]` (mandatory, no default)
+\item{dataset_name}{\verb{[character]} (mandatory, no default)
 name of a dataset}
 }
 \description{
