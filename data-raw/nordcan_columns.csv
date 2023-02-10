@@ -55,9 +55,9 @@ entity_level_13;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 entity_level_20;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 entity_level_30;TRUE;;TRUE;TRUE;;;;;;;;;;TRUE;;;;;;TRUE
 agegroup;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
-agr_all_ages;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
-agr_bone;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
-agr_all_sites;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
+agr_all_ages;TRUE;;;;;;;;;;;;;;;;;;;TRUE
+agr_bone;TRUE;;;;;;;;;;;;;;;;;;;TRUE
+agr_all_sites;TRUE;;;;;;;;;;;;;;;;;;;TRUE
 period_5;TRUE;;TRUE;TRUE;;;;;;;;;;;;;;;;TRUE
 excl_imp_error;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_imp_icd10conversion;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
@@ -65,7 +65,7 @@ excl_imp_benign;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_imp_duplicate;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_imp_entitymissing;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_imp_total;TRUE;;TRUE;TRUE;;;;;;;;;;;;;;;;TRUE
-excl_surv_age;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
+excl_surv_age;TRUE;;;;;;;;;;;;;;;;;;;TRUE
 excl_surv_dco;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_surv_autopsy;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
 excl_surv_negativefou;TRUE;;TRUE;;;;;;;;;;;;;;;;;TRUE
